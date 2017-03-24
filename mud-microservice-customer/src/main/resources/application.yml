@@ -1,16 +1,10 @@
 spring:
-  application:
-    name: mud-microservice-customer
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
   cloud:
     config:
       discovery:
         service-id: mud-microservice-configcenter
         enabled: true
+      name: customer
 eureka:
   client:
     service-url:

@@ -4,6 +4,7 @@ spring:
       discovery:
         service-id: mud-microservice-configcenter
         enabled: true
+      name: activity
 eureka:
   client:
     service-url:
