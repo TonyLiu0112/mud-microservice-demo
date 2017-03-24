@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: mud-microservice-activity
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    config:
+      discovery:
+        service-id: mud-microservice-configcenter
+        enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:123456@localhost:8761/eureka/

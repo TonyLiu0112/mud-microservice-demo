@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mud-microservice-eureka
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://admin:123456@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+security:
+  user:
+    name: admin
+    password: 123456
