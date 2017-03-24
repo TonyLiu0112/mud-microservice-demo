@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -92,25 +91,8 @@ public class ActivityService {
         return activityRes;
     }
 
-    public List<ActivityRes> list() throws Exception {
-        List<ActivityDO> records = activityRepository.findAll();
-        List<ActivityRes> responses = new ArrayList<>();
-        for (ActivityDO record : records) {
-            ActivityRes res = new ActivityRes();
-            BeanUtils.copyProperties(record, res);
-            responses.add(res);
-        }
-        return responses;
-    }
-
-    public List<ActivityRes> findAllNoPage() {
+    public List<ActivityRes> findAllNoPage() throws InstantiationException, IllegalAccessException {
         List<ActivityDO> records = activityRepository.findByDf(0);
-        List<ActivityRes> responses = new ArrayList<>();
-        for (ActivityDO record : records) {
-            ActivityRes res = new ActivityRes();
-            BeanUtils.copyProperties(record, res);
-            responses.add(res);
-        }
-        return responses;
+        return ConvertUtils.convert(records, ActivityRes.class);
     }
 }

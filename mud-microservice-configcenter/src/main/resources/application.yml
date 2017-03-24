@@ -5,7 +5,11 @@ spring:
       config:
         server:
           git:
-            uri: https://github.com/TonyLiu0112/spring-cloud-config-repository
+            uri: https://github.com/TonyLiu0112/mud-microservice-configuration-repository
+            search-paths:
+              - mud-microservice-activity
+              - mud-microservice-customer
+              - mud-microservice-security
   rabbitmq:
         host: localhost
         port: 5672

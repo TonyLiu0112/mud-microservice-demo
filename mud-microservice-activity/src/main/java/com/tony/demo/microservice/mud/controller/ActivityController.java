@@ -37,7 +37,11 @@ public class ActivityController extends AbstractController {
 
     @GetMapping(value = "listNoPage")
     public Map<String, Object> findAllNoPage() {
-        return data(activityService.findAllNoPage());
+        try {
+            return data(activityService.findAllNoPage());
+        } catch (Exception e) {
+            return fail();
+        }
     }
 
     @GetMapping(value = "/{id}")
@@ -58,7 +62,6 @@ public class ActivityController extends AbstractController {
             logger.error("Failed to modify activity info.", e);
             return fail();
         }
-
     }
 
     @PostMapping(value = "/save")
