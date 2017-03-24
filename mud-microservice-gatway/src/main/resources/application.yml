@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: mud-microservice-gatway
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:123456@localhost:8761/eureka/
