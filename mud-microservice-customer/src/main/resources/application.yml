@@ -9,3 +9,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:9999/oauth/check_token
+    client:
+      client-id: demo
+      client-secret: demo
