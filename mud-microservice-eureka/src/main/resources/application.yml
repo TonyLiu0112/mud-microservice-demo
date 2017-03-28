@@ -9,13 +9,13 @@ eureka:
     hostname: peer1
   client:
     service-url:
-      defaultZone: http://admin:123456@peer2:8762/eureka/,http://admin:123456@peer3:8763/eureka/
+      defaultZone: http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
     healthcheck:
       enabled: true
 security:
   user:
     name: admin
-    password: 123456
+    password: 111111
 server:
   port: 8761
 ---
@@ -26,13 +26,13 @@ eureka:
     hostname: peer2
   client:
     service-url:
-      defaultZone: http://admin:123456@peer3:8763/eureka/,http://admin:123456@peer1:8761/eureka/
+      defaultZone: http://admin:333333@peer3:8763/eureka/,http://admin:111111@peer1:8761/eureka/
     healthcheck:
       enabled: true
 security:
   user:
     name: admin
-    password: 123456
+    password: 222222
 server:
   port: 8762
 ---
@@ -43,12 +43,12 @@ eureka:
     hostname: peer3
   client:
     service-url:
-      defaultZone: http://admin:123456@peer1:8761/eureka/,http://admin:123456@peer2:8762/eureka/
+      defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/
     healthcheck:
       enabled: true
 security:
   user:
     name: admin
-    password: 123456
+    password: 333333
 server:
   port: 8763
