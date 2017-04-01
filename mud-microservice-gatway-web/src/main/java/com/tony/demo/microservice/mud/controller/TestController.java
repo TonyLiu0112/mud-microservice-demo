@@ -22,7 +22,7 @@ public class TestController {
 
     @GetMapping("get")
     public Object get() {
-        return restTemplate.getForObject("http://localhost:8082/customer/listNoPage", String.class);
+        return restTemplate.getForObject("http://localhost:8082/customer/listNoPage", Object.class);
     }
 
 }
