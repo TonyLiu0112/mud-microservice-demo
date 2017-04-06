@@ -10,6 +10,8 @@ spring:
               - mud-microservice-activity
               - mud-microservice-customer
               - mud-microservice-security
+              - mud-microservice-gatway-web
+              - mud-microservice-gatway-mobile
   rabbitmq:
     host: localhost
     port: 5672

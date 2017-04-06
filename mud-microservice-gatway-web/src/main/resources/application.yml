@@ -3,36 +3,13 @@ server:
 spring:
   application:
     name: mud-microservice-gatway-web
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
   cloud:
     config:
       discovery:
         enabled: true
         service-id: mud-microservice-configcenter
+      name: gatway-web
 eureka:
   client:
     service-url:
       defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
-security:
-  basic:
-    enabled: false
-  oauth2:
-    client:
-      client-id: mud
-      client-secret: mud
-      access-token-uri: http://localhost:9999/oauth/token
-      user-authorization-uri: http://localhost:9999/oauth/authorize
-      scope: read, write
-    resource:
-      token-info-uri: http://localhost:9999/oauth/check_token
-# remote client load balance strategy for Ribbon
-mud-microservice-customer:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
-mud-microservice-activity:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
