@@ -20,12 +20,12 @@ public class AccessController {
 
     @GetMapping("/customer/list")
     public Object customerList() {
-        return restTemplate.getForObject("http://localhost:8082/customer/listNoPage", Object.class);
+        return restTemplate.getForObject("http://mud-microservice-customer/customer/listNoPage", Object.class);
     }
 
     @GetMapping("/activity/list")
     public Object activityList() {
-        return restTemplate.getForObject("http://localhost:8081/activity/listNoPage", Object.class);
+        return restTemplate.getForObject("http://mud-microservice-activity/activity/listNoPage", Object.class);
     }
 
     /**
@@ -37,7 +37,7 @@ public class AccessController {
      */
     @GetMapping("/list/security")
     public Object adminList(@RequestParam("activityId") String activityId) {
-        return restTemplate.getForObject("http://localhost:8081/activity/findAll?activityId=" + activityId, Object.class);
+        return restTemplate.getForObject("http://mud-microservice-activity/activity/findAll?activityId=" + activityId, Object.class);
     }
 
 }

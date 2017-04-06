@@ -29,3 +29,10 @@ security:
       scope: read, write
     resource:
       token-info-uri: http://localhost:9999/oauth/check_token
+# remote client load balance strategy for Ribbon
+mud-microservice-customer:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+mud-microservice-activity:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
