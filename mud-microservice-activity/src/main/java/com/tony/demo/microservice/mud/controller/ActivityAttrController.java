@@ -30,10 +30,6 @@ public class ActivityAttrController extends AbstractController {
 
     private final ActivityAttrService activityAttrService;
 
-    /**
-     * upload.image.path.activity.attr.${activityId}
-     * upload.image.path.activity.customer.${customerId}
-     */
     @Value("${upload.image.path.activity.attr}")
     private String activityAttrPath;
 

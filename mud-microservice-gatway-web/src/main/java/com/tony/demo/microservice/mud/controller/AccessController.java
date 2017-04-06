@@ -4,16 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("demo")
-public class TestController {
+public class AccessController {
 
     private final OAuth2RestTemplate restTemplate;
 
     @Autowired
-    public TestController(OAuth2RestTemplate restTemplate) {
+    public AccessController(OAuth2RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -25,6 +26,18 @@ public class TestController {
     @GetMapping("/activity/list")
     public Object activityList() {
         return restTemplate.getForObject("http://localhost:8081/activity/listNoPage", Object.class);
+    }
+
+    /**
+     * 私有资源
+     * 仅拥有admin权限用户才可访问
+     *
+     * @param activityId
+     * @return
+     */
+    @GetMapping("/list/security")
+    public Object adminList(@RequestParam("activityId") String activityId) {
+        return restTemplate.getForObject("http://localhost:8081/activity/findAll?activityId=" + activityId, Object.class);
     }
 
 }

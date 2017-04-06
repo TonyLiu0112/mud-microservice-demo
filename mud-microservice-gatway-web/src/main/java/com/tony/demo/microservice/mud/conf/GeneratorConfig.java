@@ -1,6 +1,7 @@
 package com.tony.demo.microservice.mud.conf;
 
 import org.apache.catalina.filters.RequestDumperFilter;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -21,6 +22,7 @@ public class GeneratorConfig {
     }
 
     @Bean
+    @LoadBalanced
     public OAuth2RestTemplate oauth2RestTemplate(OAuth2ClientContext oauth2ClientContext, OAuth2ProtectedResourceDetails details) {
         OAuth2RestTemplate tmp = new OAuth2RestTemplate(details, oauth2ClientContext);
         System.out.println(tmp);
