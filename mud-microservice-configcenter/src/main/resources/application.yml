@@ -7,11 +7,7 @@ spring:
           git:
             uri: https://github.com/TonyLiu0112/mud-microservice-configuration-repository
             search-paths:
-              - mud-microservice-activity
-              - mud-microservice-customer
-              - mud-microservice-security
-              - mud-microservice-gatway-web
-              - mud-microservice-gatway-mobile
+              - mud-microservice-*
   rabbitmq:
     host: localhost
     port: 5672
