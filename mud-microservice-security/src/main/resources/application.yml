@@ -14,8 +14,8 @@ security:
     password: password
   oauth2:
     client:
-      client-id: demo
-      client-secret: demo
+      client-id: mud
+      client-secret: mud
       scope: read, write
       auto-approve-scopes: .*
     authorization:

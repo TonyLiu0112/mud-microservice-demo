@@ -14,5 +14,5 @@ security:
     resource:
       token-info-uri: http://localhost:9999/oauth/check_token
     client:
-      client-id: demo
-      client-secret: demo
+      client-id: mud
+      client-secret: mud

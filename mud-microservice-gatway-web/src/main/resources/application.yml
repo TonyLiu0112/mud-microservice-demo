@@ -22,8 +22,8 @@ security:
     enabled: false
   oauth2:
     client:
-      client-id: demo
-      client-secret: demo
+      client-id: mud
+      client-secret: mud
       access-token-uri: http://localhost:9999/oauth/token
       user-authorization-uri: http://localhost:9999/oauth/authorize
       scope: read, write
