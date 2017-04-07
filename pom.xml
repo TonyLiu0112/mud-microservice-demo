@@ -12,7 +12,6 @@
         <module>mud-microservice-activity</module>
         <module>mud-microservice-thirdparty</module>
         <module>mud-microservice-api-gateway</module>
-        <module>mud-microservice-gatway-mobile</module>
         <module>mud-microservice-common</module>
         <module>mud-microservice-security</module>
         <module>mud-microservice-score</module>
