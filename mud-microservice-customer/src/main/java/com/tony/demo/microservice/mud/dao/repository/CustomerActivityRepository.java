@@ -17,4 +17,6 @@ public interface CustomerActivityRepository extends JpaRepository<CustomerActivi
     Page<CustomerActivityDO> findByDf(int df, Pageable pageable);
 
     List<CustomerActivityDO> findByDf(int df);
+
+    List<CustomerActivityDO> findByActivityId(long customerId);
 }

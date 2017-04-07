@@ -35,6 +35,13 @@ public class CustomerActivityController extends AbstractController {
         return pageData(customerActivityService.findAll(pageRequest.getPageNum(), pageRequest.getPageSize()), pageRequest);
     }
 
+    @GetMapping(value = "/findByActivityId")
+    public Map<String, Object> findAll(@RequestParam("activityId") long activityId) throws Exception {
+        return data(customerActivityService.findByActivityId(activityId));
+    }
+
+
+
     @GetMapping(value = "/{id}")
     public Map<String, Object> findByPK(@PathVariable("id") Long id) throws Exception {
         try {

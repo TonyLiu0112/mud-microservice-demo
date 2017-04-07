@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.conf;
+package com.tony.demo.microservice.mud.web.manager.conf;
 
 import org.apache.catalina.filters.RequestDumperFilter;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -12,7 +12,12 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 @Configuration
 public class GeneratorConfig {
 
-    @Profile("!pro")
+    /**
+     * 请求dump过滤器，用于查看所有请求的请求头信息
+     *
+     * @return
+     */
+    @Profile("!pro") // 如果不是生产环境的profile，则打开此配置
     @Bean
     RequestDumperFilter requestDumperFilter() {
         return new RequestDumperFilter();

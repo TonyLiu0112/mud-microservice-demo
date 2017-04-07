@@ -6,6 +6,7 @@ import com.tony.demo.microservice.mud.dao.repository.CustomerActivityRepository;
 import com.tony.demo.microservice.mud.services.biz.CacheService;
 import com.tony.demo.microservice.mud.services.model.req.CustomerActivityReq;
 import com.tony.demo.microservice.mud.services.model.res.CustomerActivityRes;
+import com.tony.demo.microservice.mud.services.model.res.CustomerRes;
 import com.tony.demo.microservice.mud.utils.BeanUtilsPlus;
 import com.tony.demo.microservice.mud.utils.ConvertUtils;
 import org.apache.log4j.Logger;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 客户活动服务
@@ -110,5 +113,16 @@ public class CustomerActivityService {
     public List<CustomerActivityRes> list() throws InstantiationException, IllegalAccessException {
         List<CustomerActivityDO> list = customerActivityRepository.findByDf(0);
         return ConvertUtils.convert(list, CustomerActivityRes.class);
+    }
+
+    public List<CustomerRes> findByActivityId(long activityId) throws Exception {
+        List<CustomerActivityDO> list = customerActivityRepository.findByActivityId(activityId);
+        return list.stream().map(record -> {
+            try {
+                return customerService.findOne(record.getCustomerId());
+            } catch (Exception e) {
+                return new CustomerRes();
+            }
+        }).collect(Collectors.toList());
     }
 }
