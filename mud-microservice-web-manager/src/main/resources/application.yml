@@ -7,6 +7,10 @@ spring:
         enabled: true
         service-id: mud-microservice-configcenter
       name: web-manager
+  redis:
+    host: localhost
+    port: 6379
+    password: test123456
 eureka:
   client:
     service-url:
