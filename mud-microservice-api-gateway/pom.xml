@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mud-microservice-gatway-web</artifactId>
+    <artifactId>mud-microservice-api-gateway</artifactId>
     <packaging>jar</packaging>
 
-    <name>mud-microservice-gatway-web</name>
+    <name>mud-microservice-api-gateway</name>
     <url>http://maven.apache.org</url>
 
     <properties>

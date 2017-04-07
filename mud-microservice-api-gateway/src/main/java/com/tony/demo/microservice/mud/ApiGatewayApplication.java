@@ -8,8 +8,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableOAuth2Sso
-public class WebGatwayApplication {
+public class ApiGatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(WebGatwayApplication.class, args);
+        SpringApplication.run(ApiGatewayApplication.class, args);
     }
 }

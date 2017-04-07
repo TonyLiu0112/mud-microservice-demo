@@ -2,13 +2,13 @@ server:
   port: 7000
 spring:
   application:
-    name: mud-microservice-gatway-web
+    name: mud-microservice-api-gateway
   cloud:
     config:
       discovery:
         enabled: true
         service-id: mud-microservice-configcenter
-      name: gatway-web
+      name: api-gateway
 eureka:
   client:
     service-url:
