@@ -30,27 +30,6 @@ public class SecurityApplication {
         }
     }
 
-//    @Configuration
-//    @Order(-20)
-//    static class LoginConfig extends WebSecurityConfigurerAdapter {
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http.csrf().disable();
-//            http.formLogin().loginPage("/login").permitAll()
-//                    .and()
-//                    .requestMatchers()
-//                    .antMatchers("/", "/login", "/oauth/authorize", "/oauth/confirm_access")
-//                    .and()
-//                    .authorizeRequests()
-//                    .anyRequest().authenticated();
-//        }
-//
-//        @Override
-//        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//            super.configure(auth);
-//        }
-//    }
-
     @Profile("!cloud")
     @Bean
     RequestDumperFilter requestDumperFilter() {
