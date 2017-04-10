@@ -1,6 +1,7 @@
 package com.tony.demo.microservice.mud.web.manager.conf;
 
 import org.apache.catalina.filters.RequestDumperFilter;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +11,8 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 
 @Configuration
-public class GeneratorConfig {
+@EnableOAuth2Sso
+public class OAuth2Config {
 
     /**
      * 请求dump过滤器，用于查看所有请求的请求头信息
