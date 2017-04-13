@@ -1,2 +1,3 @@
 server:
   port: 9999
+  use-forward-headers: false
