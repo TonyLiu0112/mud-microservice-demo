@@ -8,8 +8,6 @@ spring:
         enabled: true
         service-id: mud-microservice-configcenter
       name: web-manager
-  aop:
-    proxy-target-class: true
 eureka:
   client:
     service-url:
