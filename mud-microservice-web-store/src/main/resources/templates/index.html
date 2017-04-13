@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>欢迎首页</title>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+        <tr>
+            <td>客户名称</td>
+            <td>活动名称</td>
+        </tr>
+    </thead>
+    <tbody th:unless="${#lists.isEmpty(dataList)}">
+        <tr th:each="record: ${dataList}">
+            <td th:text="${record.customerName}"></td>
+            <td th:text="${record.activityName}"></td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

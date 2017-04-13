@@ -16,6 +16,7 @@
         <module>mud-microservice-security</module>
         <module>mud-microservice-score</module>
         <module>mud-microservice-web-manager</module>
+        <module>mud-microservice-web-store</module>
     </modules>
     <packaging>pom</packaging>
 
