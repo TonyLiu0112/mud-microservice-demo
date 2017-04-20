@@ -36,13 +36,6 @@ public class AccessController {
         return restTemplate.getForObject("http://mud-microservice-activity/activity/listNoPage", Object.class);
     }
 
-    /**
-     * 私有资源
-     * 仅拥有admin权限用户才可访问
-     *
-     * @param activityId
-     * @return
-     */
     @GetMapping("/list/security")
     public Object adminList(@RequestParam("activityId") String activityId) {
         return restTemplate.getForObject("http://mud-microservice-activity/activity/findAll?activityId=" + activityId, Object.class);
