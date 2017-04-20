@@ -35,11 +35,13 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final SecurityUserService securityUserService;
     private final TokenBuild tokenBuild;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    public AuthenticationService(AuthenticationManager authenticationManager, SecurityUserService securityUserService) {
+    public AuthenticationService(AuthenticationManager authenticationManager, SecurityUserService securityUserService, RestTemplate restTemplate) {
         this.authenticationManager = authenticationManager;
         this.securityUserService = securityUserService;
+        this.restTemplate = restTemplate;
         this.tokenBuild = new TokenBuild();
     }
 
@@ -64,15 +66,9 @@ public class AuthenticationService {
 
     class TokenBuild {
 
-        private RestTemplate restTemplate;
-
-        TokenBuild() {
-            this.restTemplate = new RestTemplate();
-        }
-
         HashMap buildToken(String username, String password) throws Exception {
             setInterceptor(username, password);
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:9998/oauth/token?client_id=acme&grant_type=client_credentials", null, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity("http://mud-microservice-security-api/oauth/token?client_id=" + username + "&grant_type=client_credentials", null, String.class);
             String responseText = response.getBody();
             Assert.isTrue(HttpStatus.OK == response.getStatusCode(), "Request oauth/token error, response is " + response.getStatusCode());
             HashMap jwtMap = new ObjectMapper().readValue(responseText, HashMap.class);

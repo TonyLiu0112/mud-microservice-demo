@@ -28,30 +28,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
                 .antMatchers(HttpMethod.POST, "/security/doLogin").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
+                .and().cors()
                 .and().csrf().disable();
-
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(securityUserService.getUserDetailsService());
     }
-
-//    @Autowired
-//    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("user").password("password").roles("USER")
-//                .and()
-//                .withUser("app_client").password("nopass").roles("USER")
-//                .and()
-//                .withUser("admin").password("password").roles("ADMIN");
-//    }
 
     @Override
     @Bean
