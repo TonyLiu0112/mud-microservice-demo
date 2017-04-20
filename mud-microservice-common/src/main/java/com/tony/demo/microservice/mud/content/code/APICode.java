@@ -15,6 +15,7 @@ public enum APICode {
     UN_OPS("0005", "", "已到每次操作上限"),
     UN_REPETITION("0006", "", "不可重复操作"),
     UNICODE_NULL("0007", "", "用户唯一标识符uniqueCode为空."),
+    AUTHENTICATE_ERROR("0009", "", "认证错误"),
     UNKNOW("9999", "", "未知异常");
 
     private String code;

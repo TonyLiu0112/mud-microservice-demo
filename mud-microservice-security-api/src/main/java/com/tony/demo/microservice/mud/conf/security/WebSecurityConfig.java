@@ -31,32 +31,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
+                .antMatchers(HttpMethod.POST, "/security/doLogin").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().csrf().disable();
 
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(securityUserService.getUserDetailsService());
-//    }
-
-    @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER")
-                .and()
-                .withUser("app_client").password("nopass").roles("USER")
-                .and()
-                .withUser("admin").password("password").roles("ADMIN");
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(securityUserService.getUserDetailsService());
     }
 
-//    @Override
-//    @Bean
-//    public UserDetailsService userDetailsServiceBean() throws Exception {
-//        return securityUserService.getUserDetailsService();
+//    @Autowired
+//    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("user").password("password").roles("USER")
+//                .and()
+//                .withUser("app_client").password("nopass").roles("USER")
+//                .and()
+//                .withUser("admin").password("password").roles("ADMIN");
 //    }
+
+    @Override
+    @Bean
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return securityUserService.getUserDetailsService();
+    }
 
     @Override
     @Bean

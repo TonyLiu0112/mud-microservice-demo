@@ -16,6 +16,10 @@ public class SecurityUserReq {
 
     private Integer sex;
 
+    private String clientId;
+
+    private String secret;
+
     public Long getId() {
         return id;
     }
@@ -70,5 +74,21 @@ public class SecurityUserReq {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 }
