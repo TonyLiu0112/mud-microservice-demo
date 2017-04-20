@@ -6,6 +6,7 @@
 
 * 通过Ajax获取token
 
+
     $.ajax({
       url: 'http://localhost:9998/security/doLogin',
       dataType:"json",
@@ -28,6 +29,7 @@
 返回信息中包含access_token信息
 
 * 通过Ajax访问受保护资源
+
 
     $.ajax({
       url: 'http://localhost:7000/demo/tokens',
