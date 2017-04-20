@@ -4,7 +4,7 @@
 
 ## js操作
 
-1.  通过Ajax获取token
+####  通过Ajax获取token
 
 
     $.ajax({
@@ -28,7 +28,7 @@
 
 返回信息中包含access_token信息
 
-2. 通过Ajax访问受保护资源
+#### 通过Ajax访问受保护资源
 
 
     $.ajax({
