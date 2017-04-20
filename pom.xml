@@ -13,7 +13,7 @@
         <module>mud-microservice-thirdparty</module>
         <module>mud-microservice-api-gateway</module>
         <module>mud-microservice-common</module>
-        <module>mud-microservice-security</module>
+        <module>mud-microservice-security-sso</module>
         <module>mud-microservice-security-api</module>
         <module>mud-microservice-score</module>
         <module>mud-microservice-web-manager</module>
