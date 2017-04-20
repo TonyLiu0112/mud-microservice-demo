@@ -30,7 +30,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         http.requestMatcher(new OAuthRequestedMatcher())
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .anyRequest().authenticated().and().cors();
+                .anyRequest().authenticated();
     }
 
     @Bean
