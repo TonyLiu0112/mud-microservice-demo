@@ -48,45 +48,45 @@
 1. 重写AuthorizationCodeServices并交给spring管理
     
     
-    @Bean
-    public AuthorizationCodeServices authorizationCodeServices() {
-        return new JdbcAuthorizationCodeServices(dataSource);
-    }
-    
+        @Bean
+        public AuthorizationCodeServices authorizationCodeServices() {
+            return new JdbcAuthorizationCodeServices(dataSource);
+        }
+        
 2. 重写TokenStore并交给spring管理
 
 
-    @Bean
-    public TokenStore tokenStore() {
-        return new JdbcTokenStore(dataSource);
-    }
+        @Bean
+        public TokenStore tokenStore() {
+            return new JdbcTokenStore(dataSource);
+        }
 
 3. 重写ClientDetailsService并交给spring管理
 
 
-    @Bean
-    public ClientDetailsService clientDetails() {
-        return new JdbcClientDetailsService(dataSource);
-    }
+        @Bean
+        public ClientDetailsService clientDetails() {
+            return new JdbcClientDetailsService(dataSource);
+        }
     
 4. 对于多个SSO下游服务集群，如果使用zuul作为SSO网关，配置上需要注意，如果使用ribbon来负载，
 不要通过eureka来发现服务，请使用静态ribbon静态列表方式，前者会有重定向的问题，eg:
     
     
-    zuul:
-      routes:
-        auth-server:
-          path: /security/**
-          serviceId: auth
-          sensitive-headers:
-    
-    ribbon:
-      eureka:
-        enabled: false
-      eager-load:
-        enabled: true
-    
-    auth:
-      ribbon:
-        listOfServers: http://localhost:9998/,http://localhost:9997/
-        NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+        zuul:
+          routes:
+            auth-server:
+              path: /security/**
+              serviceId: auth
+              sensitive-headers:
+        
+        ribbon:
+          eureka:
+            enabled: false
+          eager-load:
+            enabled: true
+        
+        auth:
+          ribbon:
+            listOfServers: http://localhost:9998/,http://localhost:9997/
+            NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
