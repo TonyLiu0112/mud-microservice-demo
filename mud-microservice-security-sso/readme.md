@@ -1,6 +1,7 @@
 ## 描述
 > 1. SSO单点登入
 > 2. 分布式session的管理
+> 3. jdbc模式下sql脚本在这里 -> [Tables](https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/test/resources/schema.sql)
 
 ## Spring OAuth2 SOO 流程
 
