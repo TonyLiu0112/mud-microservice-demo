@@ -1,0 +1,3 @@
+server:
+  port: 18808
+  context-path: /sso-proxy

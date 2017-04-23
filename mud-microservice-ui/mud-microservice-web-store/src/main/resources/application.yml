@@ -12,7 +12,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
-# sso服务
 security:
   basic:
     enabled: false
@@ -20,34 +19,10 @@ security:
     client:
       client-id: mud
       client-secret: mud
-      access-token-uri: http://localhost:9999/oauth/token
-      user-authorization-uri: http://localhost:9999/oauth/authorize
+      access-token-uri: http://localhost:18808/sso-proxy/security/security/oauth/token
+      user-authorization-uri: http://localhost:18808/sso-proxy/security/security/oauth/authorize
       scope: read, write
     resource:
-      token-info-uri: http://localhost:9999/oauth/check_token
+      token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
 logging:
   level.org.springframework.security: debug
-#security:
-#  basic:
-#    enabled: false
-#  oauth2:
-#    client:
-#      client-id: mud
-#      client-secret: mud
-#      access-token-uri: http://localhost:${server.port}/proxy/oauth/token
-#      user-authorization-uri: http://localhost:${server.port}/proxy/oauth/authorize
-#      scope: read, write
-#    resource:
-#      token-info-uri: http://localhost:${server.port}/proxy/oauth/check_token
-#  ignored: /proxy/oauth/token, /proxy/oauth/authorize, /proxy/oauth/check_token
-#zuul:
-#  routes:
-#    auth-server:
-#      add-proxy-headers: true
-#      path: /proxy/**
-#      serviceId: mud-microservice-security
-#mud-microservice-security:
-#  ribbon:
-#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
-#logging:
-#  level.org.springframework.security: debug

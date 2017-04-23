@@ -5,9 +5,22 @@ spring:
         enabled: true
         service-id: mud-microservice-configcenter
       name: security
+  redis:
+    host: localhost
+    port: 6379
+    password: test123456
 eureka:
   client:
     service-url:
       defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
 logging:
   level.org.springframework.security: debug
+#security:
+#  oauth2:
+#    client:
+#      client-id: mud
+#      client-secret: mud
+#      scope: read, write
+#      auto-approve-scopes: .*
+#    authorization:
+#      check-token-access: permitAll()

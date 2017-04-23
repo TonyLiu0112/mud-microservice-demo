@@ -11,6 +11,7 @@
         <module>mud-microservice-api-gateway</module>
         <module>mud-microservice-common</module>
         <module>mud-microservice-security-sso</module>
+        <module>mud-microservice-security-sso-gateway</module>
         <module>mud-microservice-security-api</module>
         <module>mud-microservice-services</module>
         <module>mud-microservice-ui</module>
