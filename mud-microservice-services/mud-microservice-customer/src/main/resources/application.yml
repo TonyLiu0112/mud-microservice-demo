@@ -1,11 +1,3 @@
 spring:
-  cloud:
-    config:
-      discovery:
-        service-id: mud-microservice-configcenter
-        enabled: true
-      name: customer
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
+  application:
+    name: mud-microservice-customer

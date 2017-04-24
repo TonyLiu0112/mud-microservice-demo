@@ -2,12 +2,12 @@ spring:
   application:
     name: mud-microservice-configcenter
   cloud:
-      config:
-        server:
-          git:
-            uri: https://github.com/TonyLiu0112/mud-microservice-configuration-repository
-            search-paths:
-              - mud-microservice-*
+    config:
+      server:
+        git:
+          uri: https://github.com/TonyLiu0112/mud-microservice-configuration-repository
+          search-paths:
+            - mud-microservice-*
   rabbitmq:
     host: localhost
     port: 5672

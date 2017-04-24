@@ -1,15 +1,12 @@
 spring:
   application:
     name: sso-gateway
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
+
 zuul:
   routes:
     auth-server:
       path: /security/**
-      serviceId: auth
+      serviceId: mud-microservice-security
       sensitive-headers:
 
 ribbon:
@@ -18,7 +15,7 @@ ribbon:
   eager-load:
     enabled: true
 
-auth:
+mud-microservice-security:
   ribbon:
     listOfServers: http://localhost:9998/,http://localhost:9997/
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule

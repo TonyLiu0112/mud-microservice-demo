@@ -1,3 +1,14 @@
 server:
   port: 8080
   context-path: /store
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: mud-microservice-configcenter
+      name: web-store
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
