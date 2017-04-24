@@ -8,6 +8,12 @@ eureka:
 # 如果想通过service-id的方式在eureka上发现配置中心集群服务
 # 下面配置需要配置在bootstrap.yml中，如果配置在application.yml中，配置无效
 spring:
+  application:
+    name: mud-microservice-security
+  redis:
+    host: localhost
+    port: 6379
+    password: test123456
   cloud:
     config:
       discovery:

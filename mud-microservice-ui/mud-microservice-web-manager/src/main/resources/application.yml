@@ -1,6 +1,3 @@
-spring:
-  application:
-    name: mud-microservice-web-manager
 security:
   basic:
     enabled: false

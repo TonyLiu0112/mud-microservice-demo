@@ -1,6 +1,8 @@
 server:
   port: 7000
 spring:
+  application:
+    name: mud-microservice-api-gateway
   cloud:
     config:
       discovery:

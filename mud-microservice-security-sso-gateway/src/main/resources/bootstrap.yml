@@ -1,6 +1,9 @@
 server:
   port: 18808
   context-path: /sso-proxy
+spring:
+  application:
+    name: sso-gateway
 eureka:
   client:
     service-url:

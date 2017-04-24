@@ -1,6 +1,3 @@
-spring:
-  application:
-    name: mud-microservice-api-gateway
 security:
   key:
     -----BEGIN PUBLIC KEY-----

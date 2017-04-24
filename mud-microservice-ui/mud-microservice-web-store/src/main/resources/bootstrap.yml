@@ -2,6 +2,8 @@ server:
   port: 8080
   context-path: /store
 spring:
+  application:
+    name: mud-microservice-web-store
   cloud:
     config:
       discovery:

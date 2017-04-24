@@ -1,7 +1,3 @@
-spring:
-  application:
-    name: sso-gateway
-
 zuul:
   routes:
     auth-server:

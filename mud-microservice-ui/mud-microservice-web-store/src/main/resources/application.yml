@@ -1,6 +1,3 @@
-spring:
-  application:
-    name: mud-microservice-web-store
 security:
   basic:
     enabled: false

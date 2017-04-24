@@ -1,10 +1,3 @@
-spring:
-  application:
-    name: mud-microservice-security
-  redis:
-    host: localhost
-    port: 6379
-    password: test123456
 logging:
   level.org.springframework.security: debug
 #security:
