@@ -1,13 +1,17 @@
 package com.tony.demo.microservice.mud.web.manager.service;
 
-import com.alibaba.fastjson.JSONObject;
+import com.tony.demo.microservice.mud.web.manager.dto.CustomerDto;
 import com.tony.demo.microservice.mud.web.manager.dto.IndexDto;
-import jodd.util.StringUtil;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import com.tony.demo.microservice.mud.web.manager.service.downstream.ActivityService;
+import com.tony.demo.microservice.mud.web.manager.service.downstream.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * simple service for demo
@@ -17,40 +21,41 @@ import java.util.List;
 @Service
 public class SimpleService {
 
-    private final OAuth2RestTemplate restTemplate;
+    private Logger logger = LoggerFactory.getLogger(SimpleService.class);
 
-    public SimpleService(OAuth2RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    private final CustomerService customerService;
+    private final ActivityService activityService;
+
+    @Autowired
+    public SimpleService(CustomerService customerService, ActivityService activityService) {
+        this.customerService = customerService;
+        this.activityService = activityService;
     }
 
-    public List<IndexDto> findCustomerAndActivity() {
+    public List<IndexDto> findCustomerAndActivity() throws Exception {
         final List<IndexDto> results = new ArrayList<>();
-        String responseJSON = restTemplate.getForObject("http://mud-microservice-activity/activity/listNoPage", String.class);
-        JSONObject activity = JSONObject.parseObject(responseJSON);
-
-        activity.getJSONArray("results").forEach(o -> {
-            JSONObject r = (JSONObject) o;
-            String activityName = findCustomerName(Long.valueOf(r.getString("id")));
-            if (StringUtil.isNotEmpty(activityName)) {
-                IndexDto indexDto = new IndexDto();
-                indexDto.setActivityName(r.getString("name"));
-                indexDto.setCustomerName(activityName);
-                results.add(indexDto);
-            }
-        });
-
+        activityService.findAllActivity().ifPresent(activityDtos -> activityDtos.forEach(activityDto -> {
+            IndexDto indexDto = new IndexDto();
+            indexDto.setActivityName(activityDto.getName());
+            indexDto.setCustomerName(getCustomerNames(activityDto.getId()));
+            results.add(indexDto);
+        }));
         return results;
     }
 
-    private String findCustomerName(Long id) {
-        final String[] names = {""};
-        String customers = restTemplate.getForObject("http://mud-microservice-customer/customer/activity/findByActivityId?activityId=" + id, String.class);
-        JSONObject responseJSON = JSONObject.parseObject(customers);
-        responseJSON.getJSONArray("results").forEach(o -> {
-            JSONObject activityJSON = (JSONObject) o;
-            names[0] += activityJSON.getString("name") + ",";
-        });
-        return names[0];
+    private String getCustomerNames(Long id) {
+        try {
+            final String[] names = {"无数据"};
+            customerService.findByActivityId(id)
+                    .ifPresent(customerDtos -> {
+                        if (!customerDtos.isEmpty())
+                            names[0] = customerDtos.stream().map(CustomerDto::getName).collect(Collectors.joining(","));
+                    });
+            return names[0];
+        } catch (Exception e) {
+            logger.error("Failed to load customer Name." + e);
+        }
+        return "ERROR";
     }
 
 }

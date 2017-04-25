@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 
 @Configuration
-public class OAuth2Config {
+public class RestTemplateConfig {
 
     @Bean
     @LoadBalanced
