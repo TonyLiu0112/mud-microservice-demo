@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.api.security.conf;
+package com.tony.demo.microservice.mud.security.api.conf;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

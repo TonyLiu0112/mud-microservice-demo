@@ -1,7 +1,7 @@
-package com.tony.demo.microservice.mud.api.security.service;
+package com.tony.demo.microservice.mud.security.api.service;
 
-import com.tony.demo.microservice.mud.api.security.dao.entity.SecurityUserDO;
-import com.tony.demo.microservice.mud.api.security.dao.repository.SecurityUserRepository;
+import com.tony.demo.microservice.mud.security.api.dao.entity.SecurityUserDO;
+import com.tony.demo.microservice.mud.security.api.dao.repository.SecurityUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;

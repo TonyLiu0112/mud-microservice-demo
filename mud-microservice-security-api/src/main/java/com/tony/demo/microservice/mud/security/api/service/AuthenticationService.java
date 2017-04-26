@@ -1,7 +1,7 @@
-package com.tony.demo.microservice.mud.api.security.service;
+package com.tony.demo.microservice.mud.security.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tony.demo.microservice.mud.api.security.service.dto.SecurityUserReq;
+import com.tony.demo.microservice.mud.security.api.service.dto.SecurityUserReq;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.api.security.service.dto;
+package com.tony.demo.microservice.mud.security.api.service.dto;
 
 public class SecurityUserReq {
 

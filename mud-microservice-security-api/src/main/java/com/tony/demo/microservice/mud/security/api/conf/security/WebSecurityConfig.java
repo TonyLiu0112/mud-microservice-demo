@@ -1,6 +1,6 @@
-package com.tony.demo.microservice.mud.api.security.conf.security;
+package com.tony.demo.microservice.mud.security.api.conf.security;
 
-import com.tony.demo.microservice.mud.api.security.service.SecurityUserService;
+import com.tony.demo.microservice.mud.security.api.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

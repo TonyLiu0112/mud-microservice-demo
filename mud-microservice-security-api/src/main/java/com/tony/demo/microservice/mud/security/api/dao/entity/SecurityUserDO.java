@@ -1,7 +1,13 @@
-package com.tony.demo.microservice.mud.api.security.service.dto;
+package com.tony.demo.microservice.mud.security.api.dao.entity;
 
-public class SecurityUserRes {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "security_user")
+public class SecurityUserDO {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String loginName;

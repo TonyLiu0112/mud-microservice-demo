@@ -1,9 +1,9 @@
-package com.tony.demo.microservice.mud.api.security.controller;
+package com.tony.demo.microservice.mud.security.api.controller;
 
-import com.tony.demo.microservice.mud.api.security.service.AuthenticationService;
-import com.tony.demo.microservice.mud.api.security.service.dto.SecurityUserReq;
 import com.tony.demo.microservice.mud.common.AbstractController;
 import com.tony.demo.microservice.mud.common.content.code.APICode;
+import com.tony.demo.microservice.mud.security.api.service.AuthenticationService;
+import com.tony.demo.microservice.mud.security.api.service.dto.SecurityUserReq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

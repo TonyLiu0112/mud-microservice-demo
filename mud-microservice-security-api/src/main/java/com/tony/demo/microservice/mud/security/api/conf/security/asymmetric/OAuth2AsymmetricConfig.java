@@ -1,8 +1,11 @@
-package com.tony.demo.microservice.mud.api.security.conf.security;
+package com.tony.demo.microservice.mud.security.api.conf.security.asymmetric;
 
+import com.tony.demo.microservice.mud.security.api.conf.security.CustomTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -15,23 +18,23 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import java.util.Arrays;
 
 /**
  * 认证服务配置客户端明细
- * 对称加密
+ * 非对称加密
  * <p>
  * Created by Tony on 27/03/2017.
  */
-//@Configuration
-//@ConditionalOnMissingClass("com.tony.demo.microservice.mud.conf.security.asymmetric.OAuth2AsymmetricConfig")
-public class OAuth2SymmetricConfig extends AuthorizationServerConfigurerAdapter {
+@Configuration
+public class OAuth2AsymmetricConfig extends AuthorizationServerConfigurerAdapter {
 
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public OAuth2SymmetricConfig(AuthenticationManager authenticationManager) {
+    public OAuth2AsymmetricConfig(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
@@ -65,7 +68,9 @@ public class OAuth2SymmetricConfig extends AuthorizationServerConfigurerAdapter 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mud-api.jks"),
+                "mud#234".toCharArray());
+        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mud-api"));
         return converter;
     }
 

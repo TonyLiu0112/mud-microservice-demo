@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.api.security.conf.security;
+package com.tony.demo.microservice.mud.security.api.conf.security;
 
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

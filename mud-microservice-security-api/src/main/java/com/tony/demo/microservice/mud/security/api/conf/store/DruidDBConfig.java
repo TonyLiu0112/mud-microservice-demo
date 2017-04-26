@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.api.security.conf.store;
+package com.tony.demo.microservice.mud.security.api.conf.store;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.log4j.Logger;
