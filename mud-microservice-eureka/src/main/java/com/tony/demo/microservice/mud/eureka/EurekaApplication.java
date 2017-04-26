@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud;
+package com.tony.demo.microservice.mud.eureka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
