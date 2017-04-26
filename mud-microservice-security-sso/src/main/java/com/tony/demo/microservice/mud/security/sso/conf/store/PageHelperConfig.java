@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.conf.store;
+package com.tony.demo.microservice.mud.security.sso.conf.store;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.context.annotation.Bean;

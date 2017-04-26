@@ -1,6 +1,6 @@
-package com.tony.demo.microservice.mud.service;
+package com.tony.demo.microservice.mud.security.sso.service;
 
-import com.tony.demo.microservice.mud.service.dto.SecurityUserReq;
+import com.tony.demo.microservice.mud.security.sso.service.dto.SecurityUserReq;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

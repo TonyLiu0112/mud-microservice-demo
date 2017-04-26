@@ -1,6 +1,6 @@
-package com.tony.demo.microservice.mud.dao.mapper;
+package com.tony.demo.microservice.mud.security.sso.dao.mapper;
 
-import com.tony.demo.microservice.mud.dao.entity.SecurityUserDO;
+import com.tony.demo.microservice.mud.security.sso.dao.entity.SecurityUserDO;
 import org.springframework.stereotype.Repository;
 
 @Repository

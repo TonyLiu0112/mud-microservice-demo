@@ -1,6 +1,6 @@
-package com.tony.demo.microservice.mud.dao.repository;
+package com.tony.demo.microservice.mud.security.sso.dao.repository;
 
-import com.tony.demo.microservice.mud.dao.entity.SecurityUserDO;
+import com.tony.demo.microservice.mud.security.sso.dao.entity.SecurityUserDO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
