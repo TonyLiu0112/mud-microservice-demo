@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.utils;
+package com.tony.demo.microservice.mud.common.utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

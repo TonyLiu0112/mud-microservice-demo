@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.utils;
+package com.tony.demo.microservice.mud.common.utils;
 
 import com.github.pagehelper.Page;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +27,7 @@ public final class ConvertUtils {
      * @return github page object
      */
     public static <T> Page<T> convert(org.springframework.data.domain.Page<T> springPage) {
-        com.github.pagehelper.Page<T> gitHubPage = new com.github.pagehelper.Page<>();
+        Page<T> gitHubPage = new Page<>();
         gitHubPage.addAll(springPage.getContent());
         gitHubPage.setPageNum(springPage.getNumber() + PAGE_NUMBER_OFFSET);
         gitHubPage.setPageSize(springPage.getSize());

@@ -1,16 +1,15 @@
 package com.tony.demo.microservice.mud.services.biz.customer;
 
 import com.github.pagehelper.PageInfo;
+import com.tony.demo.microservice.mud.common.utils.BeanUtilsPlus;
+import com.tony.demo.microservice.mud.common.utils.ConvertUtils;
 import com.tony.demo.microservice.mud.dao.entity.CustomerActivityScoreAttrDO;
 import com.tony.demo.microservice.mud.dao.repository.CustomerActivityScoreAttrRepository;
 import com.tony.demo.microservice.mud.services.biz.CacheService;
 import com.tony.demo.microservice.mud.services.model.req.CustomerActivityScoreAttrReq;
 import com.tony.demo.microservice.mud.services.model.res.CustomerActivityScoreAttrRes;
-import com.tony.demo.microservice.mud.utils.BeanUtilsPlus;
-import com.tony.demo.microservice.mud.utils.ConvertUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

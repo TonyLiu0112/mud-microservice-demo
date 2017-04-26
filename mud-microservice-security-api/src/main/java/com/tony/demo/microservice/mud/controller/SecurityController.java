@@ -1,7 +1,7 @@
 package com.tony.demo.microservice.mud.controller;
 
-import com.tony.demo.microservice.mud.AbstractController;
-import com.tony.demo.microservice.mud.content.code.APICode;
+import com.tony.demo.microservice.mud.common.AbstractController;
+import com.tony.demo.microservice.mud.common.content.code.APICode;
 import com.tony.demo.microservice.mud.service.AuthenticationService;
 import com.tony.demo.microservice.mud.service.dto.SecurityUserReq;
 import org.slf4j.Logger;
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.utils;
+package com.tony.demo.microservice.mud.common.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

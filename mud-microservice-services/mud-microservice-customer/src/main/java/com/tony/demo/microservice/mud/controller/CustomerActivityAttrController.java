@@ -1,10 +1,10 @@
 package com.tony.demo.microservice.mud.controller;
 
-import com.tony.demo.microservice.mud.AbstractController;
-import com.tony.demo.microservice.mud.results.PageRequest;
+import com.tony.demo.microservice.mud.common.AbstractController;
+import com.tony.demo.microservice.mud.common.results.PageRequest;
+import com.tony.demo.microservice.mud.common.utils.FileUtil;
 import com.tony.demo.microservice.mud.services.biz.customer.CustomerActivityAttrService;
 import com.tony.demo.microservice.mud.services.model.req.CustomerActivityAttrReq;
-import com.tony.demo.microservice.mud.utils.FileUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +36,18 @@ public class CustomerActivityAttrController extends AbstractController {
     public CustomerActivityAttrController(CustomerActivityAttrService customerActivityAttrService) {
         this.customerActivityAttrService = customerActivityAttrService;
     }
-    
+
     @GetMapping(value = "/findAll")
-    public Map<String, Object> findAll(@RequestParam(value = "customerActivityId") long customerActivityId, HttpServletRequest httpReq){
-    	PageRequest pageRequest = getPageRequest(httpReq);
-    	try {
-			return pageData(customerActivityAttrService.findByCustomerActivityId(customerActivityId, pageRequest.getPageNum(), pageRequest.getPageSize()), pageRequest);
-		} catch (Exception e) {
-			logger.error("Failed to find all customer activity attr list.",e);
-			return fail();
-		}
+    public Map<String, Object> findAll(@RequestParam(value = "customerActivityId") long customerActivityId, HttpServletRequest httpReq) {
+        PageRequest pageRequest = getPageRequest(httpReq);
+        try {
+            return pageData(customerActivityAttrService.findByCustomerActivityId(customerActivityId, pageRequest.getPageNum(), pageRequest.getPageSize()), pageRequest);
+        } catch (Exception e) {
+            logger.error("Failed to find all customer activity attr list.", e);
+            return fail();
+        }
     }
-    
+
     @GetMapping(value = "/{id}")
     public Map<String, Object> findOne(@PathVariable(value = "id") long id) throws Exception {
         try {

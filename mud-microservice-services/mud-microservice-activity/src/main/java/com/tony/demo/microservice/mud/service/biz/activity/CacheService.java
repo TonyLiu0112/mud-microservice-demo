@@ -1,9 +1,9 @@
 package com.tony.demo.microservice.mud.service.biz.activity;
 
 import com.kiisoo.tp.common.redis3.RedisClient;
-import com.tony.demo.microservice.mud.content.cache.ActivityKey;
-import com.tony.demo.microservice.mud.content.cache.CustomerActivityKey;
-import com.tony.demo.microservice.mud.content.cache.CustomerKey;
+import com.tony.demo.microservice.mud.common.content.cache.ActivityKey;
+import com.tony.demo.microservice.mud.common.content.cache.CustomerActivityKey;
+import com.tony.demo.microservice.mud.common.content.cache.CustomerKey;
 import com.tony.demo.microservice.mud.service.model.res.*;
 import jodd.util.StringUtil;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.content.cache;
+package com.tony.demo.microservice.mud.common.content.cache;
 
 /**
  * 客户信息缓存key

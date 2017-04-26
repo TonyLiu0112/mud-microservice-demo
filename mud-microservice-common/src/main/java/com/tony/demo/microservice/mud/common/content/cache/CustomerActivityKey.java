@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.content.cache;
+package com.tony.demo.microservice.mud.common.content.cache;
 
 /**
  * Created by Tony on 17/02/2017.

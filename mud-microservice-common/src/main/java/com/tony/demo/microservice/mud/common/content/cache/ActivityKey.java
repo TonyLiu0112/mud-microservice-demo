@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.content.cache;
+package com.tony.demo.microservice.mud.common.content.cache;
 
 /**
  * 活动缓存key描述对象

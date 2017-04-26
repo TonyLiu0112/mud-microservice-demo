@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.utils;
+package com.tony.demo.microservice.mud.common.utils;
 
 import jodd.util.StringUtil;
 import org.apache.commons.codec.digest.DigestUtils;

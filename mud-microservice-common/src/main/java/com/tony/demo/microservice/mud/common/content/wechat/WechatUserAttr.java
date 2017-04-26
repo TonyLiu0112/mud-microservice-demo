@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.content.wechat;
+package com.tony.demo.microservice.mud.common.content.wechat;
 
 /**
  * 微信响应返回码

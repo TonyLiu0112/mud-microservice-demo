@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.content.code;
+package com.tony.demo.microservice.mud.common.content.code;
 
 /**
  * 手机接口返回码规范

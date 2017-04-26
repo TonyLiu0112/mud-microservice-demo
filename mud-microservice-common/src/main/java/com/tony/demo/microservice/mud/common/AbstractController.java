@@ -1,8 +1,8 @@
-package com.tony.demo.microservice.mud;
+package com.tony.demo.microservice.mud.common;
 
-import com.tony.demo.microservice.mud.content.code.APICode;
-import com.tony.demo.microservice.mud.results.APIResponse;
-import com.tony.demo.microservice.mud.results.PageRequest;
+import com.tony.demo.microservice.mud.common.content.code.APICode;
+import com.tony.demo.microservice.mud.common.results.APIResponse;
+import com.tony.demo.microservice.mud.common.results.PageRequest;
 import org.apache.commons.io.IOUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
@@ -14,8 +14,8 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tony.demo.microservice.mud.AbstractController.ResponseKey.*;
-import static com.tony.demo.microservice.mud.content.code.APICode.*;
+import static com.tony.demo.microservice.mud.common.AbstractController.ResponseKey.*;
+import static com.tony.demo.microservice.mud.common.content.code.APICode.*;
 
 /**
  * 最高抽象控制器，不提供controller服务，仅封装公用方法

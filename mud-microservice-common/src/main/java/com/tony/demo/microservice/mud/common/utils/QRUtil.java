@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.utils;
+package com.tony.demo.microservice.mud.common.utils;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;

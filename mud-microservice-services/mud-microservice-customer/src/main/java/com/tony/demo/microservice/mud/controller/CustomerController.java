@@ -1,7 +1,7 @@
 package com.tony.demo.microservice.mud.controller;
 
-import com.tony.demo.microservice.mud.AbstractController;
-import com.tony.demo.microservice.mud.results.PageRequest;
+import com.tony.demo.microservice.mud.common.AbstractController;
+import com.tony.demo.microservice.mud.common.results.PageRequest;
 import com.tony.demo.microservice.mud.services.biz.customer.CustomerService;
 import com.tony.demo.microservice.mud.services.model.req.CustomerReq;
 import org.apache.log4j.Logger;

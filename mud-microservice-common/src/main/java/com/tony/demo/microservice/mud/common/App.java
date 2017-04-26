@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud;
+package com.tony.demo.microservice.mud.common;
 
 /**
  * Hello world!

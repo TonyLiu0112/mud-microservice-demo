@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.results;
+package com.tony.demo.microservice.mud.common.results;
 
 /**
  * Open API 响应对象

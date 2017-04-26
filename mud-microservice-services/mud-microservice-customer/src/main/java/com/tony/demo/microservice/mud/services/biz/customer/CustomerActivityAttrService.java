@@ -6,8 +6,8 @@ import com.tony.demo.microservice.mud.dao.repository.CustomerActivityAttrReposit
 import com.tony.demo.microservice.mud.services.biz.CacheService;
 import com.tony.demo.microservice.mud.services.model.req.CustomerActivityAttrReq;
 import com.tony.demo.microservice.mud.services.model.res.CustomerActivityAttrRes;
-import com.tony.demo.microservice.mud.utils.BeanUtilsPlus;
-import com.tony.demo.microservice.mud.utils.ConvertUtils;
+import com.tony.demo.microservice.mud.common.utils.BeanUtilsPlus;
+import com.tony.demo.microservice.mud.common.utils.ConvertUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

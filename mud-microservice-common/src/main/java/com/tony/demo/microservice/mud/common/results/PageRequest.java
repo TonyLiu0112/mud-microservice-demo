@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.results;
+package com.tony.demo.microservice.mud.common.results;
 
 /**
  * Created by Tony on 1/27/16.
