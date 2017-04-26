@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class ActivityServiceImpl extends ActivityServiceFallback implements ActivityService {
@@ -28,10 +29,25 @@ public class ActivityServiceImpl extends ActivityServiceFallback implements Acti
         this.restTemplate = restTemplate;
     }
 
-    @HystrixCommand(defaultFallback = "findAllActivityFallBack", commandProperties = {@HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE")})
+    @HystrixCommand(defaultFallback = "findAllActivityFallBack",
+            commandProperties = {
+                    @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE"),
+                    // 当在配置时间窗口(默认十秒一个窗口)内达到此数量的失败后，进行短路，默认20个。
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "5"),
+                    // 熔断器默认工作时间,默认:5秒.熔断器中断请求后的10秒内会进入半打开状态,10秒后会放部分请求通过尝试。
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),
+                    // 熔断器容错比率，默认50%。意味着在时间窗口内，有50%的请求失败，就会熔断。
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "30"),
+                    // 熔断器的窗口时间范围，默认10秒一个窗口
+                    @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "20000")
+            })
     @Override
     public Optional<List<ActivityDto>> findAllActivity() throws Exception {
         try {
+            Random random = new Random();
+            if (random.nextInt(100) > 2) // mock access downstream service exception.
+                throw new RuntimeException("Mock exception.");
+            logger.info("正在访问...");
             String responseText = restTemplate.getForObject(String.format(URI, "activity/listNoPage"), String.class);
             RestResult restResult = JSONObject.parseObject(responseText, RestResult.class);
             List<ActivityDto> activityDtoList = JSONObject.parseArray(restResult.getResults().toString(), ActivityDto.class);
