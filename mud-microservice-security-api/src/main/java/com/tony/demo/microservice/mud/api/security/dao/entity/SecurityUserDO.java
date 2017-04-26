@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.dao.entity;
+package com.tony.demo.microservice.mud.api.security.dao.entity;
 
 import javax.persistence.*;
 

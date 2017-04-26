@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.conf.security;
+package com.tony.demo.microservice.mud.api.security.conf.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

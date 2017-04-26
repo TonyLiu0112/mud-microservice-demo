@@ -1,6 +1,6 @@
-package com.tony.demo.microservice.mud.service.dto;
+package com.tony.demo.microservice.mud.api.security.service.dto;
 
-public class SecurityUserRes {
+public class SecurityUserReq {
 
     private Long id;
 
@@ -15,6 +15,10 @@ public class SecurityUserRes {
     private String email;
 
     private Integer sex;
+
+    private String clientId;
+
+    private String secret;
 
     public Long getId() {
         return id;
@@ -70,5 +74,21 @@ public class SecurityUserRes {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 }
