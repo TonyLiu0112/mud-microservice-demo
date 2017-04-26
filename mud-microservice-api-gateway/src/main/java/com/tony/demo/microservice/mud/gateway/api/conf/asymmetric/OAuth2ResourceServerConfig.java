@@ -1,5 +1,6 @@
-package com.tony.demo.microservice.mud.conf;
+package com.tony.demo.microservice.mud.gateway.api.conf.asymmetric;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -17,11 +18,14 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 对称加密
+ * 非对称加密
  */
-//@Configuration
-//@EnableResourceServer
+@Configuration
+@EnableResourceServer
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
+
+    @Value("${security.key}")
+    private String publicKey;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer config) {
@@ -31,10 +35,10 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.requestMatcher(new OAuthRequestedMatcher())
-                .cors()
-                .and().authorizeRequests()
-//                .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .anyRequest().authenticated();
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .anyRequest().authenticated()
+                .and().cors();
     }
 
     @Bean
@@ -45,7 +49,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
+        converter.setVerifierKey(publicKey);
         return converter;
     }
 

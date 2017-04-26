@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.conf;
+package com.tony.demo.microservice.mud.gateway.api.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
