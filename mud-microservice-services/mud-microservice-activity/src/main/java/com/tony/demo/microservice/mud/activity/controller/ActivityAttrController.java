@@ -1,6 +1,6 @@
 package com.tony.demo.microservice.mud.activity.controller;
 
-import com.tony.demo.microservice.mud.activity.activity.ActivityAttrService;
+import com.tony.demo.microservice.mud.activity.service.ActivityAttrService;
 import com.tony.demo.microservice.mud.activity.model.req.ActivityAttrReq;
 import com.tony.demo.microservice.mud.common.AbstractController;
 import com.tony.demo.microservice.mud.common.results.PageRequest;

@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.activity.activity;
+package com.tony.demo.microservice.mud.activity.service;
 
 import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.activity.dao.entity.ActivityDO;

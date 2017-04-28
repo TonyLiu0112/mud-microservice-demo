@@ -17,6 +17,7 @@
         <module>mud-microservice-customer</module>
         <module>mud-microservice-score</module>
         <module>mud-microservice-thirdparty</module>
+        <module>mud-microservice-user</module>
     </modules>
 
     <properties>

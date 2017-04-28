@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.activity.activity;
+package com.tony.demo.microservice.mud.activity.service;
 
 import com.kiisoo.tp.common.redis3.RedisClient;
 import com.tony.demo.microservice.mud.activity.model.res.*;

@@ -29,7 +29,7 @@ public class SecurityUserService {
         return this::findUserDetails;
     }
 
-    UserDetails findUserDetails(String loginName) {
+    private UserDetails findUserDetails(String loginName) {
         SecurityUserDO account = securityUserRepository.findByLoginName(loginName);
         if (account != null) {
             return new User(account.getLoginName(), account.getPassword(), true, true, true, true,
