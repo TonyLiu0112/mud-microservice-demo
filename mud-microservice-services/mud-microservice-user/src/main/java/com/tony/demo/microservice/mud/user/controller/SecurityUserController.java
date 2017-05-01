@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @RestController
@@ -29,6 +30,16 @@ public class SecurityUserController extends AbstractController {
     public Map<String, Object> getUserByLoginName(@RequestParam("loginName") String loginName) {
         try {
             return data(securityUserService.findUserDetails(loginName));
+        } catch (Exception e) {
+            logger.error("", e);
+            return fail();
+        }
+    }
+
+    @GetMapping("printSession")
+    public Map<String, Object> printSession(HttpSession httpSession) {
+        try {
+            return data(httpSession.getAttribute("manager"));
         } catch (Exception e) {
             logger.error("", e);
             return fail();
