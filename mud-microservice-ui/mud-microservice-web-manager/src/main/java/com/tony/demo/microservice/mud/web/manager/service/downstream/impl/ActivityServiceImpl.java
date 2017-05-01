@@ -45,8 +45,8 @@ public class ActivityServiceImpl extends ActivityServiceFallback implements Acti
     public Optional<List<ActivityDto>> findAllActivity() throws Exception {
         try {
             Random random = new Random();
-            if (random.nextInt(100) > 2) // mock access downstream service exception.
-                throw new RuntimeException("Mock exception.");
+//            if (random.nextInt(100) > 2) // mock access downstream service exception.
+//                throw new RuntimeException("Mock exception.");
             logger.info("正在访问...");
             String responseText = restTemplate.getForObject(String.format(URI, "activity/listNoPage"), String.class);
             RestResult restResult = JSONObject.parseObject(responseText, RestResult.class);
