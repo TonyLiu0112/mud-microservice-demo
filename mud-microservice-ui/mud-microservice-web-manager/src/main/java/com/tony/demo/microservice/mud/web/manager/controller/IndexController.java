@@ -6,7 +6,9 @@ import com.tony.demo.microservice.mud.web.manager.dto.UserDto;
 import com.tony.demo.microservice.mud.web.manager.service.SimpleService;
 import com.tony.demo.microservice.mud.web.manager.service.downstream.RemoteUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("index")
@@ -23,11 +27,13 @@ public class IndexController extends AbstractController {
 
     private final SimpleService simpleService;
     private final RemoteUserService remoteUserService;
+    private final OAuth2RestTemplate oAuth2RestTemplate;
 
     @Autowired
-    public IndexController(SimpleService simpleService, RemoteUserService remoteUserService) {
+    public IndexController(SimpleService simpleService, RemoteUserService remoteUserService, OAuth2RestTemplate oAuth2RestTemplate) {
         this.simpleService = simpleService;
         this.remoteUserService = remoteUserService;
+        this.oAuth2RestTemplate = oAuth2RestTemplate;
     }
 
     @GetMapping("index")
@@ -42,7 +48,7 @@ public class IndexController extends AbstractController {
     @ResponseBody
     Map<String, Object> getUserInfo(HttpSession httpSession) {
         httpSession.setAttribute("manager", "for test");
-        String loginName = (String) httpSession.getAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME);
+        String loginName = (String) httpSession.getAttribute("originalPrincipalName");
         Map<String, Object> res = remoteUserService.getByLoginName(loginName);
         Map<String, String> userInfo = (Map<String, String>) res.get("results");
         UserDto userDto = new UserDto();
@@ -53,6 +59,25 @@ public class IndexController extends AbstractController {
         userDto.setSex(Integer.parseInt(userInfo.get("sex")));
         httpSession.setAttribute("user", userDto);
         return data(userDto);
+    }
+
+    /**
+     * 测试获得sso的权限信息
+     *
+     * @param httpSession
+     * @return
+     */
+    @GetMapping("userDetails")
+    public
+    @ResponseBody
+    Map<String, Object> getUserDetails(HttpSession httpSession) {
+        SecurityContext securityContext = (SecurityContext) httpSession.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+        final String roles = securityContext.getAuthentication().getAuthorities().stream()
+                .map(Object::toString).collect(Collectors.joining(","));
+        return data(new HashMap<String, Object>() {{
+            put("userName", securityContext.getAuthentication().getPrincipal().toString());
+            put("roles", roles);
+        }});
     }
 
 }

@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>欢迎首页</title>
 </head>
@@ -7,18 +8,23 @@
 
 <table border="1">
     <thead>
-        <tr>
-            <td>客户名称</td>
-            <td>活动名称</td>
-        </tr>
+    <tr>
+        <td>客户名称</td>
+        <td>活动名称</td>
+    </tr>
     </thead>
     <tbody th:unless="${#lists.isEmpty(dataList)}">
-        <tr th:each="record: ${dataList}">
-            <td th:text="${record.customerName}"></td>
-            <td th:text="${record.activityName}"></td>
-        </tr>
+    <tr th:each="record: ${dataList}">
+        <td th:text="${record.customerName}"></td>
+        <td th:text="${record.activityName}"></td>
+    </tr>
     </tbody>
 </table>
-
+<div sec:authorize="hasRole('USER')">
+    我是用户
+</div>
+<div sec:authorize="hasRole('ADMIN')">
+    我是管理员
+</div>
 </body>
 </html>
