@@ -1,6 +1,5 @@
 server:
-  port: 8080
-  context-path: /store
+  port: 9090
 spring:
   application:
     name: mud-microservice-web-store

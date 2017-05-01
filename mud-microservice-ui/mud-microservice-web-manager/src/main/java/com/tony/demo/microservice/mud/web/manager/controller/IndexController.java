@@ -41,6 +41,7 @@ public class IndexController extends AbstractController {
     public
     @ResponseBody
     Map<String, Object> getUserInfo(HttpSession httpSession) {
+        httpSession.setAttribute("manager", "for test");
         String loginName = (String) httpSession.getAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME);
         Map<String, Object> res = remoteUserService.getByLoginName(loginName);
         Map<String, String> userInfo = (Map<String, String>) res.get("results");
