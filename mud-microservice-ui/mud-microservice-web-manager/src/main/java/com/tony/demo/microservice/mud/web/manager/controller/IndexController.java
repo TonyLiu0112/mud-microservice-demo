@@ -7,7 +7,6 @@ import com.tony.demo.microservice.mud.web.manager.service.SimpleService;
 import com.tony.demo.microservice.mud.web.manager.service.downstream.RemoteUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +26,11 @@ public class IndexController extends AbstractController {
 
     private final SimpleService simpleService;
     private final RemoteUserService remoteUserService;
-    private final OAuth2RestTemplate oAuth2RestTemplate;
 
     @Autowired
-    public IndexController(SimpleService simpleService, RemoteUserService remoteUserService, OAuth2RestTemplate oAuth2RestTemplate) {
+    public IndexController(SimpleService simpleService, RemoteUserService remoteUserService) {
         this.simpleService = simpleService;
         this.remoteUserService = remoteUserService;
-        this.oAuth2RestTemplate = oAuth2RestTemplate;
     }
 
     @GetMapping("index")
