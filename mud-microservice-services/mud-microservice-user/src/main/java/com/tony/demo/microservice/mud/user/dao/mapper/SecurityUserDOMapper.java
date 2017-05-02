@@ -1,7 +1,9 @@
 package com.tony.demo.microservice.mud.user.dao.mapper;
 
 import com.tony.demo.microservice.mud.user.dao.entity.SecurityUserDO;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface SecurityUserDOMapper {
     int insert(SecurityUserDO record);
 

@@ -1,11 +1,11 @@
 package com.tony.demo.microservice.mud.customer.dao.mapper;
 
 import com.tony.demo.microservice.mud.customer.dao.entity.CustomerDO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface CustomerDOMapper {
     int insert(CustomerDO record);
 
@@ -16,7 +16,7 @@ public interface CustomerDOMapper {
     int updateByPrimaryKeySelective(CustomerDO record);
 
     int updateByPrimaryKey(CustomerDO record);
-    
+
     /**
      * 客户列表查询
      *

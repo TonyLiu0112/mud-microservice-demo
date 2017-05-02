@@ -1,9 +1,9 @@
 package com.tony.demo.microservice.mud.customer.dao.mapper;
 
 import com.tony.demo.microservice.mud.customer.dao.entity.CustomerWechatConfigDO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface CustomerWechatConfigDOMapper {
     int insert(CustomerWechatConfigDO record);
 

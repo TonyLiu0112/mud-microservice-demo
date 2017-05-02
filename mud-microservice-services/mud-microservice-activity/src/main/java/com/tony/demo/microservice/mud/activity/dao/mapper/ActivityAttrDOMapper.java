@@ -1,9 +1,9 @@
 package com.tony.demo.microservice.mud.activity.dao.mapper;
 
 import com.tony.demo.microservice.mud.activity.dao.entity.ActivityAttrDO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface ActivityAttrDOMapper {
     int insert(ActivityAttrDO record);
 

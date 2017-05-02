@@ -1,9 +1,9 @@
 package com.tony.demo.microservice.mud.activity.dao.mapper;
 
 import com.tony.demo.microservice.mud.activity.dao.entity.BasicActivityKindDO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface BasicActivityKindDOMapper {
     int insert(BasicActivityKindDO record);
 
