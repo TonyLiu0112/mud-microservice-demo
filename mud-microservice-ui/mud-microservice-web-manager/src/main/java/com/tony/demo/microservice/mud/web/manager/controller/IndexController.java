@@ -42,20 +42,22 @@ public class IndexController extends AbstractController {
     }
 
     @SuppressWarnings("unchecked")
-	@GetMapping("getUser")
+    @GetMapping("getUser")
     public
     @ResponseBody
     Map<String, Object> getUserInfo(HttpSession httpSession) {
         httpSession.setAttribute("manager", "for test");
-        String loginName = (String) httpSession.getAttribute("originalPrincipalName");
+        SecurityContext securityContext = (SecurityContext) httpSession.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+        String loginName = securityContext.getAuthentication().getPrincipal().toString();
         Map<String, Object> res = remoteUserService.getByLoginName(loginName);
-        Map<String, String> userInfo = (Map<String, String>) res.get("results");
+        Map<String, Object> userInfo = (Map<String, Object>) res.get("results");
         UserDto userDto = new UserDto();
         userDto.setLoginName(loginName);
-        userDto.setEmail(userInfo.get("email"));
-        userDto.setNickname(userInfo.get("nickname"));
-        userDto.setPhone(userInfo.get("phone"));
-        userDto.setSex(Integer.parseInt(userInfo.get("sex")));
+        userDto.setPassword(userInfo.get("password").toString());
+        userDto.setEmail(userInfo.get("email").toString());
+        userDto.setNickname(userInfo.get("nickname").toString());
+        userDto.setPhone(userInfo.get("phone").toString());
+        userDto.setSex((Integer) userInfo.get("sex"));
         httpSession.setAttribute("user", userDto);
         return data(userDto);
     }
@@ -67,7 +69,7 @@ public class IndexController extends AbstractController {
      * @return
      */
     @SuppressWarnings("serial")
-	@GetMapping("userDetails")
+    @GetMapping("userDetails")
     public
     @ResponseBody
     Map<String, Object> getUserDetails(HttpSession httpSession) {
@@ -79,18 +81,18 @@ public class IndexController extends AbstractController {
             put("roles", roles);
         }});
     }
-    
+
     @GetMapping("{name}")
-    public 
+    public
     @ResponseBody
     Map<String, Object> findByName(@PathVariable("name") String name) {
-    	try {
-			return data(simpleService.findActivityByName(name));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return fail();
-		}
+        try {
+            return data(simpleService.findActivityByName(name));
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return fail();
+        }
     }
 
 }

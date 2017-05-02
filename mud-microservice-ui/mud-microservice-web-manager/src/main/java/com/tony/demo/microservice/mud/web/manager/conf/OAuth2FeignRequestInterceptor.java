@@ -2,6 +2,7 @@ package com.tony.demo.microservice.mud.web.manager.conf;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import jodd.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -24,15 +25,15 @@ public class OAuth2FeignRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
-        LOGGER.info(hashCode() + "");
+        System.out.println(oauth2ClientContext.getAccessToken().getValue());
         if (template.headers().containsKey(AUTHORIZATION_HEADER)) {
             LOGGER.warn("The Authorization token has been already set");
-        } else if (oauth2ClientContext.getAccessTokenRequest().getExistingToken() == null) {
+        } else if (StringUtil.isBlank(oauth2ClientContext.getAccessToken().getValue())) {
             LOGGER.warn("Can not obtain existing token for request, if it is a non secured request, ignore.");
         } else {
             LOGGER.debug("Constructing Header {} for Token {}", AUTHORIZATION_HEADER, BEARER_TOKEN_TYPE);
             template.header(AUTHORIZATION_HEADER, String.format("%s %s", BEARER_TOKEN_TYPE,
-                    oauth2ClientContext.getAccessTokenRequest().getExistingToken().toString()));
+                    oauth2ClientContext.getAccessToken().getValue()));
         }
     }
 

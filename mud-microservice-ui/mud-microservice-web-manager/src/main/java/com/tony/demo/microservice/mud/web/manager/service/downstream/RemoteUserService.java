@@ -12,7 +12,7 @@ import java.util.Map;
 @FeignClient(value = "mud-microservice-user", fallback = RemoteUserService.RemoteUserServiceFallback.class)
 public interface RemoteUserService {
 
-    @GetMapping("user/getByLoginName")
+    @GetMapping("/user/getByLoginName")
     Map<String, Object> getByLoginName(@RequestParam("loginName") String loginName);
 
     @Component

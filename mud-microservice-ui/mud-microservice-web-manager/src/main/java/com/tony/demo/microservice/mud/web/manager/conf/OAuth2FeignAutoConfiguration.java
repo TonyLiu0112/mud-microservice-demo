@@ -13,13 +13,13 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
  * Created by Tony on 30/04/2017.
  */
 @Configuration
-@ConditionalOnClass({ Feign.class })
+@ConditionalOnClass({Feign.class})
 @ConditionalOnProperty(value = "feign.oauth2.enabled", matchIfMissing = true)
 public class OAuth2FeignAutoConfiguration {
 
     @Bean
     @ConditionalOnBean(OAuth2ClientContext.class)
-    public RequestInterceptor oauth2FeignRequestInterceptor(OAuth2ClientContext oauth2ClientContext) {
-        return new OAuth2FeignRequestInterceptor(oauth2ClientContext);
+    public RequestInterceptor oauth2FeignRequestInterceptor(OAuth2ClientContext oAuth2ClientContext) {
+        return new OAuth2FeignRequestInterceptor(oAuth2ClientContext);
     }
 }
