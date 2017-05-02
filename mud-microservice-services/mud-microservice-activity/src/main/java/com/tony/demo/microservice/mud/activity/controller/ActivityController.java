@@ -54,7 +54,7 @@ public class ActivityController extends AbstractController {
         }
     }
     
-    @GetMapping(value = "/{name}")
+    @GetMapping(value = "/name/{name}")
     public Map<String, Object> findByName(@PathVariable("name") String name) throws Exception {
         try {
             return data(activityService.findByName(name));

@@ -16,9 +16,9 @@ public class ActivityServiceFallback {
         logger.warn("The method of findAllActivity() is not available. Please check the downstream service of {}", ActivityService.URI);
         return Optional.empty();
     }
-    
-    public Optional<ActivityDto> findByNameFallback(String name) throws Exception {
-    	logger.warn("The method of findByName() is not available. Please check the downstream service of {}", ActivityService.URI);
+
+    public Optional<ActivityDto> findByNameFallback() {
+        logger.warn("The method of findByName() is not available. Please check the downstream service of {}", ActivityService.URI);
         return Optional.empty();
     }
 }
