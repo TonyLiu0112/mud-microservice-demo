@@ -40,7 +40,8 @@ public class IndexController extends AbstractController {
         return "index";
     }
 
-    @GetMapping("getUser")
+    @SuppressWarnings("unchecked")
+	@GetMapping("getUser")
     public
     @ResponseBody
     Map<String, Object> getUserInfo(HttpSession httpSession) {
@@ -64,7 +65,8 @@ public class IndexController extends AbstractController {
      * @param httpSession
      * @return
      */
-    @GetMapping("userDetails")
+    @SuppressWarnings("serial")
+	@GetMapping("userDetails")
     public
     @ResponseBody
     Map<String, Object> getUserDetails(HttpSession httpSession) {
