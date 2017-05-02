@@ -84,4 +84,9 @@
         <appender-ref ref="SQL"/>
     </logger>
 
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SQL"/>
+    </logger>
+
 </configuration>
