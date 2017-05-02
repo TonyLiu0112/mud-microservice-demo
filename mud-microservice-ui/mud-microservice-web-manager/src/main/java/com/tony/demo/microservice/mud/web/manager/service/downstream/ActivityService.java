@@ -13,4 +13,8 @@ public interface ActivityService {
         return Optional.empty();
     }
 
+    default Optional<ActivityDto> findByName(String name) throws Exception {
+    	return Optional.empty();
+    }
+
 }

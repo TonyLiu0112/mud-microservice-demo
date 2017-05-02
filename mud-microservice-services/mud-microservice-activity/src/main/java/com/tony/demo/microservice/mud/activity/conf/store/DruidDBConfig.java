@@ -17,7 +17,7 @@ import java.sql.SQLException;
  * Created by Tony on 07/02/2017.
  */
 @Configuration
-@MapperScan("com.tony.demo.microservice.mud.dao.mapper")
+@MapperScan("com.tony.demo.microservice.mud.activity.dao.mapper")
 public class DruidDBConfig {
     private Logger logger = Logger.getLogger(DruidDBConfig.class);
 

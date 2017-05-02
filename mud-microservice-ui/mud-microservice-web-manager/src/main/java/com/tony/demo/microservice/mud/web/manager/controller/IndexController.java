@@ -11,6 +11,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -77,6 +78,19 @@ public class IndexController extends AbstractController {
             put("userName", securityContext.getAuthentication().getPrincipal().toString());
             put("roles", roles);
         }});
+    }
+    
+    @GetMapping("{name}")
+    public 
+    @ResponseBody
+    Map<String, Object> findByName(@PathVariable("name") String name) {
+    	try {
+			return data(simpleService.findActivityByName(name));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return fail();
+		}
     }
 
 }

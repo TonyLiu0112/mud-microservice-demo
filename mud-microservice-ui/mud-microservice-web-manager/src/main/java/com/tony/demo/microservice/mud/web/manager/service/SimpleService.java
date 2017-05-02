@@ -1,5 +1,6 @@
 package com.tony.demo.microservice.mud.web.manager.service;
 
+import com.tony.demo.microservice.mud.web.manager.dto.ActivityDto;
 import com.tony.demo.microservice.mud.web.manager.dto.CustomerDto;
 import com.tony.demo.microservice.mud.web.manager.dto.IndexDto;
 import com.tony.demo.microservice.mud.web.manager.service.downstream.ActivityService;
@@ -57,5 +58,9 @@ public class SimpleService {
         }
         return "ERROR";
     }
+
+	public ActivityDto findActivityByName(String name) throws Exception {
+		return activityService.findByName(name).orElse(new ActivityDto());
+	}
 
 }

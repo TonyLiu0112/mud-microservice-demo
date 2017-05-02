@@ -2,6 +2,7 @@ package com.tony.demo.microservice.mud.activity.service;
 
 import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.activity.dao.entity.ActivityDO;
+import com.tony.demo.microservice.mud.activity.dao.mapper.ActivityDOMapper;
 import com.tony.demo.microservice.mud.activity.dao.repository.ActivityRepository;
 import com.tony.demo.microservice.mud.activity.model.req.ActivityReq;
 import com.tony.demo.microservice.mud.activity.model.res.ActivityRes;
@@ -26,13 +27,15 @@ import java.util.List;
 public class ActivityService {
 
     private final ActivityRepository activityRepository;
+    private final ActivityDOMapper activityDOMapper;
 
     @Autowired
     private CacheService cacheService;
 
     @Autowired
-    public ActivityService(ActivityRepository activityRepository) {
+    public ActivityService(ActivityRepository activityRepository, ActivityDOMapper activityDOMapper) {
         this.activityRepository = activityRepository;
+        this.activityDOMapper = activityDOMapper;
     }
 
     /**
@@ -95,4 +98,12 @@ public class ActivityService {
         List<ActivityDO> records = activityRepository.findByDf(0);
         return ConvertUtils.convert(records, ActivityRes.class);
     }
+
+	public ActivityRes findByName(String name) {
+		ActivityDO activityDo = activityDOMapper.findByName(name);
+		ActivityRes res = new ActivityRes();
+		if (activityDo != null)
+			BeanUtils.copyProperties(activityDo, res);
+		return res;
+	}
 }

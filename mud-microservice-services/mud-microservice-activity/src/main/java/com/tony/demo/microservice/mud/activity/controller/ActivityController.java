@@ -53,6 +53,16 @@ public class ActivityController extends AbstractController {
             return fail();
         }
     }
+    
+    @GetMapping(value = "/{name}")
+    public Map<String, Object> findByName(@PathVariable("name") String name) throws Exception {
+        try {
+            return data(activityService.findByName(name));
+        } catch (Exception e) {
+            logger.error(e);
+            return fail();
+        }
+    }
 
     @PutMapping(value = "/modify")
     public Map<String, Object> modifyByPK(@RequestBody ActivityReq activityReq) throws Exception {
