@@ -15,6 +15,7 @@
         <module>mud-microservice-security-api</module>
         <module>mud-microservice-services</module>
         <module>mud-microservice-ui</module>
+        <module>mud-microservice-monitor-dashboard</module>
     </modules>
     <packaging>pom</packaging>
 
