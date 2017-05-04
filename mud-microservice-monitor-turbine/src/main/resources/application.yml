@@ -12,5 +12,5 @@ security:
       token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
 turbine:
   aggregator:
-    clusterConfig: UI-CLUSTER
+    clusterConfig: UI-CLUSTER # TODO 未完成
   appConfig: customers
