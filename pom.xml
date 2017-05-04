@@ -16,6 +16,7 @@
         <module>mud-microservice-services</module>
         <module>mud-microservice-ui</module>
         <module>mud-microservice-monitor-dashboard</module>
+        <module>mud-microservice-monitor-turbine</module>
     </modules>
     <packaging>pom</packaging>
 
