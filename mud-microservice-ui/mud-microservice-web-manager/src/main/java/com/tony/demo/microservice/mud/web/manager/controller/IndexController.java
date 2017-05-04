@@ -50,6 +50,8 @@ public class IndexController extends AbstractController {
         SecurityContext securityContext = (SecurityContext) httpSession.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
         String loginName = securityContext.getAuthentication().getPrincipal().toString();
         Map<String, Object> res = remoteUserService.getByLoginName(loginName);
+        if (res == null || res.isEmpty())
+            return fail();
         Map<String, Object> userInfo = (Map<String, Object>) res.get("results");
         UserDto userDto = new UserDto();
         userDto.setLoginName(loginName);

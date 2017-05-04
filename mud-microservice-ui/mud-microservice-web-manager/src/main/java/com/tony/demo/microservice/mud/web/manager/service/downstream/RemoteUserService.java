@@ -26,4 +26,5 @@ public interface RemoteUserService {
             return null;
         }
     }
+
 }
