@@ -1,8 +1,8 @@
 package com.tony.demo.microservice.mud.web.manager.controller;
 
 import com.tony.demo.microservice.mud.common.AbstractController;
+import com.tony.demo.microservice.mud.common.session.UserDto;
 import com.tony.demo.microservice.mud.web.manager.dto.IndexDto;
-import com.tony.demo.microservice.mud.web.manager.dto.UserDto;
 import com.tony.demo.microservice.mud.web.manager.service.SimpleService;
 import com.tony.demo.microservice.mud.web.manager.service.downstream.RemoteUserService;
 import org.springframework.beans.factory.annotation.Autowired;

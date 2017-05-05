@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.web.manager.dto;
+package com.tony.demo.microservice.mud.common.session;
 
 import java.io.Serializable;
 

@@ -10,7 +10,9 @@ security:
       scope: read, write
     resource:
       token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
+  ignored: /turbine.stream
 turbine:
   aggregator:
-    clusterConfig: UI-CLUSTER # TODO 未完成
-  appConfig: customers
+    clusterConfig: default # MUD-MICROSERVICE-WEB-MANAGER,MUD-MICROSERVICE-WEB-STORE
+  appConfig: mud-microservice-web-manager,mud-microservice-web-store
+  clusterNameExpression: new String('default')

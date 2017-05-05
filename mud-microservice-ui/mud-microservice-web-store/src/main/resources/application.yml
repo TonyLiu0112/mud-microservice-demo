@@ -10,5 +10,6 @@ security:
       scope: read, write
     resource:
       token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
+  ignored: /hystrix.stream, /turbine.stream
 #logging:
 #  level.org.springframework.security: debug

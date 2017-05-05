@@ -10,7 +10,7 @@ security:
       scope: read, write
     resource:
       token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
-  ignored: /hystrix.stream
+  ignored: /hystrix.stream, /turbine.stream
 feign:
   hystrix:
     enabled: true
