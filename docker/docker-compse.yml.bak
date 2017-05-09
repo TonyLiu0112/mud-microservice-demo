@@ -1,0 +1,41 @@
+version: '2'
+services:
+  peer1:
+    image: mud-microservice/mud-microservice-eureka
+    restart: always
+    ports:
+      - 8761:8761
+    expose:
+      - 8761
+    hostname: peer1
+    networks:
+      - eureka-net
+    environment:
+      spring.profiles.active: peer1
+  peer2:
+    image: mud-microservice/mud-microservice-eureka
+    restart: always
+    ports:
+      - 8762:8762
+    expose:
+      - 8762
+    hostname: peer2
+    networks:
+      - eureka-net
+    environment:
+      spring.profiles.active: peer2
+  peer3:
+    image: mud-microservice/mud-microservice-eureka
+    restart: always
+    ports:
+      - 8763:8763
+    expose:
+      - 8763
+    hostname: peer3
+    networks:
+      - eureka-net
+    environment:
+      spring.profiles.active: peer3
+networks:
+  eureka-net:
+    driver: bridge

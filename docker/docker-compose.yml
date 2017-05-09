@@ -1,0 +1,44 @@
+ambassador:
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name peer1_eureka -name peer2_eureka -name peer3_eureka"
+peer1:
+  image: mud-microservice/mud-microservice-eureka
+  restart: always
+  ports:
+    - 8761:8761
+  expose:
+    - 8761
+  hostname: peer1
+  environment:
+    spring.profiles.active: peer1
+  links:
+    - ambassador:peer2
+    - ambassador:peer3
+peer2:
+  image: mud-microservice/mud-microservice-eureka
+  restart: always
+  ports:
+    - 8762:8762
+  expose:
+    - 8762
+  hostname: peer2
+  environment:
+    spring.profiles.active: peer2
+  links:
+    - ambassador:peer1
+    - ambassador:peer3
+peer3:
+  image: mud-microservice/mud-microservice-eureka
+  restart: always
+  ports:
+    - 8763:8763
+  expose:
+    - 8763
+  hostname: peer3
+  environment:
+    spring.profiles.active: peer3
+  links:
+    - ambassador:peer1
+    - ambassador:peer2

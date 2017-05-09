@@ -1,17 +1,17 @@
-package com.tony.demo.microservice.mud.eureka;
+package com.tony.demo.microservice.mud.monitor.turbine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.cloud.netflix.turbine.EnableTurbine;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableHystrixDashboard
 @EnableOAuth2Sso
-public class HystrixDashboardApplication {
+@EnableTurbine
+public class TurbineApplication {
     public static void main(String[] args) {
-        SpringApplication.run(HystrixDashboardApplication.class, args);
+        SpringApplication.run(TurbineApplication.class, args);
     }
 }
