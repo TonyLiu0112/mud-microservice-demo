@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: mud-microservice-configcenter
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/TonyLiu0112/mud-microservice-configuration-repository
+          search-paths:
+            - mud-microservice-*
+  rabbitmq:
+    host: mudrabbitmq
+    port: 5672
+    username: guest
+    password: guest
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:111111@eureka1:8761/eureka/,http://admin:222222@eureka2:8762/eureka/,http://admin:333333@eureka3:8763/eureka/
+encrypt:
+  key-store:
+    location: classpath:/server.jks
+    password: mud#234
+    alias: ConfigCenter
+    secret: mudconfig#234

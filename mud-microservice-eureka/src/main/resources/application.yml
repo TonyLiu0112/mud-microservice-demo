@@ -3,13 +3,13 @@ spring:
     name: mud-microservice-eureka
 ---
 spring:
-  profiles: peer1
+  profiles: eureka1
 eureka:
   instance:
-    hostname: peer1
+    hostname: eureka1
   client:
     service-url:
-      defaultZone: http://admin:222222@peer2:8762/eureka/,http://admin:333333@peer3:8763/eureka/
+      defaultZone: http://admin:222222@eureka2:8762/eureka/,http://admin:333333@eureka3:8763/eureka/
     healthcheck:
       enabled: true
 security:
@@ -20,13 +20,13 @@ server:
   port: 8761
 ---
 spring:
-  profiles: peer2
+  profiles: eureka2
 eureka:
   instance:
-    hostname: peer2
+    hostname: eureka2
   client:
     service-url:
-      defaultZone: http://admin:333333@peer3:8763/eureka/,http://admin:111111@peer1:8761/eureka/
+      defaultZone: http://admin:333333@eureka3:8763/eureka/,http://admin:111111@eureka1:8761/eureka/
     healthcheck:
       enabled: true
 security:
@@ -37,13 +37,13 @@ server:
   port: 8762
 ---
 spring:
-  profiles: peer3
+  profiles: eureka3
 eureka:
   instance:
-    hostname: peer3
+    hostname: eureka3
   client:
     service-url:
-      defaultZone: http://admin:111111@peer1:8761/eureka/,http://admin:222222@peer2:8762/eureka/
+      defaultZone: http://admin:111111@eureka1:8761/eureka/,http://admin:222222@eureka2:8762/eureka/
     healthcheck:
       enabled: true
 security:

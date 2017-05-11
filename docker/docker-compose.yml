@@ -1,44 +1,150 @@
-ambassador:
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name peer1_eureka -name peer2_eureka -name peer3_eureka"
-peer1:
-  image: mud-microservice/mud-microservice-eureka
-  restart: always
-  ports:
-    - 8761:8761
-  expose:
-    - 8761
-  hostname: peer1
-  environment:
-    spring.profiles.active: peer1
-  links:
-    - ambassador:peer2
-    - ambassador:peer3
-peer2:
-  image: mud-microservice/mud-microservice-eureka
-  restart: always
-  ports:
-    - 8762:8762
-  expose:
-    - 8762
-  hostname: peer2
-  environment:
-    spring.profiles.active: peer2
-  links:
-    - ambassador:peer1
-    - ambassador:peer3
-peer3:
-  image: mud-microservice/mud-microservice-eureka
-  restart: always
-  ports:
-    - 8763:8763
-  expose:
-    - 8763
-  hostname: peer3
-  environment:
-    spring.profiles.active: peer3
-  links:
-    - ambassador:peer1
-    - ambassador:peer2
+version: '3'
+networks:
+  mud-network:
+    driver: bridge
+services:
+  #################################################################################
+  #########################        Basic Component        #########################
+  #################################################################################
+  ### RabbitMQ
+  mud-rabbitmq:
+    image: rabbitmq
+    restart: always
+    hostname: RabbitmqHost
+    networks:
+      - mud-network
+    expose:
+      - 4369
+      - 5671
+      - 5672
+      - 15672
+      - 25672
+  ### Redis
+  mud-redis:
+    image: mud/redis:latest
+    restart: always
+    hostname: RedisHost
+    networks:
+      - mud-network
+  ### MySQL
+  mud-mysql:
+    image: mud/mysql:latest
+    restart: always
+    hostname: MysqlHost
+    networks:
+      - mud-network
+    expose:
+      - 3306
+    ports:
+      - 3308:3306
+    volumes:
+      - /data/mud-microservice/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+  #################################################################################
+  #########################       Cluster of eureka       #########################
+  #################################################################################
+  eureka1:
+    image: mud-microservice/mud-microservice-eureka
+    ports:
+      - 8761:8761
+    expose:
+      - 8761
+    hostname: eureka1
+    networks:
+      - mud-network
+    environment:
+      spring.profiles.active: eureka1
+  eureka2:
+    image: mud-microservice/mud-microservice-eureka
+    ports:
+      - 8762:8762
+    expose:
+      - 8762
+    hostname: eureka2
+    networks:
+      - mud-network
+    environment:
+      spring.profiles.active: eureka2
+  eureka3:
+    image: mud-microservice/mud-microservice-eureka
+    ports:
+      - 8763:8763
+    expose:
+      - 8763
+    hostname: eureka3
+    networks:
+      - mud-network
+    environment:
+      spring.profiles.active: eureka3
+
+  #################################################################################
+  #########################       Cluster of config       #########################
+  #################################################################################
+  configcenter-1:
+    image: mud-microservice/mud-microservice-configcenter
+    restart: always
+    expose:
+      - 8888
+    hostname: configcenter1
+    networks:
+      - mud-network
+    links:
+      - eureka1:eureka1
+      - eureka2:eureka2
+      - eureka3:eureka3
+      - mud-rabbitmq:mudrabbitmq
+  configcenter-2:
+    image: mud-microservice/mud-microservice-configcenter
+    restart: always
+    expose:
+      - 8888
+    hostname: configcenter2
+    networks:
+      - mud-network
+    links:
+      - eureka1:eureka1
+      - eureka2:eureka2
+      - eureka3:eureka3
+      - mud-rabbitmq:mudrabbitmq
+
+  #################################################################################
+  #########################        Cluster of SSO         #########################
+  #################################################################################
+  security-sso-1:
+    image: mud-microservice/mud-microservice-security-sso
+    restart: always
+    expose:
+      - 9999
+    ports:
+      - 9999:9999
+    networks:
+      - mud-network
+    links:
+      - eureka1:eureka1
+      - eureka2:eureka2
+      - eureka3:eureka3
+      - mud-rabbitmq:mudrabbitmq
+      - mud-mysql:mud-mysql
+      - mud-redis:mudredis
+      - configcenter-1:configcenter1
+      - configcenter-2:configcenter2
+  security-sso-2:
+    image: mud-microservice/mud-microservice-security-sso
+    restart: always
+    expose:
+      - 9999
+    ports:
+      - 9998:9999
+    networks:
+      - mud-network
+    links:
+      - eureka1:eureka1
+      - eureka2:eureka2
+      - eureka3:eureka3
+      - mud-rabbitmq:mudrabbitmq
+      - mud-mysql:mud-mysql
+      - mud-redis:mudredis
+      - configcenter-1:configcenter1
+      - configcenter-2:configcenter2
