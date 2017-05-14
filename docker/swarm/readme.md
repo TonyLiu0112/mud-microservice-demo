@@ -3,14 +3,13 @@
 ### 环境说明
 
 #### 虚拟机
+>ubuntu-16.04.2-server-amd64
 
-    ubuntu-16.04.2-server-amd64
-   
-ubuntu1: 10.211.55.9
+    ubuntu1: 10.211.55.9
 
-ubuntu2: 10.211.55.10
+    ubuntu2: 10.211.55.10
 
-ubuntu3: 10.211.55.11
+    ubuntu3: 10.211.55.11
 
 ### 打开docker监听2375端口
 
