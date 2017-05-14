@@ -68,4 +68,4 @@ ubuntu3: 10.211.55.11
 
 浏览器中访问 `http://10.211.55.9:8500`, 返回如下:
 
-![UI](https://github.com/TonyLiu0112/mud-microservice-demo/tree/master/docker/consul/consul-ui-index.png)
+![](consul-ui-index.png)
