@@ -1,8 +1,8 @@
-##Consul集群搭建
-> console是一个开源的docker swarm集群管理平台
+#Consul集群搭建
+> console是一个开源的docker swarm集群服务发现平台
 > 搭建简单使用方便
 
-### 环境说明
+## 环境说明
  
 #### 虚拟机
 >ubuntu-16.04.2-server-amd64
@@ -17,7 +17,7 @@
 
     sudo docker pull progrium/consul
     
-#### 启动容器
+## 启动容器
 > 其中172.17.0.1是docker0的默认ip，可以通过ip addr命令查看docker0的网络信息得到
 
 * ubuntu1
@@ -64,7 +64,7 @@
             progrium/consul -server -advertise 10.211.55.11 -join 10.211.55.9
         
         
-#### 检查UI
+## 检查UI
 
 浏览器中访问 `http://10.211.55.9:8500`, 返回如下:
 

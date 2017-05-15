@@ -1,6 +1,6 @@
-### 使用docker部署swarm集群
+# 使用docker部署swarm集群
 
-### 环境说明
+## 环境说明
 
 #### 虚拟机
 >ubuntu-16.04.2-server-amd64
@@ -12,14 +12,24 @@
     ubuntu3: 10.211.55.11
 
 ### 打开docker监听2375端口
+> 使用办法一,一直出现2375端口无法打开的情况，参考 [Issue](https://github.com/docker/swarm/issues/2704)
 
-    sudo vi /etc/default/docker
-    
-在文件最后一行添加如下内容
+1. 办法一
 
-    DOCKER_OPTS="$DOCKER_OPTS -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
+		sudo vi /etc/default/docker
     
-### 启动swarm
+	在文件最后一行添加如下内容
+
+    	DOCKER_OPTS="$DOCKER_OPTS -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
+    	
+2. 办法二
+	
+		// 暂停已存在的docker服务
+		sudo service docker stop
+		// 启动服务
+		sudo nohup docker daemon -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=consul://<consul 服务地址>:8500 --cluster-advertise=<docker 服务地址>:2375 &
+    
+## 构建swarm集群
 
 
 #### 管理节点
@@ -38,6 +48,8 @@
 
     sudo docker -H 10.211.55.9:4000 info
     
-### 问题
+#### 测试可用性
 
-每个节点2375端口无法启动,参考[ISSUE](https://github.com/docker/swarm/issues/2704)
+	docker -H 10.211.55.9:4000 run -d redis
+
+可以看到运行通过55.9这台机器的manager，redis运行在集群的任意一台机器上了
