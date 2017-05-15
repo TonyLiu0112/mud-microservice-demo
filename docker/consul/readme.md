@@ -69,3 +69,45 @@
 浏览器中访问 `http://10.211.55.9:8500`, 返回如下:
 
 ![](consul-ui-index.png)
+
+## 服务注册
+默认情况下，自己的应用服务是无法直接注册到consul中的，使用`gliderlabs/registrator`镜像完成应用的自动注册和注销
+
+### 使用gliderlabs/registrator
+> 注意，gliderlabs/registrator默认只主动注册映射过端口的应用，如果应用为映射端口到主机，则无法在consul上发现这个服务
+
+#### 在各个节点运行服务
+
+ubuntu1 机器
+
+	sudo docker run -d \
+    --name=registrator \
+    --net=host \
+    --volume=/var/run/docker.sock:/tmp/docker.sock \
+    gliderlabs/registrator:latest \
+      consul://10.211.55.9:8500
+      
+ubuntu2 机器
+
+	sudo docker run -d \
+	    --name=registrator \
+	    --net=host \
+	    --volume=/var/run/docker.sock:/tmp/docker.sock \
+	    gliderlabs/registrator:latest \
+	      consul://10.211.55.10:8500
+	
+ubuntu3 机器
+
+	sudo docker run -d \
+	    --name=registrator \
+	    --net=host \
+	    --volume=/var/run/docker.sock:/tmp/docker.sock \
+	    gliderlabs/registrator:latest \
+	      consul://10.211.55.11:8500
+	      
+#### 测试服务
+
+	docker -H 10.211.55.9 run -d -p 6379:6379 redis
+	
+可以在consul UI中看到新启动的服务
+![](redis-consul.png)
