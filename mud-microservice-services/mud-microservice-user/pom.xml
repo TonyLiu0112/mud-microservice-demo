@@ -109,7 +109,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <imageName>mud-microservice/${project.artifactId}</imageName>
+                    <!--<imageName>mud-microservice/${project.artifactId}</imageName>-->
+                    <imageName>registry.cn-shenzhen.aliyuncs.com/tonyrepository/mud-service-user</imageName>
                     <baseImage>java</baseImage>
                     <dockerDirectory>${project.basedir}/src/main/resources/docker</dockerDirectory>
                     <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
@@ -120,6 +121,7 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                    <serverId>aliyun-docker-hub</serverId>
                 </configuration>
             </plugin>
         </plugins>
