@@ -1,0 +1,14 @@
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://admin:111111@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+security:
+  user:
+    name: admin
+    password: 111111
+server:
+  port: 8761

@@ -1,2 +1,5 @@
+spring:
+  application:
+    name: mud-microservice-configcenter
 server:
   port: 8888

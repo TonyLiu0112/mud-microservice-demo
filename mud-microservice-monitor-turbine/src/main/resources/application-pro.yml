@@ -1,0 +1,18 @@
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      client-id: mud
+      client-secret: mud
+      access-token-uri: http://mud-sso-gateway:18808/sso-proxy/security/security/oauth/token
+      user-authorization-uri: http://mud-sso-gateway:18808/sso-proxy/security/security/oauth/authorize
+      scope: read, write
+    resource:
+      token-info-uri: http://mud-sso-gateway:18808/sso-proxy/security/security/oauth/check_token
+  ignored: /turbine.stream
+turbine:
+  aggregator:
+    clusterConfig: default # MUD-MICROSERVICE-WEB-MANAGER,MUD-MICROSERVICE-WEB-STORE
+  appConfig: mud-microservice-web-manager,mud-microservice-web-store
+  clusterNameExpression: new String('default')

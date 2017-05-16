@@ -1,0 +1,32 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  redis:
+    host: localhost
+    port: 6379
+    password: test123456
+# Remote service load balance strategy for Ribbon invoke
+mud-microservice-customer:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+mud-microservice-activity:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      client-id: mud
+      client-secret: mud
+      access-token-uri: http://localhost:18808/sso-proxy/security/security/oauth/token
+      user-authorization-uri: http://localhost:18808/sso-proxy/security/security/oauth/authorize
+      scope: read, write
+    resource:
+      token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
+  ignored: /hystrix.stream, /turbine.stream
+#logging:
+#  level.org.springframework.security: debug

@@ -1,11 +1,3 @@
-security:
-  key:
-    -----BEGIN PUBLIC KEY-----
-    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsZbcKnQppmkY5xeMBzHc
-    nvgnPgrhpPQftxKrdWvNOTroQlg/KAqjEOwKB+tqK5O4iUdzhfFGrNxYLw76S4VN
-    IVmEXX/cE5WylI3wpY1Fv04blO090Xx2UMVun79Qqg0kKdzSj2wuouoiejW5Z3Ni
-    aENyhCaRlsXzkItnGsRc1Bo/JP8M8xFUXV/xgau06hZp55qxBq+lfR6rtXdY581b
-    Xp+Mc9NkCY3skEs5SK1rl1CHVJTBpp3sInXGNkgbgrDSom5qvhBzvG8cjPNMeNdg
-    cTkLggRJo+S5uxpWVNcqGfh1fy5ZSAOwnoVOuTJlfv8GTGJ4l3q1EMZVrRELucA5
-    BQIDAQAB
-    -----END PUBLIC KEY-----
+spring:
+  profiles:
+    active: pro

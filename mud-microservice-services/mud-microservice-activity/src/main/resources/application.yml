@@ -1,6 +1,6 @@
 spring:
-  application:
-    name: mud-microservice-activity
+  profiles:
+    active: pro
 mybatis:
   mapper-locations:
     - classpath:META-INF/mybatis/sqlmap/*.xml

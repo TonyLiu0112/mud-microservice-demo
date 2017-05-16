@@ -1,0 +1,57 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  jpa:
+      show-sql: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/guard?characterEncoding=utf8
+    username: guardmsq
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,log4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+# redis config
+redis:
+  model: pool
+  host-and-port: localhost:6379
+  pass: test123456
+  max-idle: 8
+  max-total: 100
+  max-wait-millis: 2000
+# sso
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
+    client:
+      client-id: mud
+      client-secret: mud
+# log
+logging:
+  level:
+    root: info
+# 上传图片路径
+upload:
+  image:
+    path:
+      activity:
+        attr: /tmp/mud/activity/attr
+      customer:
+        activity:
+          attr: /tmp/mud/customer/activity/attr

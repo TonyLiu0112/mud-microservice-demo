@@ -1,0 +1,15 @@
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      client-id: mud
+      client-secret: mud
+      access-token-uri: http://localhost:18808/sso-proxy/security/security/oauth/token
+      user-authorization-uri: http://localhost:18808/sso-proxy/security/security/oauth/authorize
+      scope: read, write
+    resource:
+      token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
+logging:
+  level:
+    com.netflix.hystrix: debug

@@ -1,0 +1,15 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: mud-microservice-web-store
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: mud-microservice-configcenter
+      name: web-store
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:111111@eureka1:8761/eureka/,http://admin:222222@eureka2:8762/eureka/,http://admin:333333@eureka3:8763/eureka/

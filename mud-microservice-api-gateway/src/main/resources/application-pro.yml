@@ -1,0 +1,24 @@
+security:
+  key:
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsZbcKnQppmkY5xeMBzHc
+    nvgnPgrhpPQftxKrdWvNOTroQlg/KAqjEOwKB+tqK5O4iUdzhfFGrNxYLw76S4VN
+    IVmEXX/cE5WylI3wpY1Fv04blO090Xx2UMVun79Qqg0kKdzSj2wuouoiejW5Z3Ni
+    aENyhCaRlsXzkItnGsRc1Bo/JP8M8xFUXV/xgau06hZp55qxBq+lfR6rtXdY581b
+    Xp+Mc9NkCY3skEs5SK1rl1CHVJTBpp3sInXGNkgbgrDSom5qvhBzvG8cjPNMeNdg
+    cTkLggRJo+S5uxpWVNcqGfh1fy5ZSAOwnoVOuTJlfv8GTGJ4l3q1EMZVrRELucA5
+    BQIDAQAB
+    -----END PUBLIC KEY-----
+spring:
+  rabbitmq:
+    host: mudrabbitmq
+    port: 5672
+    username: guest
+    password: guest
+# Remote service load balance strategy for Ribbon invoke
+mud-microservice-customer:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+mud-microservice-activity:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule

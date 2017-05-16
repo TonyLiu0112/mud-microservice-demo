@@ -4,14 +4,11 @@ zuul:
       path: /security/**
       serviceId: mud-microservice-security
       sensitive-headers:
-
 ribbon:
   eureka:
     enabled: false
   eager-load:
     enabled: true
-
-mud-microservice-security:
-  ribbon:
-    listOfServers: http://localhost:9999/,http://localhost:9998/
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+spring:
+  profiles:
+    active: pro
