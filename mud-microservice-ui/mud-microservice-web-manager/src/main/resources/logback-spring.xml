@@ -2,12 +2,44 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <property name="LOG_DIR" value="/data/logs/mud/web/"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <property name="LOG_DIR" value="/data/mud-microservice/logs/"/>
     <property name="APP_NAME" value="mud-manager"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{0} line%L - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${APP_NAME}/logstash/${APP_NAME}.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${APP_NAME}/%d{yyyyMMdd}/${APP_NAME}.json.gz</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "severity": "%level",
+                        "service": "${springAppName:-}",
+                        "trace": "%X{X-B3-TraceId:-}",
+                        "span": "%X{X-B3-SpanId:-}",
+                        "parent": "%X{X-B3-ParentSpanId:-}",
+                        "exportable": "%X{X-Span-Export:-}",
+                        "pid": "${PID:-}",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "rest": "%message"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
         </encoder>
     </appender>
 
@@ -29,7 +61,7 @@
         </triggeringPolicy>
     </appender>
 
-    <appender name="SERVICE" class="ch.qos.logback.core.rolling.RollingFileAppender" >
+    <appender name="SERVICE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
@@ -48,13 +80,15 @@
         </triggeringPolicy>
     </appender>
 
-    <logger name="com.tony.demo.microservice.mud.web.manager.service" level="INFO" additivity="false">
+    <root level="info">
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="LOGSTASH"/>
+    </root>
+    <logger name="com.tony.demo.microservice.mud.web.manager.service" level="INFO" additivity="false">
         <appender-ref ref="ERROR"/>
         <appender-ref ref="SERVICE"/>
     </logger>
     <logger name="com.tony.demo.microservice.mud.web.manager.controller" level="INFO" additivity="false">
-        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="ERROR"/>
         <appender-ref ref="SERVICE"/>
     </logger>
