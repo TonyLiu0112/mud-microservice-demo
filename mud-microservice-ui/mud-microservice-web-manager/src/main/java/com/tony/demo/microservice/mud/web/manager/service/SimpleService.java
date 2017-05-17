@@ -33,6 +33,11 @@ public class SimpleService {
         this.activityService = activityService;
     }
 
+    /**
+     * dddd
+     * @return
+     * @throws Exception
+     */
     public List<IndexDto> findCustomerAndActivity() throws Exception {
         final List<IndexDto> results = new ArrayList<>();
         activityService.findAllActivity().ifPresent(activityDtos -> activityDtos.forEach(activityDto -> {
@@ -59,8 +64,8 @@ public class SimpleService {
         return "ERROR";
     }
 
-	public ActivityDto findActivityByName(String name) throws Exception {
-		return activityService.findByName(name).orElse(new ActivityDto());
-	}
+    public ActivityDto findActivityByName(String name) throws Exception {
+        return activityService.findByName(name).orElse(new ActivityDto());
+    }
 
 }

@@ -9,6 +9,8 @@ spring:
         enabled: true
         service-id: mud-microservice-configcenter
       name: web-manager
+  zipkin:
+    base-url: http://monitor-zipkin:9411
 eureka:
   client:
     service-url:

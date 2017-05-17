@@ -40,7 +40,7 @@ hystrix:
 logging:
   level:
     root: info
-    org.springframework.cloud.sleuth: debug
+#    org.springframework.cloud.sleuth: debug
 # 认证服务
 # security:
 #   basic:
