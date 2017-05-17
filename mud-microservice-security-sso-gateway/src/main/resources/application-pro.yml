@@ -1,4 +1,4 @@
 mud-microservice-security:
   ribbon:
-    listOfServers: http://localhost:9999/,http://localhost:9998/
+    listOfServers: http://mud-sso:9999/,http://mud-sso:9998/
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule

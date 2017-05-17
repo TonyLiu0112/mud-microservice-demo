@@ -3,7 +3,7 @@ server:
   context-path: /sso-proxy
 spring:
   application:
-    name: sso-gateway
+    name: mud-sso-gateway
 eureka:
   client:
     service-url:

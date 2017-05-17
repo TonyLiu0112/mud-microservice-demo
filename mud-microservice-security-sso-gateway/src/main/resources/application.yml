@@ -8,7 +8,7 @@ ribbon:
   eureka:
     enabled: false
   eager-load:
-    enabled: true
+    enabled: false
 spring:
   profiles:
     active: pro
