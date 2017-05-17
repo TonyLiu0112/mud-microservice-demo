@@ -37,6 +37,10 @@ hystrix:
       execution:
         isolation:
           strategy: SEMAPHORE
+logging:
+  level:
+    root: info
+    org.springframework.cloud.sleuth: debug
 # 认证服务
 # security:
 #   basic:
