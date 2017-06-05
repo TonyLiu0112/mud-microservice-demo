@@ -36,3 +36,31 @@ Dockerfile:
     
 如果docker实例有多个，并且分散在不同的虚拟机中，请使用docker Swarm工具构建集群
 >待定....
+
+### MacOS下 docker镜像文件dockerDocker.qcow2过大解决办法
+
+使用`brew`安装`qemu`
+    
+    brew install qemu
+    
+登录docker虚拟机
+
+    screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
+    
+在docker虚拟机中执行下面命令，需要花费几分钟
+
+    dd if=/dev/zero of=/var/tempfile
+    rm /var/tempfile
+
+退出虚拟机，并关闭docker后，在本地终端执行如下命令
+
+    $ cd ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux
+    $ mv Docker.qcow2 Docker.qcow2.original
+    $ du -hs Docker.qcow2.original
+    12G     Docker.qcow2.original
+    $ qemu-img convert -O qcow2 Docker.qcow2.original Docker.qcow2
+    $ rm Docker.qcow2.original
+    $ du -hs Docker.qcow2
+    772M    Docker.qcow2
+
+
