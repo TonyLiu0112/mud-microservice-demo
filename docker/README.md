@@ -42,18 +42,17 @@ Dockerfile:
 使用`brew`安装`qemu`
     
     brew install qemu
-    
+
 登录docker虚拟机
 
     screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
-    
+
 在docker虚拟机中执行下面命令，需要花费几分钟
 
     dd if=/dev/zero of=/var/tempfile
     rm /var/tempfile
 
 退出虚拟机，并关闭docker后，在本地终端执行如下命令
-    
     
     $ cd ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux
     $ mv Docker.qcow2 Docker.qcow2.original
