@@ -53,8 +53,9 @@ Dockerfile:
     rm /var/tempfile
 
 退出虚拟机，并关闭docker后，在本地终端执行如下命令
-
-    $ cd ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux
+    
+    
+    $ cd ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux
     $ mv Docker.qcow2 Docker.qcow2.original
     $ du -hs Docker.qcow2.original
     12G     Docker.qcow2.original
@@ -62,5 +63,3 @@ Dockerfile:
     $ rm Docker.qcow2.original
     $ du -hs Docker.qcow2
     772M    Docker.qcow2
-
-
