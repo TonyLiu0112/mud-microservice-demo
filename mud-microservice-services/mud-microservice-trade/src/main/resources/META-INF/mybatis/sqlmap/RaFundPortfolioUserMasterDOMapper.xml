@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaFundPortfolioUserMasterDOMapper">
+    <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserMasterDO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="portfolio_id" property="portfolioId" jdbcType="INTEGER"/>
+        <result column="portfolio_name" property="portfolioName" jdbcType="VARCHAR"/>
+        <result column="portfolio_risk_type" property="portfolioRiskType" jdbcType="TINYINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="aip_cycle" property="aipCycle" jdbcType="SMALLINT"/>
+        <result column="portfolio_net" property="portfolioNet" jdbcType="DECIMAL"/>
+        <result column="portfolio_market_val" property="portfolioMarketVal" jdbcType="DECIMAL"/>
+        <result column="portfolio_share" property="portfolioShare" jdbcType="DECIMAL"/>
+        <result column="portfolio_invested_cost" property="portfolioInvestedCost" jdbcType="DECIMAL"/>
+        <result column="portfolio_accumulated_profit" property="portfolioAccumulatedProfit" jdbcType="DECIMAL"/>
+        <result column="portfolio_tpl_id" property="portfolioTplId" jdbcType="INTEGER"/>
+        <result column="stock_fund_market_val" property="stockFundMarketVal" jdbcType="DECIMAL"/>
+        <result column="bond_fund_market_val" property="bondFundMarketVal" jdbcType="DECIMAL"/>
+        <result column="currency_fund_market_val" property="currencyFundMarketVal" jdbcType="DECIMAL"/>
+        <result column="aip_type" property="aipType" jdbcType="TINYINT"/>
+        <result column="rebalance_type" property="rebalanceType" jdbcType="TINYINT"/>
+        <result column="ytd_return" property="ytdReturn" jdbcType="DECIMAL"/>
+        <result column="1year_return" property="year1Return" jdbcType="DECIMAL"/>
+        <result column="total_return" property="totalReturn" jdbcType="DECIMAL"/>
+        <result column="add_time" property="addTime" jdbcType="INTEGER"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, portfolio_id, portfolio_name, portfolio_risk_type, user_id, aip_cycle, portfolio_net, 
+    portfolio_market_val, portfolio_share, portfolio_invested_cost, portfolio_accumulated_profit, 
+    portfolio_tpl_id, stock_fund_market_val, bond_fund_market_val, currency_fund_market_val, 
+    aip_type, rebalance_type, ytd_return, 1year_return, total_return, add_time, last_update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ra_fund_portfolio_user_master
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserMasterDO">
+    insert into ra_fund_portfolio_user_master (id, portfolio_id, portfolio_name, 
+      portfolio_risk_type, user_id, aip_cycle, 
+      portfolio_net, portfolio_market_val, portfolio_share, 
+      portfolio_invested_cost, portfolio_accumulated_profit, 
+      portfolio_tpl_id, stock_fund_market_val, bond_fund_market_val, 
+      currency_fund_market_val, aip_type, rebalance_type, 
+      ytd_return, 1year_return, total_return, 
+      add_time, last_update_time)
+    values (#{id,jdbcType=INTEGER}, #{portfolioId,jdbcType=INTEGER}, #{portfolioName,jdbcType=VARCHAR}, 
+      #{portfolioRiskType,jdbcType=TINYINT}, #{userId,jdbcType=INTEGER}, #{aipCycle,jdbcType=SMALLINT}, 
+      #{portfolioNet,jdbcType=DECIMAL}, #{portfolioMarketVal,jdbcType=DECIMAL}, #{portfolioShare,jdbcType=DECIMAL}, 
+      #{portfolioInvestedCost,jdbcType=DECIMAL}, #{portfolioAccumulatedProfit,jdbcType=DECIMAL}, 
+      #{portfolioTplId,jdbcType=INTEGER}, #{stockFundMarketVal,jdbcType=DECIMAL}, #{bondFundMarketVal,jdbcType=DECIMAL}, 
+      #{currencyFundMarketVal,jdbcType=DECIMAL}, #{aipType,jdbcType=TINYINT}, #{rebalanceType,jdbcType=TINYINT}, 
+      #{ytdReturn,jdbcType=DECIMAL}, #{year1Return,jdbcType=DECIMAL}, #{totalReturn,jdbcType=DECIMAL},
+      #{addTime,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserMasterDO">
+        insert into ra_fund_portfolio_user_master
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="portfolioId != null">
+                portfolio_id,
+            </if>
+            <if test="portfolioName != null">
+                portfolio_name,
+            </if>
+            <if test="portfolioRiskType != null">
+                portfolio_risk_type,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="aipCycle != null">
+                aip_cycle,
+            </if>
+            <if test="portfolioNet != null">
+                portfolio_net,
+            </if>
+            <if test="portfolioMarketVal != null">
+                portfolio_market_val,
+            </if>
+            <if test="portfolioShare != null">
+                portfolio_share,
+            </if>
+            <if test="portfolioInvestedCost != null">
+                portfolio_invested_cost,
+            </if>
+            <if test="portfolioAccumulatedProfit != null">
+                portfolio_accumulated_profit,
+            </if>
+            <if test="portfolioTplId != null">
+                portfolio_tpl_id,
+            </if>
+            <if test="stockFundMarketVal != null">
+                stock_fund_market_val,
+            </if>
+            <if test="bondFundMarketVal != null">
+                bond_fund_market_val,
+            </if>
+            <if test="currencyFundMarketVal != null">
+                currency_fund_market_val,
+            </if>
+            <if test="aipType != null">
+                aip_type,
+            </if>
+            <if test="rebalanceType != null">
+                rebalance_type,
+            </if>
+            <if test="ytdReturn != null">
+                ytd_return,
+            </if>
+            <if test="year1Return != null">
+                1year_return,
+            </if>
+            <if test="totalReturn != null">
+                total_return,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="portfolioId != null">
+                #{portfolioId,jdbcType=INTEGER},
+            </if>
+            <if test="portfolioName != null">
+                #{portfolioName,jdbcType=VARCHAR},
+            </if>
+            <if test="portfolioRiskType != null">
+                #{portfolioRiskType,jdbcType=TINYINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="aipCycle != null">
+                #{aipCycle,jdbcType=SMALLINT},
+            </if>
+            <if test="portfolioNet != null">
+                #{portfolioNet,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioMarketVal != null">
+                #{portfolioMarketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioShare != null">
+                #{portfolioShare,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioInvestedCost != null">
+                #{portfolioInvestedCost,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioAccumulatedProfit != null">
+                #{portfolioAccumulatedProfit,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioTplId != null">
+                #{portfolioTplId,jdbcType=INTEGER},
+            </if>
+            <if test="stockFundMarketVal != null">
+                #{stockFundMarketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="bondFundMarketVal != null">
+                #{bondFundMarketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="currencyFundMarketVal != null">
+                #{currencyFundMarketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="aipType != null">
+                #{aipType,jdbcType=TINYINT},
+            </if>
+            <if test="rebalanceType != null">
+                #{rebalanceType,jdbcType=TINYINT},
+            </if>
+            <if test="ytdReturn != null">
+                #{ytdReturn,jdbcType=DECIMAL},
+            </if>
+            <if test="year1Return != null">
+                #{year1Return,jdbcType=DECIMAL},
+            </if>
+            <if test="totalReturn != null">
+                #{totalReturn,jdbcType=DECIMAL},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserMasterDO">
+        update ra_fund_portfolio_user_master
+        <set>
+            <if test="portfolioId != null">
+                portfolio_id = #{portfolioId,jdbcType=INTEGER},
+            </if>
+            <if test="portfolioName != null">
+                portfolio_name = #{portfolioName,jdbcType=VARCHAR},
+            </if>
+            <if test="portfolioRiskType != null">
+                portfolio_risk_type = #{portfolioRiskType,jdbcType=TINYINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="aipCycle != null">
+                aip_cycle = #{aipCycle,jdbcType=SMALLINT},
+            </if>
+            <if test="portfolioNet != null">
+                portfolio_net = #{portfolioNet,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioMarketVal != null">
+                portfolio_market_val = #{portfolioMarketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioShare != null">
+                portfolio_share = #{portfolioShare,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioInvestedCost != null">
+                portfolio_invested_cost = #{portfolioInvestedCost,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioAccumulatedProfit != null">
+                portfolio_accumulated_profit = #{portfolioAccumulatedProfit,jdbcType=DECIMAL},
+            </if>
+            <if test="portfolioTplId != null">
+                portfolio_tpl_id = #{portfolioTplId,jdbcType=INTEGER},
+            </if>
+            <if test="stockFundMarketVal != null">
+                stock_fund_market_val = #{stockFundMarketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="bondFundMarketVal != null">
+                bond_fund_market_val = #{bondFundMarketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="currencyFundMarketVal != null">
+                currency_fund_market_val = #{currencyFundMarketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="aipType != null">
+                aip_type = #{aipType,jdbcType=TINYINT},
+            </if>
+            <if test="rebalanceType != null">
+                rebalance_type = #{rebalanceType,jdbcType=TINYINT},
+            </if>
+            <if test="ytdReturn != null">
+                ytd_return = #{ytdReturn,jdbcType=DECIMAL},
+            </if>
+            <if test="year1Return != null">
+                1year_return = #{year1Return,jdbcType=DECIMAL},
+            </if>
+            <if test="totalReturn != null">
+                total_return = #{totalReturn,jdbcType=DECIMAL},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserMasterDO">
+    update ra_fund_portfolio_user_master
+    set portfolio_id = #{portfolioId,jdbcType=INTEGER},
+      portfolio_name = #{portfolioName,jdbcType=VARCHAR},
+      portfolio_risk_type = #{portfolioRiskType,jdbcType=TINYINT},
+      user_id = #{userId,jdbcType=INTEGER},
+      aip_cycle = #{aipCycle,jdbcType=SMALLINT},
+      portfolio_net = #{portfolioNet,jdbcType=DECIMAL},
+      portfolio_market_val = #{portfolioMarketVal,jdbcType=DECIMAL},
+      portfolio_share = #{portfolioShare,jdbcType=DECIMAL},
+      portfolio_invested_cost = #{portfolioInvestedCost,jdbcType=DECIMAL},
+      portfolio_accumulated_profit = #{portfolioAccumulatedProfit,jdbcType=DECIMAL},
+      portfolio_tpl_id = #{portfolioTplId,jdbcType=INTEGER},
+      stock_fund_market_val = #{stockFundMarketVal,jdbcType=DECIMAL},
+      bond_fund_market_val = #{bondFundMarketVal,jdbcType=DECIMAL},
+      currency_fund_market_val = #{currencyFundMarketVal,jdbcType=DECIMAL},
+      aip_type = #{aipType,jdbcType=TINYINT},
+      rebalance_type = #{rebalanceType,jdbcType=TINYINT},
+      ytd_return = #{ytdReturn,jdbcType=DECIMAL},
+      1year_return = #{year1Return,jdbcType=DECIMAL},
+      total_return = #{totalReturn,jdbcType=DECIMAL},
+      add_time = #{addTime,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPortfolioIdAndUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_fund_portfolio_user_master
+        WHERE
+        portfolio_id = #{portfolioId}
+        AND user_id = #{userId}
+    </select>
+</mapper>

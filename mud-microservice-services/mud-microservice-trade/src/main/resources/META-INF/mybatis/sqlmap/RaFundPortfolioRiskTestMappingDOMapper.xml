@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaFundPortfolioRiskTestMappingDOMapper" >
+  <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskTestMappingDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="score_begin" property="scoreBegin" jdbcType="INTEGER" />
+    <result column="score_end" property="scoreEnd" jdbcType="INTEGER" />
+    <result column="risk_prefer" property="riskPrefer" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, score_begin, score_end, risk_prefer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ra_fund_portfolio_risk_test_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskTestMappingDO" >
+    insert into ra_fund_portfolio_risk_test_mapping (id, score_begin, score_end, 
+      risk_prefer)
+    values (#{id,jdbcType=INTEGER}, #{scoreBegin,jdbcType=INTEGER}, #{scoreEnd,jdbcType=INTEGER}, 
+      #{riskPrefer,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskTestMappingDO" >
+    insert into ra_fund_portfolio_risk_test_mapping
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="scoreBegin != null" >
+        score_begin,
+      </if>
+      <if test="scoreEnd != null" >
+        score_end,
+      </if>
+      <if test="riskPrefer != null" >
+        risk_prefer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="scoreBegin != null" >
+        #{scoreBegin,jdbcType=INTEGER},
+      </if>
+      <if test="scoreEnd != null" >
+        #{scoreEnd,jdbcType=INTEGER},
+      </if>
+      <if test="riskPrefer != null" >
+        #{riskPrefer,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskTestMappingDO" >
+    update ra_fund_portfolio_risk_test_mapping
+    <set >
+      <if test="scoreBegin != null" >
+        score_begin = #{scoreBegin,jdbcType=INTEGER},
+      </if>
+      <if test="scoreEnd != null" >
+        score_end = #{scoreEnd,jdbcType=INTEGER},
+      </if>
+      <if test="riskPrefer != null" >
+        risk_prefer = #{riskPrefer,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskTestMappingDO" >
+    update ra_fund_portfolio_risk_test_mapping
+    set score_begin = #{scoreBegin,jdbcType=INTEGER},
+      score_end = #{scoreEnd,jdbcType=INTEGER},
+      risk_prefer = #{riskPrefer,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

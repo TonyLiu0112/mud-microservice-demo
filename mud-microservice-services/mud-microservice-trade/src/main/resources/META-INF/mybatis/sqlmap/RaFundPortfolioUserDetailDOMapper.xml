@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaFundPortfolioUserDetailDOMapper">
+    <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserDetailDO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="portfolio_id" property="portfolioId" jdbcType="INTEGER"/>
+        <result column="fund_code" property="fundCode" jdbcType="CHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="sn" property="sn" jdbcType="TINYINT"/>
+        <result column="percent_begin" property="percentBegin" jdbcType="DECIMAL"/>
+        <result column="percent" property="percent" jdbcType="DECIMAL"/>
+        <result column="market_val" property="marketVal" jdbcType="DECIMAL"/>
+        <result column="share" property="share" jdbcType="DECIMAL"/>
+        <result column="share_id" property="shareId" jdbcType="VARCHAR"/>
+        <result column="cost" property="cost" jdbcType="DECIMAL"/>
+        <result column="bank_code" property="bankCode" jdbcType="CHAR"/>
+        <result column="bank_card_no" property="bankCardNo" jdbcType="VARCHAR"/>
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, portfolio_id, fund_code, user_id, sn, percent_begin, percent, market_val, share, 
+    share_id, cost, bank_code, bank_card_no, bank_name
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ra_fund_portfolio_user_detail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserDetailDO">
+    insert into ra_fund_portfolio_user_detail (id, portfolio_id, fund_code, 
+      user_id, sn, percent_begin, 
+      percent, market_val, share, 
+      share_id, cost, bank_code, 
+      bank_card_no, bank_name)
+    values (#{id,jdbcType=INTEGER}, #{portfolioId,jdbcType=INTEGER}, #{fundCode,jdbcType=CHAR}, 
+      #{userId,jdbcType=INTEGER}, #{sn,jdbcType=TINYINT}, #{percentBegin,jdbcType=DECIMAL}, 
+      #{percent,jdbcType=DECIMAL}, #{marketVal,jdbcType=DECIMAL}, #{share,jdbcType=DECIMAL}, 
+      #{shareId,jdbcType=VARCHAR}, #{cost,jdbcType=DECIMAL}, #{bankCode,jdbcType=CHAR}, 
+      #{bankCardNo,jdbcType=VARCHAR}, #{bankName})
+  </insert>
+    <insert id="insertSelective"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserDetailDO">
+        insert into ra_fund_portfolio_user_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="portfolioId != null">
+                portfolio_id,
+            </if>
+            <if test="fundCode != null">
+                fund_code,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="sn != null">
+                sn,
+            </if>
+            <if test="percentBegin != null">
+                percent_begin,
+            </if>
+            <if test="percent != null">
+                percent,
+            </if>
+            <if test="marketVal != null">
+                market_val,
+            </if>
+            <if test="share != null">
+                share,
+            </if>
+            <if test="shareId != null">
+                share_id,
+            </if>
+            <if test="cost != null">
+                cost,
+            </if>
+            <if test="bankCode != null">
+                bank_code,
+            </if>
+            <if test="bankCardNo != null">
+                bank_card_no,
+            </if>
+            <if test="bankName != null">
+                bank_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="portfolioId != null">
+                #{portfolioId,jdbcType=INTEGER},
+            </if>
+            <if test="fundCode != null">
+                #{fundCode,jdbcType=CHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="sn != null">
+                #{sn,jdbcType=TINYINT},
+            </if>
+            <if test="percentBegin != null">
+                #{percentBegin,jdbcType=DECIMAL},
+            </if>
+            <if test="percent != null">
+                #{percent,jdbcType=DECIMAL},
+            </if>
+            <if test="marketVal != null">
+                #{marketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="share != null">
+                #{share,jdbcType=DECIMAL},
+            </if>
+            <if test="shareId != null">
+                #{shareId,jdbcType=VARCHAR},
+            </if>
+            <if test="cost != null">
+                #{cost,jdbcType=DECIMAL},
+            </if>
+            <if test="bankCode != null">
+                #{bankCode,jdbcType=CHAR},
+            </if>
+            <if test="bankCardNo != null">
+                #{bankCardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null">
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserDetailDO">
+        update ra_fund_portfolio_user_detail
+        <set>
+            <if test="portfolioId != null">
+                portfolio_id = #{portfolioId,jdbcType=INTEGER},
+            </if>
+            <if test="fundCode != null">
+                fund_code = #{fundCode,jdbcType=CHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="sn != null">
+                sn = #{sn,jdbcType=TINYINT},
+            </if>
+            <if test="percentBegin != null">
+                percent_begin = #{percentBegin,jdbcType=DECIMAL},
+            </if>
+            <if test="percent != null">
+                percent = #{percent,jdbcType=DECIMAL},
+            </if>
+            <if test="marketVal != null">
+                market_val = #{marketVal,jdbcType=DECIMAL},
+            </if>
+            <if test="share != null">
+                share = #{share,jdbcType=DECIMAL},
+            </if>
+            <if test="shareId != null">
+                share_id = #{shareId,jdbcType=VARCHAR},
+            </if>
+            <if test="cost != null">
+                cost = #{cost,jdbcType=DECIMAL},
+            </if>
+            <if test="bankCode != null">
+                bank_code = #{bankCode,jdbcType=CHAR},
+            </if>
+            <if test="bankCardNo != null">
+                bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null">
+                bank_name = #{bankName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserDetailDO">
+    update ra_fund_portfolio_user_detail
+    set portfolio_id = #{portfolioId,jdbcType=INTEGER},
+      fund_code = #{fundCode,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      sn = #{sn,jdbcType=TINYINT},
+      percent_begin = #{percentBegin,jdbcType=DECIMAL},
+      percent = #{percent,jdbcType=DECIMAL},
+      market_val = #{marketVal,jdbcType=DECIMAL},
+      share = #{share,jdbcType=DECIMAL},
+      share_id = #{shareId,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=DECIMAL},
+      bank_code = #{bankCode,jdbcType=CHAR},
+      bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      bank_name = #{bankName}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectUserDetail" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_fund_portfolio_user_detail
+        WHERE
+        portfolio_id = #{portfolioId}
+        AND fund_code = #{fundCode}
+        AND user_id = #{userId}
+    </select>
+
+    <select id="selectByUserIdAndPortfolioId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_fund_portfolio_user_detail
+        WHERE
+        user_id = #{userId}
+        AND portfolio_id = #{portfolioId}
+    </select>
+
+    <select id="selectUsableUserDetails" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_fund_portfolio_user_detail
+        WHERE
+        user_id = #{userId}
+        AND portfolio_id = #{portfolioId}
+        AND share > 0
+    </select>
+</mapper>

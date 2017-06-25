@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaFundPortfolioDetailDOMapper">
+    <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioDetailDO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="portfolio_id" property="portfolioId" jdbcType="INTEGER"/>
+        <result column="fund_code" property="fundCode" jdbcType="CHAR"/>
+        <result column="fund_name" property="fundName" jdbcType="VARCHAR"/>
+        <result column="fund_type" property="fundType" jdbcType="TINYINT"/>
+        <result column="sn" property="sn" jdbcType="TINYINT"/>
+        <result column="percent_begin" property="percentBegin" jdbcType="DECIMAL"/>
+        <result column="add_time" property="addTime" jdbcType="INTEGER"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="fund_code_replace" property="fundCodeReplace" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, portfolio_id, fund_code, fund_name, fund_type, sn, percent_begin, add_time, last_update_time,
+    fund_code_replace
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ra_fund_portfolio_detail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioDetailDO">
+    insert into ra_fund_portfolio_detail (id, portfolio_id, fund_code, fund_name,
+      fund_type, sn, percent_begin, 
+      add_time, last_update_time, fund_code_replace
+      )
+    values (#{id,jdbcType=INTEGER}, #{portfolioId,jdbcType=INTEGER}, #{fundCode,jdbcType=CHAR}, #{fundName},
+      #{fundType,jdbcType=TINYINT}, #{sn,jdbcType=TINYINT}, #{percentBegin,jdbcType=DECIMAL}, 
+      #{addTime,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{fundCodeReplace,jdbcType=CHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioDetailDO">
+        insert into ra_fund_portfolio_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="portfolioId != null">
+                portfolio_id,
+            </if>
+            <if test="fundCode != null">
+                fund_code,
+            </if>
+            <if test="fundName != null">
+                fund_name,
+            </if>
+            <if test="fundType != null">
+                fund_type,
+            </if>
+            <if test="sn != null">
+                sn,
+            </if>
+            <if test="percentBegin != null">
+                percent_begin,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="fundCodeReplace != null">
+                fund_code_replace,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="portfolioId != null">
+                #{portfolioId,jdbcType=INTEGER},
+            </if>
+            <if test="fundCode != null">
+                #{fundCode,jdbcType=CHAR},
+            </if>
+            <if test="fundName != null">
+                #{fundName},
+            </if>
+            <if test="fundType != null">
+                #{fundType,jdbcType=TINYINT},
+            </if>
+            <if test="sn != null">
+                #{sn,jdbcType=TINYINT},
+            </if>
+            <if test="percentBegin != null">
+                #{percentBegin,jdbcType=DECIMAL},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fundCodeReplace != null">
+                #{fundCodeReplace,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioDetailDO">
+        update ra_fund_portfolio_detail
+        <set>
+            <if test="portfolioId != null">
+                portfolio_id = #{portfolioId,jdbcType=INTEGER},
+            </if>
+            <if test="fundCode != null">
+                fund_code = #{fundCode,jdbcType=CHAR},
+            </if>
+            <if test="fundType != null">
+                fund_type = #{fundType,jdbcType=TINYINT},
+            </if>
+            <if test="sn != null">
+                sn = #{sn,jdbcType=TINYINT},
+            </if>
+            <if test="percentBegin != null">
+                percent_begin = #{percentBegin,jdbcType=DECIMAL},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fundCodeReplace != null">
+                fund_code_replace = #{fundCodeReplace,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioDetailDO">
+    update ra_fund_portfolio_detail
+    set portfolio_id = #{portfolioId,jdbcType=INTEGER},
+      fund_code = #{fundCode,jdbcType=CHAR},
+      fund_type = #{fundType,jdbcType=TINYINT},
+      sn = #{sn,jdbcType=TINYINT},
+      percent_begin = #{percentBegin,jdbcType=DECIMAL},
+      add_time = #{addTime,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      fund_code_replace = #{fundCodeReplace,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectByPortfolioId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_fund_portfolio_detail
+        WHERE
+        portfolio_id = #{portfolioId}
+    </select>
+
+    <select id="selectByPortfolioIdAndFundCode" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_fund_portfolio_detail
+        WHERE
+        portfolio_id = #{portfolioId}
+        AND fund_code = #{fundCode}
+    </select>
+</mapper>

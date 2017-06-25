@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaFundNetDOMapper">
+    <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.trade.dao.entity.RaFundNetDO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="fund_code" property="fundCode" jdbcType="VARCHAR"/>
+        <result column="fund_name" property="fundName" jdbcType="VARCHAR"/>
+        <result column="net" property="net" jdbcType="DECIMAL"/>
+        <result column="net_date" property="netDate" jdbcType="TIMESTAMP"/>
+        <result column="accumulative_net" property="accumulativeNet" jdbcType="DECIMAL"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, fund_code, fund_name, net, net_date, accumulative_net
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ra_fund_net
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundNetDO">
+    insert into ra_fund_net (id, fund_code, fund_name, 
+      net, net_date, accumulative_net
+      )
+    values (#{id,jdbcType=INTEGER}, #{fundCode,jdbcType=VARCHAR}, #{fundName,jdbcType=VARCHAR}, 
+      #{net,jdbcType=DECIMAL}, #{netDate,jdbcType=TIMESTAMP}, #{accumulativeNet,jdbcType=DECIMAL}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundNetDO">
+        insert into ra_fund_net
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fundCode != null">
+                fund_code,
+            </if>
+            <if test="fundName != null">
+                fund_name,
+            </if>
+            <if test="net != null">
+                net,
+            </if>
+            <if test="netDate != null">
+                net_date,
+            </if>
+            <if test="accumulativeNet != null">
+                accumulative_net,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="fundCode != null">
+                #{fundCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fundName != null">
+                #{fundName,jdbcType=VARCHAR},
+            </if>
+            <if test="net != null">
+                #{net,jdbcType=DECIMAL},
+            </if>
+            <if test="netDate != null">
+                #{netDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accumulativeNet != null">
+                #{accumulativeNet,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundNetDO">
+        update ra_fund_net
+        <set>
+            <if test="fundCode != null">
+                fund_code = #{fundCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fundName != null">
+                fund_name = #{fundName,jdbcType=VARCHAR},
+            </if>
+            <if test="net != null">
+                net = #{net,jdbcType=DECIMAL},
+            </if>
+            <if test="netDate != null">
+                net_date = #{netDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accumulativeNet != null">
+                accumulative_net = #{accumulativeNet,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundNetDO">
+    update ra_fund_net
+    set fund_code = #{fundCode,jdbcType=VARCHAR},
+      fund_name = #{fundName,jdbcType=VARCHAR},
+      net = #{net,jdbcType=DECIMAL},
+      net_date = #{netDate,jdbcType=TIMESTAMP},
+      accumulative_net = #{accumulativeNet,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectLatestByFundCode" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ra_fund_net
+        WHERE fund_code = #{fundCode}
+        order by net_date desc
+        limit 0,1
+    </select>
+</mapper>

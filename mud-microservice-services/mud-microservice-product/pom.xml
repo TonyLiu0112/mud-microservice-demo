@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mud-microservice-thirdparty</artifactId>
+    <artifactId>mud-microservice-product</artifactId>
     <packaging>jar</packaging>
 
-    <name>mud-microservice-thirdparty</name>
+    <name>mud-microservice-product</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -109,7 +109,7 @@
                 </executions>
                 <configuration>
                     <!--<imageName>mud-microservice/${project.artifactId}</imageName>-->
-                    <imageName>registry.cn-shenzhen.aliyuncs.com/tonyrepository/mud-service-thirdparty</imageName>
+                    <imageName>registry.cn-shenzhen.aliyuncs.com/tonyrepository/mud-service-activity</imageName>
                     <baseImage>java</baseImage>
                     <dockerDirectory>${project.basedir}/src/main/resources/docker</dockerDirectory>
                     <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
@@ -125,4 +125,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

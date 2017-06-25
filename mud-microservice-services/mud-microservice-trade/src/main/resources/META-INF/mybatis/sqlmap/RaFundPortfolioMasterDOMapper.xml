@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaFundPortfolioMasterDOMapper" >
+  <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioMasterDO" >
+    <id column="portfolio_id" property="portfolioId" jdbcType="INTEGER" />
+    <result column="portfolio_name" property="portfolioName" jdbcType="VARCHAR" />
+    <result column="risk_prefer" property="riskPrefer" jdbcType="TINYINT" />
+    <result column="investment_period" property="investmentPeriod" jdbcType="TINYINT" />
+    <result column="portfolio_proposal" property="portfolioProposal" jdbcType="VARCHAR" />
+    <result column="portfolio_advice" property="portfolioAdvice" jdbcType="VARCHAR" />
+    <result column="bond_fund_percent" property="bondFundPercent" jdbcType="DECIMAL" />
+    <result column="stock_fund_percent" property="stockFundPercent" jdbcType="DECIMAL" />
+    <result column="currency_fund_percent" property="currencyFundPercent" jdbcType="DECIMAL" />
+    <result column="ytd_return" property="ytdReturn" jdbcType="DECIMAL" />
+    <result column="1year_return" property="year1Return" jdbcType="DECIMAL" />
+    <result column="total_return" property="totalReturn" jdbcType="DECIMAL" />
+    <result column="compound_annual_rate" property="compoundAnnualRate" jdbcType="DECIMAL" />
+    <result column="bear_market_return" property="bearMarketReturn" jdbcType="DECIMAL" />
+    <result column="compare_index1" property="compareIndex1" jdbcType="CHAR" />
+    <result column="compare_index2" property="compareIndex2" jdbcType="CHAR" />
+    <result column="compare_index3" property="compareIndex3" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="futrue_best_annual_return" property="futrueBestAnnualReturn" jdbcType="DECIMAL" />
+    <result column="futrue_worst_annual_return" property="futrueWorstAnnualReturn" jdbcType="DECIMAL" />
+    <result column="min_purchase_amt" property="minPurchaseAmt" jdbcType="DECIMAL" />
+    <result column="min_fee_rate" property="minFeeRate" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    portfolio_id, portfolio_name, risk_prefer, investment_period, portfolio_proposal, 
+    portfolio_advice, bond_fund_percent, stock_fund_percent, currency_fund_percent, ytd_return, 
+    1year_return, total_return, compound_annual_rate, bear_market_return, compare_index1, 
+    compare_index2, compare_index3, status, futrue_best_annual_return, futrue_worst_annual_return, 
+    min_purchase_amt, min_fee_rate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ra_fund_portfolio_master
+    where portfolio_id = #{portfolioId,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioMasterDO" >
+    insert into ra_fund_portfolio_master (portfolio_id, portfolio_name, risk_prefer, 
+      investment_period, portfolio_proposal, portfolio_advice, 
+      bond_fund_percent, stock_fund_percent, currency_fund_percent, 
+      ytd_return, 1year_return, total_return, 
+      compound_annual_rate, bear_market_return, compare_index1, 
+      compare_index2, compare_index3, status, 
+      futrue_best_annual_return, futrue_worst_annual_return, 
+      min_purchase_amt, min_fee_rate)
+    values (#{portfolioId,jdbcType=INTEGER}, #{portfolioName,jdbcType=VARCHAR}, #{riskPrefer,jdbcType=TINYINT}, 
+      #{investmentPeriod,jdbcType=TINYINT}, #{portfolioProposal,jdbcType=VARCHAR}, #{portfolioAdvice,jdbcType=VARCHAR}, 
+      #{bondFundPercent,jdbcType=DECIMAL}, #{stockFundPercent,jdbcType=DECIMAL}, #{currencyFundPercent,jdbcType=DECIMAL}, 
+      #{ytdReturn,jdbcType=DECIMAL}, #{year1Return,jdbcType=DECIMAL}, #{totalReturn,jdbcType=DECIMAL}, 
+      #{compoundAnnualRate,jdbcType=DECIMAL}, #{bearMarketReturn,jdbcType=DECIMAL}, #{compareIndex1,jdbcType=CHAR}, 
+      #{compareIndex2,jdbcType=CHAR}, #{compareIndex3,jdbcType=CHAR}, #{status,jdbcType=TINYINT}, 
+      #{futrueBestAnnualReturn,jdbcType=DECIMAL}, #{futrueWorstAnnualReturn,jdbcType=DECIMAL}, 
+      #{minPurchaseAmt,jdbcType=DECIMAL}, #{minFeeRate,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioMasterDO" >
+    insert into ra_fund_portfolio_master
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="portfolioId != null" >
+        portfolio_id,
+      </if>
+      <if test="portfolioName != null" >
+        portfolio_name,
+      </if>
+      <if test="riskPrefer != null" >
+        risk_prefer,
+      </if>
+      <if test="investmentPeriod != null" >
+        investment_period,
+      </if>
+      <if test="portfolioProposal != null" >
+        portfolio_proposal,
+      </if>
+      <if test="portfolioAdvice != null" >
+        portfolio_advice,
+      </if>
+      <if test="bondFundPercent != null" >
+        bond_fund_percent,
+      </if>
+      <if test="stockFundPercent != null" >
+        stock_fund_percent,
+      </if>
+      <if test="currencyFundPercent != null" >
+        currency_fund_percent,
+      </if>
+      <if test="ytdReturn != null" >
+        ytd_return,
+      </if>
+      <if test="year1Return != null" >
+        1year_return,
+      </if>
+      <if test="totalReturn != null" >
+        total_return,
+      </if>
+      <if test="compoundAnnualRate != null" >
+        compound_annual_rate,
+      </if>
+      <if test="bearMarketReturn != null" >
+        bear_market_return,
+      </if>
+      <if test="compareIndex1 != null" >
+        compare_index1,
+      </if>
+      <if test="compareIndex2 != null" >
+        compare_index2,
+      </if>
+      <if test="compareIndex3 != null" >
+        compare_index3,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="futrueBestAnnualReturn != null" >
+        futrue_best_annual_return,
+      </if>
+      <if test="futrueWorstAnnualReturn != null" >
+        futrue_worst_annual_return,
+      </if>
+      <if test="minPurchaseAmt != null" >
+        min_purchase_amt,
+      </if>
+      <if test="minFeeRate != null" >
+        min_fee_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="portfolioId != null" >
+        #{portfolioId,jdbcType=INTEGER},
+      </if>
+      <if test="portfolioName != null" >
+        #{portfolioName,jdbcType=VARCHAR},
+      </if>
+      <if test="riskPrefer != null" >
+        #{riskPrefer,jdbcType=TINYINT},
+      </if>
+      <if test="investmentPeriod != null" >
+        #{investmentPeriod,jdbcType=TINYINT},
+      </if>
+      <if test="portfolioProposal != null" >
+        #{portfolioProposal,jdbcType=VARCHAR},
+      </if>
+      <if test="portfolioAdvice != null" >
+        #{portfolioAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="bondFundPercent != null" >
+        #{bondFundPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="stockFundPercent != null" >
+        #{stockFundPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="currencyFundPercent != null" >
+        #{currencyFundPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="ytdReturn != null" >
+        #{ytdReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="year1Return != null" >
+        #{year1Return,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReturn != null" >
+        #{totalReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="compoundAnnualRate != null" >
+        #{compoundAnnualRate,jdbcType=DECIMAL},
+      </if>
+      <if test="bearMarketReturn != null" >
+        #{bearMarketReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="compareIndex1 != null" >
+        #{compareIndex1,jdbcType=CHAR},
+      </if>
+      <if test="compareIndex2 != null" >
+        #{compareIndex2,jdbcType=CHAR},
+      </if>
+      <if test="compareIndex3 != null" >
+        #{compareIndex3,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="futrueBestAnnualReturn != null" >
+        #{futrueBestAnnualReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="futrueWorstAnnualReturn != null" >
+        #{futrueWorstAnnualReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="minPurchaseAmt != null" >
+        #{minPurchaseAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="minFeeRate != null" >
+        #{minFeeRate,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioMasterDO" >
+    update ra_fund_portfolio_master
+    <set >
+      <if test="portfolioName != null" >
+        portfolio_name = #{portfolioName,jdbcType=VARCHAR},
+      </if>
+      <if test="riskPrefer != null" >
+        risk_prefer = #{riskPrefer,jdbcType=TINYINT},
+      </if>
+      <if test="investmentPeriod != null" >
+        investment_period = #{investmentPeriod,jdbcType=TINYINT},
+      </if>
+      <if test="portfolioProposal != null" >
+        portfolio_proposal = #{portfolioProposal,jdbcType=VARCHAR},
+      </if>
+      <if test="portfolioAdvice != null" >
+        portfolio_advice = #{portfolioAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="bondFundPercent != null" >
+        bond_fund_percent = #{bondFundPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="stockFundPercent != null" >
+        stock_fund_percent = #{stockFundPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="currencyFundPercent != null" >
+        currency_fund_percent = #{currencyFundPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="ytdReturn != null" >
+        ytd_return = #{ytdReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="year1Return != null" >
+        1year_return = #{year1Return,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReturn != null" >
+        total_return = #{totalReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="compoundAnnualRate != null" >
+        compound_annual_rate = #{compoundAnnualRate,jdbcType=DECIMAL},
+      </if>
+      <if test="bearMarketReturn != null" >
+        bear_market_return = #{bearMarketReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="compareIndex1 != null" >
+        compare_index1 = #{compareIndex1,jdbcType=CHAR},
+      </if>
+      <if test="compareIndex2 != null" >
+        compare_index2 = #{compareIndex2,jdbcType=CHAR},
+      </if>
+      <if test="compareIndex3 != null" >
+        compare_index3 = #{compareIndex3,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="futrueBestAnnualReturn != null" >
+        futrue_best_annual_return = #{futrueBestAnnualReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="futrueWorstAnnualReturn != null" >
+        futrue_worst_annual_return = #{futrueWorstAnnualReturn,jdbcType=DECIMAL},
+      </if>
+      <if test="minPurchaseAmt != null" >
+        min_purchase_amt = #{minPurchaseAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="minFeeRate != null" >
+        min_fee_rate = #{minFeeRate,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where portfolio_id = #{portfolioId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioMasterDO" >
+    update ra_fund_portfolio_master
+    set portfolio_name = #{portfolioName,jdbcType=VARCHAR},
+      risk_prefer = #{riskPrefer,jdbcType=TINYINT},
+      investment_period = #{investmentPeriod,jdbcType=TINYINT},
+      portfolio_proposal = #{portfolioProposal,jdbcType=VARCHAR},
+      portfolio_advice = #{portfolioAdvice,jdbcType=VARCHAR},
+      bond_fund_percent = #{bondFundPercent,jdbcType=DECIMAL},
+      stock_fund_percent = #{stockFundPercent,jdbcType=DECIMAL},
+      currency_fund_percent = #{currencyFundPercent,jdbcType=DECIMAL},
+      ytd_return = #{ytdReturn,jdbcType=DECIMAL},
+      1year_return = #{year1Return,jdbcType=DECIMAL},
+      total_return = #{totalReturn,jdbcType=DECIMAL},
+      compound_annual_rate = #{compoundAnnualRate,jdbcType=DECIMAL},
+      bear_market_return = #{bearMarketReturn,jdbcType=DECIMAL},
+      compare_index1 = #{compareIndex1,jdbcType=CHAR},
+      compare_index2 = #{compareIndex2,jdbcType=CHAR},
+      compare_index3 = #{compareIndex3,jdbcType=CHAR},
+      status = #{status,jdbcType=TINYINT},
+      futrue_best_annual_return = #{futrueBestAnnualReturn,jdbcType=DECIMAL},
+      futrue_worst_annual_return = #{futrueWorstAnnualReturn,jdbcType=DECIMAL},
+      min_purchase_amt = #{minPurchaseAmt,jdbcType=DECIMAL},
+      min_fee_rate = #{minFeeRate,jdbcType=DECIMAL}
+    where portfolio_id = #{portfolioId,jdbcType=INTEGER}
+  </update>
+</mapper>

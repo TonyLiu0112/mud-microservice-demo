@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.activity.dao.mapper.ActivityDOMapper" >
+  <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.activity.dao.entity.ActivityDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="activity_time" property="activityTime" jdbcType="TIMESTAMP" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="df" property="df" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, code, create_time, state, type, activity_time, url, df, title, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.tony.demo.microservice.mud.activity.dao.entity.ActivityDO" >
+    insert into activity (id, name, code, 
+      create_time, state, type, 
+      activity_time, url, df, 
+      title, description)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{activityTime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, #{df,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tony.demo.microservice.mud.activity.dao.entity.ActivityDO" >
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="activityTime != null" >
+        activity_time,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="df != null" >
+        df,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="activityTime != null" >
+        #{activityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="df != null" >
+        #{df,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tony.demo.microservice.mud.activity.dao.entity.ActivityDO" >
+    update activity
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="activityTime != null" >
+        activity_time = #{activityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="df != null" >
+        df = #{df,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tony.demo.microservice.mud.activity.dao.entity.ActivityDO" >
+    update activity
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      activity_time = #{activityTime,jdbcType=TIMESTAMP},
+      url = #{url,jdbcType=VARCHAR},
+      df = #{df,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByName" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from activity
+    where name = #{name}
+  </select>
+</mapper>

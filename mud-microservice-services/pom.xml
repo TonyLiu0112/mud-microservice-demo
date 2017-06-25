@@ -18,6 +18,9 @@
         <module>mud-microservice-score</module>
         <module>mud-microservice-thirdparty</module>
         <module>mud-microservice-user</module>
+        <module>mud-microservice-trade</module>
+        <module>mud-microservice-product</module>
+        <module>mud-microservice-batch</module>
     </modules>
 
     <properties>

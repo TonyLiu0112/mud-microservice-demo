@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaFundPortfolioRiskMatrixDOMapper" >
+  <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskMatrixDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="investment_period" property="investmentPeriod" jdbcType="TINYINT" />
+    <result column="risk_prefer" property="riskPrefer" jdbcType="TINYINT" />
+    <result column="portfolio_id" property="portfolioId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, investment_period, risk_prefer, portfolio_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ra_fund_portfolio_risk_matrix
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskMatrixDO" >
+    insert into ra_fund_portfolio_risk_matrix (id, investment_period, risk_prefer, 
+      portfolio_id)
+    values (#{id,jdbcType=INTEGER}, #{investmentPeriod,jdbcType=TINYINT}, #{riskPrefer,jdbcType=TINYINT}, 
+      #{portfolioId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskMatrixDO" >
+    insert into ra_fund_portfolio_risk_matrix
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="investmentPeriod != null" >
+        investment_period,
+      </if>
+      <if test="riskPrefer != null" >
+        risk_prefer,
+      </if>
+      <if test="portfolioId != null" >
+        portfolio_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="investmentPeriod != null" >
+        #{investmentPeriod,jdbcType=TINYINT},
+      </if>
+      <if test="riskPrefer != null" >
+        #{riskPrefer,jdbcType=TINYINT},
+      </if>
+      <if test="portfolioId != null" >
+        #{portfolioId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskMatrixDO" >
+    update ra_fund_portfolio_risk_matrix
+    <set >
+      <if test="investmentPeriod != null" >
+        investment_period = #{investmentPeriod,jdbcType=TINYINT},
+      </if>
+      <if test="riskPrefer != null" >
+        risk_prefer = #{riskPrefer,jdbcType=TINYINT},
+      </if>
+      <if test="portfolioId != null" >
+        portfolio_id = #{portfolioId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioRiskMatrixDO" >
+    update ra_fund_portfolio_risk_matrix
+    set investment_period = #{investmentPeriod,jdbcType=TINYINT},
+      risk_prefer = #{riskPrefer,jdbcType=TINYINT},
+      portfolio_id = #{portfolioId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
