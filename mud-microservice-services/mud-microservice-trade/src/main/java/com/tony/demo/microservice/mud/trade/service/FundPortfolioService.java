@@ -7,6 +7,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * 基金组合模板服务
  * <p>
@@ -15,8 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class FundPortfolioService {
 
+    private final RaFundPortfolioMasterDOMapper fundPortfolioMasterDOMapper;
+
     @Autowired
-    private RaFundPortfolioMasterDOMapper fundPortfolioMasterDOMapper;
+    public FundPortfolioService(RaFundPortfolioMasterDOMapper fundPortfolioMasterDOMapper) {
+        this.fundPortfolioMasterDOMapper = fundPortfolioMasterDOMapper;
+    }
 
     /**
      * 查询组合模板明细
@@ -24,12 +30,12 @@ public class FundPortfolioService {
      * @return
      * @throws Exception
      */
-    public FundPortfolioMasterResponse findByPortfolioId(Integer portfolioId) throws Exception {
+    public Optional<FundPortfolioMasterResponse> findByPortfolioId(Integer portfolioId) throws Exception {
         FundPortfolioMasterResponse response = new FundPortfolioMasterResponse();
         RaFundPortfolioMasterDO record = fundPortfolioMasterDOMapper.selectByPrimaryKey(portfolioId);
         if (record != null)
             BeanUtils.copyProperties(record, response);
-        return response;
+        return Optional.of(response);
     }
 
 }

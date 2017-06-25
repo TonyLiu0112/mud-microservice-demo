@@ -27,7 +27,7 @@ public class AccountClient {
     }
 
     public Object getAccount() throws URISyntaxException {
-        String responseBody = restTemplate.getForObject("", String.class);
+        String responseBody = restTemplate.getForObject(HBXY_ACCOUNT_QUERY, String.class);
         return null;
     }
 

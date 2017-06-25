@@ -21,10 +21,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static java.math.BigDecimal.ROUND_HALF_UP;
 
@@ -42,23 +45,22 @@ public class FundTradePurchaseService extends FundTradeBasic {
     private final String APP_TYPE = "1";
     private final String APP_ID = "2";
 
-    @Autowired
-    private FundPortfolioService fundPortfolioService;
+    private final FundPortfolioService fundPortfolioService;
+    private final FundPortfolioDetailService fundPortfolioDetailService;
+    private final FundPortfolioUserMasterService fundPortfolioUserMasterService;
+    private final FundPortfolioUserDetailService fundPortfolioUserDetailService;
+    private final UserFundOrdersPortfolioDetailService fundOrdersPortfolioDetailService;
+    private final TradeClient tradeClient;
 
     @Autowired
-    private FundPortfolioDetailService fundPortfolioDetailService;
-
-    @Autowired
-    private FundPortfolioUserMasterService fundPortfolioUserMasterService;
-
-    @Autowired
-    private FundPortfolioUserDetailService fundPortfolioUserDetailService;
-
-    @Autowired
-    private UserFundOrdersPortfolioDetailService fundOrdersPortfolioDetailService;
-
-    @Autowired
-    private TradeClient tradeClient;
+    public FundTradePurchaseService(FundPortfolioService fundPortfolioService, FundPortfolioDetailService fundPortfolioDetailService, FundPortfolioUserMasterService fundPortfolioUserMasterService, FundPortfolioUserDetailService fundPortfolioUserDetailService, UserFundOrdersPortfolioDetailService fundOrdersPortfolioDetailService, TradeClient tradeClient) {
+        this.fundPortfolioService = fundPortfolioService;
+        this.fundPortfolioDetailService = fundPortfolioDetailService;
+        this.fundPortfolioUserMasterService = fundPortfolioUserMasterService;
+        this.fundPortfolioUserDetailService = fundPortfolioUserDetailService;
+        this.fundOrdersPortfolioDetailService = fundOrdersPortfolioDetailService;
+        this.tradeClient = tradeClient;
+    }
 
     /**
      * 组合申购
@@ -200,8 +202,8 @@ public class FundTradePurchaseService extends FundTradeBasic {
     private void storePortfolioTrade(FundTradePurchaseRequest trade) throws Exception {
         FundPortfolioUserMasterResponse userHistory = fundPortfolioUserMasterService.findUserPosition(trade.getUserId(), trade.getPortfolioId());
         if (userHistory == null) {
-            FundPortfolioMasterResponse portfolioMaster = fundPortfolioService.findByPortfolioId(trade.getPortfolioId());
-            savePortfolioUserMaster(trade, portfolioMaster);
+            Optional<FundPortfolioMasterResponse> portfolioMaster = fundPortfolioService.findByPortfolioId(trade.getPortfolioId());
+            savePortfolioUserMaster(trade, portfolioMaster.orElseThrow(BusinessException::new));
         }
     }
 
@@ -301,8 +303,8 @@ public class FundTradePurchaseService extends FundTradeBasic {
      */
     public void buildPurchaseFundDetails(FundTradePurchaseRequest trade) throws Exception {
         BigDecimal sumAmount = new BigDecimal(trade.getAmount());
-        List<RaFundPortfolioDetailResponse> fundDetails = fundPortfolioDetailService.findByPortfolioId(trade.getPortfolioId());
-        for (RaFundPortfolioDetailResponse fundDetail : fundDetails) {
+        Optional<List<RaFundPortfolioDetailResponse>> portfolioDetails = fundPortfolioDetailService.findByPortfolioId(trade.getPortfolioId());
+        portfolioDetails.orElseThrow(() -> new InvalidParameterException("未找到申购的组合")).forEach(fundDetail -> {
             FundTradePurchaseProperty fundProperty = new FundTradePurchaseProperty();
             fundProperty.setFundCode(fundDetail.getFundCode());
             fundProperty.setFundName(fundDetail.getFundName());
@@ -310,7 +312,7 @@ public class FundTradePurchaseService extends FundTradeBasic {
             fundProperty.setAmount(sumAmount.multiply(fundDetail.getPercentBegin()));
             fundProperty.setSn(fundDetail.getSn());
             trade.getFundProperties().add(fundProperty);
-        }
+        });
         // TODO: 14/06/2017 手续费如何计算
         trade.setFee(BigDecimal.ZERO);
     }
@@ -321,8 +323,8 @@ public class FundTradePurchaseService extends FundTradeBasic {
      * @param trade 交易申请
      */
     public void verify(FundTradePurchaseRequest trade) throws Exception {
-        List<RaFundPortfolioDetailResponse> fundDetails = fundPortfolioDetailService.findByPortfolioId(trade.getPortfolioId());
-        parameterVerify(trade, fundDetails);
+        Optional<List<RaFundPortfolioDetailResponse>> portfolioDetails = fundPortfolioDetailService.findByPortfolioId(trade.getPortfolioId());
+        parameterVerify(trade, portfolioDetails.orElseThrow(() -> new InvalidParameterException("未找到申购的组合")));
         paymentChannelVerify(trade);
     }
 

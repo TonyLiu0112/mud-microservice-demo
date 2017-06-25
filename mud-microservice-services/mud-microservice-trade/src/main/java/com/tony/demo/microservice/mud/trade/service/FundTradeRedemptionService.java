@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 组合基金交易赎回服务
@@ -41,23 +42,22 @@ public class FundTradeRedemptionService extends FundTradeBasic {
     private final String APP_TYPE = "1";
     private final String APP_ID = "2";
 
-    @Autowired
-    private FundPortfolioDetailService fundPortfolioDetailService;
+    private final FundPortfolioDetailService fundPortfolioDetailService;
+    private final FundPortfolioUserMasterService fundPortfolioUserMasterService;
+    private final FundPortfolioUserDetailService fundPortfolioUserDetailService;
+    private final UserFundOrdersPortfolioDetailService fundOrdersPortfolioDetailService;
+    private final TradeClient tradeClient;
+    private final FundNetService fundNetService;
 
     @Autowired
-    private FundPortfolioUserMasterService fundPortfolioUserMasterService;
-
-    @Autowired
-    private FundPortfolioUserDetailService fundPortfolioUserDetailService;
-
-    @Autowired
-    private UserFundOrdersPortfolioDetailService fundOrdersPortfolioDetailService;
-
-    @Autowired
-    private TradeClient tradeClient;
-
-    @Autowired
-    private FundNetService fundNetService;
+    public FundTradeRedemptionService(FundPortfolioDetailService fundPortfolioDetailService, FundPortfolioUserMasterService fundPortfolioUserMasterService, FundPortfolioUserDetailService fundPortfolioUserDetailService, UserFundOrdersPortfolioDetailService fundOrdersPortfolioDetailService, TradeClient tradeClient, FundNetService fundNetService) {
+        this.fundPortfolioDetailService = fundPortfolioDetailService;
+        this.fundPortfolioUserMasterService = fundPortfolioUserMasterService;
+        this.fundPortfolioUserDetailService = fundPortfolioUserDetailService;
+        this.fundOrdersPortfolioDetailService = fundOrdersPortfolioDetailService;
+        this.tradeClient = tradeClient;
+        this.fundNetService = fundNetService;
+    }
 
     /**
      * 基金赎回
@@ -153,7 +153,7 @@ public class FundTradeRedemptionService extends FundTradeBasic {
     @Transactional
     private void saveOrder(FundTradeRedemptionRequest trade, FundTradeRedemptionProperty fund, TradeHistoryDTO remoteTrade, String errorMsg) throws Exception {
         UserFundOrdersPortfolioDetailRequest request = new UserFundOrdersPortfolioDetailRequest();
-        RaFundNetResponse netResponse = fundNetService.findLatestByFundCode(fund.getFundCode());
+        Optional<RaFundNetResponse> netResponse = fundNetService.findLatestByFundCode(fund.getFundCode());
         // 本地系统订单号
         request.setOrderId(SerialNumberUtil.build());
         request.setFundCode(fund.getFundCode());
@@ -161,7 +161,7 @@ public class FundTradeRedemptionService extends FundTradeBasic {
         request.setTtAccountNo("");
         request.setShare(fund.getShare());
         request.setPortfolioId(trade.getPortfolioId());
-        request.setAmount(fund.getShare().multiply(netResponse.getNet()));
+        request.setAmount(fund.getShare().multiply(netResponse.get().getNet()));
         // 基金份额 赎回为空，赎回固定份额
         request.setShareId("");
         request.setOrderTime((int) (System.currentTimeMillis() / 1000));

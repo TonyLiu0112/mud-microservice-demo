@@ -6,6 +6,7 @@ import com.tony.demo.microservice.mud.trade.dao.mapper.RaUserFundOrdersPortfolio
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 组合基金订单服务
@@ -22,6 +23,7 @@ public class UserFundOrdersPortfolioDetailService {
         this.mapper = mapper;
     }
 
+    @Transactional
     public int save(UserFundOrdersPortfolioDetailRequest request) {
         if (request == null)
             return 0;

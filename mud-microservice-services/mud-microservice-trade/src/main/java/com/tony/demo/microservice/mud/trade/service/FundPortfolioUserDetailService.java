@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 用户组合明细服务
@@ -53,11 +54,11 @@ public class FundPortfolioUserDetailService {
         RaFundPortfolioUserDetailDO record = fundPortfolioUserDetailDOMapper.selectUserDetail(portfolioId, fundCode, userId);
         if (record == null)
             return 0;
-        RaFundNetResponse latestByFundCode = fundNetService.findLatestByFundCode(fundCode);
+        Optional<RaFundNetResponse> latestByFundCode = fundNetService.findLatestByFundCode(fundCode);
         BigDecimal shareDecimal = new BigDecimal(share);
         BigDecimal uptShare = record.getShare().subtract(shareDecimal);
         record.setShare(uptShare.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : uptShare);
-        record.setMarketVal(uptShare.multiply(latestByFundCode.getNet()));
+        record.setMarketVal(uptShare.multiply(latestByFundCode.get().getNet()));
         return fundPortfolioUserDetailDOMapper.updateByPrimaryKeySelective(record);
     }
 

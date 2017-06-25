@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 风险测评服务
@@ -23,14 +24,18 @@ public class RiskTestService {
 
     private Logger log = LoggerFactory.getLogger(RiskTestService.class);
 
-    @Autowired
-    private RiskTestMapper riskTestMapper;
+    private final RiskTestMapper riskTestMapper;
+
+    private final RaFundPortfolioRiskTestResultDOMapper raFundPortfolioRiskTestResultDOMapper;
+
+    private final FundPortfolioService fundPortfolioService;
 
     @Autowired
-    private RaFundPortfolioRiskTestResultDOMapper raFundPortfolioRiskTestResultDOMapper;
-
-    @Autowired
-    private FundPortfolioService fundPortfolioService;
+    public RiskTestService(RiskTestMapper riskTestMapper, RaFundPortfolioRiskTestResultDOMapper raFundPortfolioRiskTestResultDOMapper, FundPortfolioService fundPortfolioService) {
+        this.riskTestMapper = riskTestMapper;
+        this.raFundPortfolioRiskTestResultDOMapper = raFundPortfolioRiskTestResultDOMapper;
+        this.fundPortfolioService = fundPortfolioService;
+    }
 
 
     /**
@@ -73,8 +78,11 @@ public class RiskTestService {
      */
     public boolean isRiskTrade(int userId, int portfolioId) throws Exception {
         RaFundPortfolioRiskTestResultDO record = raFundPortfolioRiskTestResultDOMapper.queryRiskTestResult(userId);
-        FundPortfolioMasterResponse portfolioResponse = fundPortfolioService.findByPortfolioId(portfolioId);
-        return !(record == null || record.getCustomRiskPrefer() == null) && portfolioResponse.getRiskPrefer() > record.getRiskPrefer();
+        Optional<FundPortfolioMasterResponse> masterOptional = fundPortfolioService.findByPortfolioId(portfolioId);
+        if (masterOptional.isPresent())
+            throw new BusinessException();
+        return !(record == null || record.getCustomRiskPrefer() == null)
+                && masterOptional.get().getRiskPrefer() > record.getRiskPrefer();
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * 用户组合服务
@@ -20,11 +21,14 @@ import java.math.BigDecimal;
 @Service
 public class FundPortfolioUserMasterService {
 
-    @Autowired
-    private RaFundPortfolioUserMasterDOMapper portfolioUserMasterDOMapper;
+    private final RaFundPortfolioUserMasterDOMapper portfolioUserMasterDOMapper;
+    private final FundNetService fundNetService;
 
     @Autowired
-    private FundNetService fundNetService;
+    public FundPortfolioUserMasterService(RaFundPortfolioUserMasterDOMapper portfolioUserMasterDOMapper, FundNetService fundNetService) {
+        this.portfolioUserMasterDOMapper = portfolioUserMasterDOMapper;
+        this.fundNetService = fundNetService;
+    }
 
     /**
      * 存储用户组合信息
@@ -64,11 +68,11 @@ public class FundPortfolioUserMasterService {
         RaFundPortfolioUserMasterDO record = portfolioUserMasterDOMapper.selectByPortfolioIdAndUserId(portfolioId, userId);
         if (record == null)
             return 0;
-        RaFundNetResponse latestByFundCode = fundNetService.findLatestByFundCode(fundCode);
+        Optional<RaFundNetResponse> latestByFundCode = fundNetService.findLatestByFundCode(fundCode);
         BigDecimal shareDecimal = new BigDecimal(applyShare);
         BigDecimal uptShare = record.getPortfolioShare().subtract(shareDecimal);
         record.setPortfolioShare(uptShare.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : uptShare);
-        BigDecimal subNet = shareDecimal.multiply(latestByFundCode.getNet());
+        BigDecimal subNet = shareDecimal.multiply(latestByFundCode.get().getNet());
         record.setPortfolioMarketVal(record.getPortfolioMarketVal().subtract(subNet));
         return portfolioUserMasterDOMapper.updateByPrimaryKeySelective(record);
     }
