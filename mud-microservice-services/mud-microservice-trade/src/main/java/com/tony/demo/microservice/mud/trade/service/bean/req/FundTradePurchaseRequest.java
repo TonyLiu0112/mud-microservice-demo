@@ -1,29 +1,38 @@
 package com.tony.demo.microservice.mud.trade.service.bean.req;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 组合申购交易请求
  * <p>
  * Created by Tony on 06/06/2017.
  */
+@ApiModel
 public class FundTradePurchaseRequest {
 
     /**
      * 组合id
      */
+    @ApiModelProperty(required = true, notes = "申请的组合ID")
     private Integer portfolioId;
 
     /**
      * 申购金额
      */
+    @ApiModelProperty(required = true, notes = "申购金额")
     private String amount;
 
     /**
      * 组合份额
      */
+    @ApiModelProperty(required = true, notes = "组合份额")
     private Integer shares = 0;
 
     /**
@@ -34,26 +43,31 @@ public class FundTradePurchaseRequest {
     /**
      * 身份证号
      */
+    @ApiModelProperty(required = true, notes = "用户身份证")
     private String idNumber;
 
     /**
      * 交易账号
      */
+    @ApiModelProperty(required = true, notes = "交易账号")
     private String tradeAcco;
 
     /**
      * 银行名称
      */
+    @ApiModelProperty(required = true, notes = "银行名称")
     private String bankName;
 
     /**
      * 银行账号
      */
+    @ApiModelProperty(required = true, notes = "银行账号")
     private String bankAcco;
 
     /**
      * 银行编号/银行代码
      */
+    @ApiModelProperty(required = true, notes = "银行代码")
     private String bankSerial;
 
     /**
@@ -69,21 +83,29 @@ public class FundTradePurchaseRequest {
     /**
      * 已投期数
      */
+    @ApiModelProperty(required = true, notes = "投资期数")
     private int aipCycle;
 
     /**
      * 组合申购基金明细信息
      */
+    @ApiModelProperty(required = true, notes = "组合基金申请明细")
     private List<FundTradePurchaseProperty> fundProperties;
 
     /**
      * 本次交易手续费
      */
-    private BigDecimal fee;
+    @ApiModelProperty(required = true, notes = "手续费")
+    private BigDecimal fee = BigDecimal.ZERO;
+
+    /**
+     * 各个基金手续费
+     */
+    private Map<String, BigDecimal> fundFees;
 
     public FundTradePurchaseRequest() {
         this.fundProperties = new ArrayList<>();
-        this.fee = BigDecimal.ZERO;
+        this.fundFees = new HashMap<>();
     }
 
     public Integer getPortfolioId() {
@@ -196,5 +218,13 @@ public class FundTradePurchaseRequest {
 
     public void setAipCycle(int aipCycle) {
         this.aipCycle = aipCycle;
+    }
+
+    public Map<String, BigDecimal> getFundFees() {
+        return fundFees;
+    }
+
+    public void setFundFees(Map<String, BigDecimal> fundFees) {
+        this.fundFees = fundFees;
     }
 }

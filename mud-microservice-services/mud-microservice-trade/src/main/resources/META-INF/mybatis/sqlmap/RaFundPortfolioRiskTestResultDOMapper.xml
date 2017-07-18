@@ -109,4 +109,15 @@
         from ra_fund_portfolio_risk_test_result
         where user_id = #{userId,jdbcType=INTEGER}
     </select>
+
+    <select id="queryMaxId" resultType="java.lang.Integer" >
+        select
+         max(id)+1
+        from ra_fund_portfolio_risk_test_result
+    </select>
+
+    <delete id="deleteByUserId">
+        delete from ra_fund_portfolio_risk_test_result where user_id = #{userId}
+    </delete>
+
 </mapper>

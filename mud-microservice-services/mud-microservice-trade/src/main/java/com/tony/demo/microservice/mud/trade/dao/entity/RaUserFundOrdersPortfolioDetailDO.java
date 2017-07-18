@@ -6,6 +6,8 @@ import java.util.Date;
 public class RaUserFundOrdersPortfolioDetailDO {
     private String orderId;
 
+    private Integer orderMasterId;
+
     private String fundCode;
 
     private Integer userId;
@@ -51,6 +53,22 @@ public class RaUserFundOrdersPortfolioDetailDO {
     private String failReason;
 
     private Date lastUpdateTime;
+
+    private String portfolioName;
+
+    public String getPortfolioName() {
+        return portfolioName;
+    }
+
+    public void setPortfolioName(String portfolioName) {this.portfolioName = portfolioName == null ? null : portfolioName.trim();}
+
+    public Integer getOrderMasterId() {
+        return orderMasterId;
+    }
+
+    public void setOrderMasterId(Integer orderMasterId) {
+        this.orderMasterId = orderMasterId;
+    }
 
     public String getOrderId() {
         return orderId;

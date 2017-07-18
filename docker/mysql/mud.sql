@@ -190,7 +190,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'华宝兴业','huabaoxingye','测试地址','13262610213','孙瑞华','2016-11-02 11:35:54','fund','基金',0),(2,'宝信金融','baoxinjinrong',NULL,'18721790735','刘博宇','2016-11-02 11:35:54','fund','金融',0),(3,'测试客户007','007','上海宝信','18888888888','Kevin',NULL,'fund','金融',0),(4,'测试客户2','2','2','2','2',NULL,'2','2',1);
+INSERT INTO `customer` VALUES (1,'XXXX','XXXXXXXXXXXX','测试地址','13262610213','孙瑞华','2016-11-02 11:35:54','fund','基金',0),(2,'XX金融','xxjinrong',NULL,'18721790735','刘博宇','2016-11-02 11:35:54','fund','金融',0),(3,'测试客户007','007','上海XX','18888888888','Kevin',NULL,'fund','金融',0),(4,'测试客户2','2','2','2','2',NULL,'2','2',1);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,7 +222,7 @@ CREATE TABLE `customer_activity` (
 
 LOCK TABLES `customer_activity` WRITE;
 /*!40000 ALTER TABLE `customer_activity` DISABLE KEYS */;
-INSERT INTO `customer_activity` VALUES (1,1,1,1,'2016-11-11 00:00:00','2016-11-12 00:00:00','2016-11-11 13:40:57',0,NULL,NULL),(2,1,2,1,'2016-11-29 11:04:48','2017-06-02 00:00:00','2016-11-15 13:11:27',0,'http://www.findmud.com/act/test/festival0601/index.html',NULL),(3,2,1,1,'2016-11-11 00:00:00','2018-11-09 00:00:00','2016-11-15 13:11:27',0,NULL,NULL),(4,1,9,1,'2016-11-29 11:04:48','2017-05-06 00:00:00','2016-11-29 10:25:48',0,'http://www.findmud.com/act/pro/fund/baoxinjinrong/festival0505/index.html',NULL),(6,1,10,1,'2016-12-01 13:58:32','2016-12-01 13:58:32','2016-12-01 13:58:32',0,'http://www.findmud.com/act/pro/fund/baoxinjinrong/mothers_day/index.html',NULL),(7,1,7,1,'2016-12-01 16:14:56','2016-12-01 16:14:56','2016-12-01 16:14:56',0,'http://www.findmud.com/act/pro/fund/baoxinjinrong/festival1225/index.html',8);
+INSERT INTO `customer_activity` VALUES (1,1,1,1,'2016-11-11 00:00:00','2016-11-12 00:00:00','2016-11-11 13:40:57',0,NULL,NULL),(2,1,2,1,'2016-11-29 11:04:48','2017-06-02 00:00:00','2016-11-15 13:11:27',0,'http://www.findmud.com/act/test/festival0601/index.html',NULL),(3,2,1,1,'2016-11-11 00:00:00','2018-11-09 00:00:00','2016-11-15 13:11:27',0,NULL,NULL),(4,1,9,1,'2016-11-29 11:04:48','2017-05-06 00:00:00','2016-11-29 10:25:48',0,'http://www.findmud.com/act/pro/fund/xxjinrong/festival0505/index.html',NULL),(6,1,10,1,'2016-12-01 13:58:32','2016-12-01 13:58:32','2016-12-01 13:58:32',0,'http://www.findmud.com/act/pro/fund/xxjinrong/mothers_day/index.html',NULL),(7,1,7,1,'2016-12-01 16:14:56','2016-12-01 16:14:56','2016-12-01 16:14:56',0,'http://www.findmud.com/act/pro/fund/xxjinrong/festival1225/index.html',8);
 /*!40000 ALTER TABLE `customer_activity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,7 +402,7 @@ CREATE TABLE `customer_application` (
 
 LOCK TABLES `customer_application` WRITE;
 /*!40000 ALTER TABLE `customer_application` DISABLE KEYS */;
-INSERT INTO `customer_application` VALUES (1,'王二麻','13891019291','上海工商银行','tony.liu0112@gmai.com'),(3,'测试','13111111111','测试客户','tony.liu0112@gmai.com'),(4,'测试2','13111111111','测试客户','tony.liu0112222@gmai.com'),(5,'TestName','13888888888','TestCompany','testmail@gmai.com'),(6,'TestName','13888888883','TestCompany','testmail@gmai.com'),(7,'TestName','13888888822','TestCompany','testmail@gmai.com'),(8,'刘博宇','18721790735','上海宝信金融科技','tony.liu0112@gmail.com'),(9,'梅西','18721790725','上海宝信金融科技','tony.liu0112@gmail.com');
+INSERT INTO `customer_application` VALUES (1,'王二麻','13891019291','上海工商银行','tony.liu0112@gmai.com'),(3,'测试','13111111111','测试客户','tony.liu0112@gmai.com'),(4,'测试2','13111111111','测试客户','tony.liu0112222@gmai.com'),(5,'TestName','13888888888','TestCompany','testmail@gmai.com'),(6,'TestName','13888888883','TestCompany','testmail@gmai.com'),(7,'TestName','13888888822','TestCompany','testmail@gmai.com'),(8,'刘博宇','18721790735','上海XX金融科技','tony.liu0112@gmail.com'),(9,'梅西','18721790725','上海XX金融科技','tony.liu0112@gmail.com');
 /*!40000 ALTER TABLE `customer_application` ENABLE KEYS */;
 UNLOCK TABLES;
 

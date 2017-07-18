@@ -75,4 +75,13 @@
       portfolio_id = #{portfolioId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="getFPRMListByPortfolioId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select
+        <include refid="Base_Column_List" />
+      from ra_fund_portfolio_risk_matrix
+      where portfolio_id = #{portfolioId,jdbcType=INTEGER}
+  </select>
+
 </mapper>

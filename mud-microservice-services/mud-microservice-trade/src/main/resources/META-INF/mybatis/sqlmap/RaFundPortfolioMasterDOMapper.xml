@@ -289,4 +289,28 @@
       min_fee_rate = #{minFeeRate,jdbcType=DECIMAL}
     where portfolio_id = #{portfolioId,jdbcType=INTEGER}
   </update>
+
+  <select id="getPortfolioMasterListByEntity" resultMap="BaseResultMap"
+          parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioMasterDO" >
+    select
+    <include refid="Base_Column_List" />
+    from ra_fund_portfolio_master
+    where 1=1
+    <if test="riskPrefer != null" >
+      AND risk_prefer = #{riskPrefer,jdbcType=TINYINT}
+    </if>
+    <if test="investmentPeriod != null" >
+      AND investment_period = #{investmentPeriod,jdbcType=TINYINT}
+    </if>
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap"
+          parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioMasterDO" >
+    select
+    <include refid="Base_Column_List" />
+    from ra_fund_portfolio_master
+
+  </select>
+
+
 </mapper>

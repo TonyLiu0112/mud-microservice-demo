@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TradeClient {
     /**
-     * 华宝交易申购服务
+     * XX交易申购服务
      */
     String HBXY_TRADE_PURCHASE = "http://mud-microservice-thirdparty/hbxy/trade/purchase";
 

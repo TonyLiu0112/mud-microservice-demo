@@ -12,4 +12,6 @@ public interface RaFundPortfolioRiskTestMappingDOMapper {
     int updateByPrimaryKeySelective(RaFundPortfolioRiskTestMappingDO record);
 
     int updateByPrimaryKey(RaFundPortfolioRiskTestMappingDO record);
+
+    int getRiskPrefer(int score);
 }

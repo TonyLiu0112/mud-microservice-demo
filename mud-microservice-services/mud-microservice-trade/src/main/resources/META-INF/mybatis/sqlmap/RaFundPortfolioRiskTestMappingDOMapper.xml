@@ -75,4 +75,12 @@
       risk_prefer = #{riskPrefer,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getRiskPrefer" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select risk_prefer
+    from ra_fund_portfolio_risk_test_mapping
+    where
+    <![CDATA[
+    score_begin  <=  #{score,jdbcType=INTEGER} and score_end > #{score,jdbcType=INTEGER}
+    ]]>
+  </select>
 </mapper>

@@ -33,13 +33,10 @@ public class ActivityAttrService {
 
     public PageInfo<ActivityAttrRes> findByActivityId(long activityId, int page, int size) throws Exception {
         Page<ActivityAttrDO> pageList = activityAttrRepository.findByDfAndActivityId(0, activityId, new PageRequest(page - 1, size));
-        Page<ActivityAttrRes> pages = pageList.map(new Converter<ActivityAttrDO, ActivityAttrRes>() {
-            @Override
-            public ActivityAttrRes convert(ActivityAttrDO source) {
-                ActivityAttrRes attrRes = new ActivityAttrRes();
-                BeanUtils.copyProperties(source, attrRes);
-                return attrRes;
-            }
+        Page<ActivityAttrRes> pages = pageList.map(source -> {
+            ActivityAttrRes attrRes = new ActivityAttrRes();
+            BeanUtils.copyProperties(source, attrRes);
+            return attrRes;
         });
         return new PageInfo<>(ConvertUtils.convert(pages));
     }

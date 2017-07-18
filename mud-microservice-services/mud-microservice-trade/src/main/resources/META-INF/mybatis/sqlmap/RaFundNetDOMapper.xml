@@ -108,4 +108,66 @@
         order by net_date desc
         limit 0,1
     </select>
+
+    <select id="selectLatestBeginNetByFundCodeArrStr" resultMap="BaseResultMap">
+        SELECT
+          net_date, fund_code, fund_name, net, accumulative_net
+        FROM (
+        SELECT
+           min(net_date) as net_date, fund_code, fund_name, net,accumulative_net
+        FROM ra_fund_net
+        WHERE fund_code in (${fundCodeArrStr})
+          GROUP BY fund_code) t ORDER BY net_date DESC LIMIT 0, 1
+
+    </select>
+
+    <select id="selectEarliestBreakNetByFundCodeArrStr" resultMap="BaseResultMap">
+        SELECT
+          net_date,fund_code,fund_name,net,accumulative_net
+        FROM (
+       SELECT
+         max(net_date) AS net_date,fund_code,fund_name,net,accumulative_net
+       FROM ra_fund_net
+       WHERE fund_code in (${fundCodeArrStr})
+       GROUP BY fund_code) t ORDER BY net_date ASC LIMIT 0, 1
+    </select>
+
+    <select id="selectByFundCodeArrStr" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ra_fund_net
+        WHERE fund_code in (${fundCodeArrStr})
+    </select>
+
+    <select id="selectByFundCodeAndNetDate" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ra_fund_net
+        WHERE fund_code=#{fundCode} and net_date=#{netDate}
+    </select>
+
+    <select id="selectByFundCodeArrStrAndNetDate" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ra_fund_net
+        WHERE fund_code in (${fundCodeArrStr}) and net_date=#{netDate}
+    </select>
+
+    <select id="selectByFundCodeArrStrAndBeginNetDate" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ra_fund_net
+        WHERE fund_code in (${fundCodeArrStr}) and net_date>=#{beginNetDate}
+    </select>
+
+    <select id="selectByFundCodeAndDate" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundNetDO" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ra_fund_net
+        WHERE fund_code = #{fundCode} AND net_date = #{netDate}
+    </select>
+
+    <select id="selectAllByFundCode" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ra_fund_net
+        WHERE fund_code = #{fundCode}
+    </select>
+
 </mapper>

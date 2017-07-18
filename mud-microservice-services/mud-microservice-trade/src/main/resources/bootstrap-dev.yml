@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   application:
-    name: mud-microservice-activity
+    name: mud-microservice-trade
   cloud:
     config:
       discovery:

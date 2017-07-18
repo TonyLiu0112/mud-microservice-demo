@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.trade.service;
+package com.tony.demo.microservice.mud.trade.service.trade;
 
 import com.tony.demo.microservice.mud.trade.service.bean.req.UserFundOrdersPortfolioDetailRequest;
 import com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioDetailDO;

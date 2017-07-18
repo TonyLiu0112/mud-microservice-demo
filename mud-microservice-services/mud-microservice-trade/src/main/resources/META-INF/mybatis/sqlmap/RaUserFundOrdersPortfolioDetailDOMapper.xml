@@ -5,6 +5,7 @@
                type="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioDetailDO">
         <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
         <id column="fund_code" property="fundCode" jdbcType="CHAR"/>
+        <result column="order_master_id" property="orderMasterId" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="tt_account_no" property="ttAccountNo" jdbcType="VARCHAR"/>
         <result column="tt_order_no" property="ttOrderNo" jdbcType="VARCHAR"/>
@@ -29,7 +30,7 @@
         <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    order_id, fund_code, user_id, tt_account_no, tt_order_no, portfolio_id, amount, share, 
+    order_id, order_master_id, fund_code, user_id, tt_account_no, tt_order_no, portfolio_id, amount, share,
     share_id, order_time, apply_time, order_type, workday, status, bank_code, bank_card_no, 
     fee, pay_status, confirm_date, comfirm_amount, comfirm_share, comfirm_nav, fail_reason, 
     last_update_time
@@ -43,7 +44,7 @@
     </select>
     <insert id="insert"
             parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioDetailDO">
-    insert into ra_user_fund_orders_portfolio_detail (order_id, fund_code, user_id, 
+    insert into ra_user_fund_orders_portfolio_detail (order_id, order_master_id, fund_code, user_id,
       tt_account_no, tt_order_no, portfolio_id, 
       amount, share, share_id, 
       order_time, apply_time, order_type, 
@@ -52,7 +53,7 @@
       confirm_date, comfirm_amount, comfirm_share, 
       comfirm_nav, fail_reason, last_update_time
       )
-    values (#{orderId,jdbcType=VARCHAR}, #{fundCode,jdbcType=CHAR}, #{userId,jdbcType=INTEGER}, 
+    values (#{orderId,jdbcType=VARCHAR}, #{orderMasterId}, #{fundCode,jdbcType=CHAR}, #{userId,jdbcType=INTEGER},
       #{ttAccountNo,jdbcType=VARCHAR}, #{ttOrderNo,jdbcType=VARCHAR}, #{portfolioId,jdbcType=INTEGER}, 
       #{amount,jdbcType=DECIMAL}, #{share,jdbcType=DECIMAL}, #{shareId,jdbcType=VARCHAR}, 
       #{orderTime,jdbcType=INTEGER}, #{applyTime,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER},
@@ -68,6 +69,9 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderId != null">
                 order_id,
+            </if>
+            <if test="orderMasterId != null">
+                order_master_id,
             </if>
             <if test="fundCode != null">
                 fund_code,
@@ -142,6 +146,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderId != null">
                 #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="orderMasterId != null">
+                #{orderMasterId},
             </if>
             <if test="fundCode != null">
                 #{fundCode,jdbcType=CHAR},
@@ -316,4 +323,86 @@
     where order_id = #{orderId,jdbcType=VARCHAR}
       and fund_code = #{fundCode,jdbcType=CHAR}
   </update>
+
+    <select id="selectByStatus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ra_user_fund_orders_portfolio_detail
+        WHERE status = #{status}
+    </select>
+
+    <select id="selectByPrimaryOrderId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_user_fund_orders_portfolio_detail
+        WHERE order_id = #{orderId}
+    </select>
+
+    <select id="getTotalAssetsByEntity" resultType="java.math.BigDecimal"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioDetailDO">
+        SELECT
+        SUM(amount)
+        FROM ra_user_fund_orders_portfolio_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND portfolio_id = #{portfolioId,jdbcType=INTEGER}
+        AND order_type = #{orderType,jdbcType=INTEGER}
+        AND (status = -1 OR status =1)
+    </select>
+
+    <select id="getFundListByEntity" resultMap="BaseResultMap"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioDetailDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ra_user_fund_orders_portfolio_detail
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND portfolio_id = #{portfolioId,jdbcType=INTEGER}
+        AND order_type = #{orderType,jdbcType=INTEGER}
+        AND (status = -1 OR status =1)
+    </select>
+
+    <select id="selectIntermediateByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_user_fund_orders_portfolio_detail
+        WHERE
+        user_id = #{userId}
+        AND status = 1
+    </select>
+
+    <select id="selectTradingGroupFundList"
+            resultType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioDetailDO"
+            parameterType="map">
+        select
+        m.user_id  as userId,
+        m.portfolio_id  as portfolioId,
+        n.portfolio_name as  portfolioName,
+        sum(IFNULL(m.amount,0)) as amount,
+        sum(IFNULL(m.share,0)) as share,
+        m.workday as workday,
+        m.order_type as orderType
+        from ra_user_fund_orders_portfolio_detail m
+        LEFT JOIN ra_fund_portfolio_master  n
+        ON  n.portfolio_id=m.portfolio_id
+        where m.user_id=#{userId,jdbcType=INTEGER}
+        and m.status in(-1,1)
+        GROUP BY m.portfolio_id,
+        m.user_id,
+        m.order_type,
+        m.workday
+        ORDER BY m.user_id,m.portfolio_id
+    </select>
+
+    <select id="selectUserConfirmOrders" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_user_fund_orders_portfolio_detail
+        WHERE 1 = 1
+        AND status = 3
+        AND user_id = #{userId}
+        AND fund_code = #{fundCode}
+        AND portfolio_id = #{portfolioId}
+    </select>
 </mapper>

@@ -1,33 +1,28 @@
-package com.tony.demo.microservice.mud.trade.service;
+package com.tony.demo.microservice.mud.trade.service.trade;
 
 import com.tony.demo.microservice.mud.common.results.ResultBuild;
 import com.tony.demo.microservice.mud.common.results.Results;
+import com.tony.demo.microservice.mud.trade.content.AppCode;
+import com.tony.demo.microservice.mud.trade.content.AppTypeCode;
 import com.tony.demo.microservice.mud.trade.content.SerialNumberUtil;
 import com.tony.demo.microservice.mud.trade.exception.BusinessException;
 import com.tony.demo.microservice.mud.trade.exception.InvalidParameterException;
 import com.tony.demo.microservice.mud.trade.exception.TradePasswordErrorException;
-import com.tony.demo.microservice.mud.trade.exception.TradePasswordLockException;
-import com.tony.demo.microservice.mud.trade.integration.TradeClient;
-import com.tony.demo.microservice.mud.trade.integration.dto.PurchaseResultDTO;
-import com.tony.demo.microservice.mud.trade.integration.dto.TradeHistoryDTO;
+import com.tony.demo.microservice.mud.trade.integration.HBFundTradeIntegration;
 import com.tony.demo.microservice.mud.trade.service.bean.req.*;
-import com.tony.demo.microservice.mud.trade.service.bean.res.FundPortfolioMasterResponse;
-import com.tony.demo.microservice.mud.trade.service.bean.res.FundPortfolioUserDetailResponse;
-import com.tony.demo.microservice.mud.trade.service.bean.res.FundPortfolioUserMasterResponse;
-import com.tony.demo.microservice.mud.trade.service.bean.res.RaFundPortfolioDetailResponse;
+import com.tony.demo.microservice.mud.trade.service.bean.res.*;
+import com.tony.demo.microservice.mud.trade.service.product.ProductService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static java.math.BigDecimal.ROUND_HALF_UP;
 
@@ -36,133 +31,118 @@ import static java.math.BigDecimal.ROUND_HALF_UP;
  * <p>
  * Created by Tony on 27/05/2017.
  */
-@Service
+@Service("fundTradePurchaseService")
 public class FundTradePurchaseService extends FundTradeBasic {
 
     private Logger logger = LoggerFactory.getLogger(FundTradePurchaseService.class);
 
     private static final String UN_USED = "";
-    private final String APP_TYPE = "1";
-    private final String APP_ID = "2";
-
-    private final FundPortfolioService fundPortfolioService;
-    private final FundPortfolioDetailService fundPortfolioDetailService;
-    private final FundPortfolioUserMasterService fundPortfolioUserMasterService;
-    private final FundPortfolioUserDetailService fundPortfolioUserDetailService;
-    private final UserFundOrdersPortfolioDetailService fundOrdersPortfolioDetailService;
-    private final TradeClient tradeClient;
+    private final String APP_TYPE = String.valueOf(AppTypeCode.WE_CHAT_XLICAI.getCode().intValue());
+    private final String APP_ID = AppCode.APP_ID_XLICAI.getCode();
 
     @Autowired
-    public FundTradePurchaseService(FundPortfolioService fundPortfolioService, FundPortfolioDetailService fundPortfolioDetailService, FundPortfolioUserMasterService fundPortfolioUserMasterService, FundPortfolioUserDetailService fundPortfolioUserDetailService, UserFundOrdersPortfolioDetailService fundOrdersPortfolioDetailService, TradeClient tradeClient) {
-        this.fundPortfolioService = fundPortfolioService;
-        this.fundPortfolioDetailService = fundPortfolioDetailService;
-        this.fundPortfolioUserMasterService = fundPortfolioUserMasterService;
-        this.fundPortfolioUserDetailService = fundPortfolioUserDetailService;
-        this.fundOrdersPortfolioDetailService = fundOrdersPortfolioDetailService;
-        this.tradeClient = tradeClient;
-    }
+    private FundPortfolioService fundPortfolioService;
+
+    @Autowired
+    private FundPortfolioDetailService fundPortfolioDetailService;
+
+    @Autowired
+    private FundPortfolioUserMasterService fundPortfolioUserMasterService;
+
+    @Autowired
+    private FundPortfolioUserDetailService fundPortfolioUserDetailService;
+
+    @Autowired
+    private FundOrdersPortfolioDetailService fundOrdersPortfolioDetailService;
+
+    @Autowired
+    private HBFundTradeIntegration hbFundTradeIntegration;
+
+    @Autowired
+    private SimpleTradeHandler simpleTradeHandler;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private OrderMasterService orderMasterService;
 
     /**
-     * 组合申购
-     * <p>
-     * 申购约定
-     * </br>
-     * <li>不支持不同支付渠道的方式</li>
+     * 组合预申购 异步购买
      *
-     * @param trade 交易申请明细
+     * @return
      */
-    public Results purchase(FundTradePurchaseRequest trade) throws Exception {
+    public Results prePurchase(FundTradePurchaseRequest trade) throws Exception {
         try {
+            logger.debug("开始处理用户{}购买组合{}的申请.", trade.getUserId(), trade.getPortfolioId());
             userIsLocked(trade.getUserId());
-            for (FundTradePurchaseProperty fundInfo : trade.getFundProperties()) {
-                singlePurchase(trade, fundInfo);
+            tryLogin(trade.getIdNumber(), trade.getPassword());
+            TradeHandleRequest tradeCommand = new TradeHandleRequest(1);
+            BeanUtils.copyProperties(trade, tradeCommand);
+            for (FundTradePurchaseProperty fund : trade.getFundProperties()) {
+                fund.setStatus(UNPAID);
+                UserFundOrdersPortfolioDetailRequest orderReq = saveOrder(trade, fund);
+                savePortfolioUserDetail(trade, fund);
+                tradeCommand.addOrder(orderReq.getOrderId());
+                logger.debug("成功记录用户{}基金{}的申购数据, 等待发起异步处理申请.", trade.getUserId(), fund.getFundCode());
             }
+            saveOrderMaster(trade);
             storePortfolioTrade(trade);
+            simpleTradeHandler.publish(tradeCommand);
+            logger.info("发起用户{}异步购买组合{}请求成功.", trade.getUserId(), trade.getPortfolioId());
+            return ResultBuild.success("申购成功");
         } catch (Exception e) {
-            logger.error("基金申购失败", e);
+            logger.error("用户基金组合预申购失败", e);
+            if (e instanceof TradePasswordErrorException)
+                lockUser(trade.getUserId());
             return ResultBuild.failed(e);
         }
-        return ResultBuild.success("申购成功");
     }
 
     /**
-     * 单个基金申购
-     * 申购失败后，尝试重新申购，最大重试5次
-     * 最大次数失败后，落地交易数据，交易状态标记为失败
+     * 基金申购
      *
-     * @param trade 交易申请
-     * @param fund  基金产品明细
+     * @param tradeHandle
+     * @throws Exception
      */
-    private void singlePurchase(FundTradePurchaseRequest trade, FundTradePurchaseProperty fund) throws Exception {
-        PurchaseResultDTO purchaseRes = null;
-        try {
-            purchaseRes = tradeClient.purchase(fund.getFundCode(), "",
-                    trade.getTradeAcco(), fund.getAmount().toString(), trade.getCapitalMode(), trade.getPassword(), APP_ID, trade.getIdNumber(), UN_USED, "", APP_TYPE);
-            if ("0000".equals(purchaseRes.getCode())) {
-                storePurchaseSuccessData(trade, fund, purchaseRes);
-            } else {
-                if (PASSWORD_ERROR.equals(purchaseRes.getCode()))
-                    throw new TradePasswordErrorException();
-            }
-        } catch (TradePasswordErrorException e) {
-            lockUser(trade.getUserId());
-            throw e;
-        } catch (Exception e) {
-            logger.error("单只基金[" + fund.getFundCode() + "]申购失败.", e);
+    public void purchase(TradeHandleRequest tradeHandle) throws Exception {
+        logger.debug("开始处理用户[{}]申购请求.", tradeHandle.getIdNumber());
+        for (String orderId : tradeHandle.getOrders()) {
+            UserFundOrdersPortfolioDetailResponse order = fundOrdersPortfolioDetailService.findByOrderId(orderId);
+            UserFundOrdersPortfolioDetailRequest request = new UserFundOrdersPortfolioDetailRequest();
+            request.setOrderId(order.getOrderId());
+            request.setFundCode(order.getFundCode());
             try {
-                String errorMsg = e.getMessage();
-                if (purchaseRes != null)
-                    errorMsg = purchaseRes.getMessage();
-                storePurchaseFailedData(trade, fund, errorMsg);
-            } catch (Exception se) {
-                logger.error("存储基金交易失败数据异常.", se);
+                PurchaseResponseBean purchaseRes = hbFundTradeIntegration.purchase(order.getFundCode(), "",
+                        tradeHandle.getTradeAcco(), order.getAmount().toString(), tradeHandle.getCapitalMode(),
+                        tradeHandle.getPassword(), APP_ID, tradeHandle.getIdNumber(), UN_USED, "", APP_TYPE);
+                if ("true".equals(purchaseRes.getSuccessful())) {
+                    request.setTtOrderNo(purchaseRes.getResults().get("applySerialStr"));
+                    request.setStatus(ACCEPT);
+                    request.setPayStatus(1);
+                    logger.info("用户[{}]购买基金{}成功.", tradeHandle.getIdNumber(), order.getFundCode());
+                } else {
+                    request.setStatus(FAILED);
+                    request.setPayStatus(0);
+                    logger.info("用户[{}]购买基金{}失败. XX响应信息为: {}", tradeHandle.getIdNumber(), order.getFundCode(), purchaseRes.toString());
+                }
+                setRemoteTradeInfo(tradeHandle, request, order, purchaseRes.getResults().get("applySerialStr"));
+            } catch (Exception e) {
+                logger.error("用户[{}]基金申购处理异常.", tradeHandle.getIdNumber(), e);
+                request.setStatus(MANUAL);
+                request.setPayStatus(0);
+            } finally {
+                logger.debug("用户[{}]申购处理完成，修改订单状态.", tradeHandle.getIdNumber());
+                fundOrdersPortfolioDetailService.modifyByPrimaryKey(request);
             }
         }
     }
 
-    /**
-     * 落地基金申购失败交易数据
-     *
-     * @param trade    申购交易申请明细
-     * @param fund     基金明细
-     * @param errorMsg 错误消息
-     * @throws Exception
-     */
-    private void storePurchaseFailedData(FundTradePurchaseRequest trade, FundTradePurchaseProperty fund, String errorMsg) throws Exception {
-        fund.setStatus(APPLYING);
-        savePortfolioUserDetail(trade, fund);
-        saveOrder(trade, fund, null, errorMsg);
-    }
-
-    /**
-     * 落地基金申购成功交易数据
-     * 份额数据等待对账程序批处理完成
-     *
-     * @param trade       申购交易申请明细
-     * @param fund        基金明细
-     * @param purchaseRes 基金公司申购返回结果
-     * @throws Exception
-     */
-    private void storePurchaseSuccessData(FundTradePurchaseRequest trade, FundTradePurchaseProperty fund, PurchaseResultDTO purchaseRes) throws Exception {
-        fund.setStatus(ACCEPT);
-        TradeHistoryDTO remoteTrade = new TradeHistoryDTO();
-        String errorMsg = "";
-        try {
-            remoteTrade = findRemoteTradeRecord(trade.getIdNumber(), fund.getFundCode(), purchaseRes.getApplySerialStr());
-        } catch (Exception e) {
-            logger.error("查询基金申购交易数据异常.", e);
-            remoteTrade.setApplyShare("0");
-            errorMsg = "基金申购成功，但获取申购交易数据失败.";
-            fund.setStatus(APPLYING);
-        }
-        savePortfolioUserDetail(trade, fund);
-        saveOrder(trade, fund, remoteTrade, errorMsg);
-    }
 
     /**
      * 落地用户组合基金持仓明细数据表
      * <p>
-     * 在申购场景下，因为华宝的基金都是非T+0.
+     * 在申购场景下，因为XX的基金都是非T+0.
      * 所以，在中间状态的情况下，份额不同步到持仓数据表.
      *
      * @param trade 申购交易申请明细
@@ -189,7 +169,14 @@ public class FundTradePurchaseService extends FundTradeBasic {
             request.setCost(fund.getAmount());
             request.setBankCode(trade.getBankSerial());
             request.setBankCardNo(trade.getBankAcco());
+            request.setBankName(trade.getBankName());
             fundPortfolioUserDetailService.save(request);
+        } else {
+            // 更新投入成本
+            FundPortfolioUserDetailRequest request = new FundPortfolioUserDetailRequest();
+            request.setId(userHistoryDetail.getId());
+            request.setCost(fund.getAmount().add(userHistoryDetail.getCost()));
+            fundPortfolioUserDetailService.modifyShareByPK(request);
         }
     }
 
@@ -201,9 +188,15 @@ public class FundTradePurchaseService extends FundTradeBasic {
      */
     private void storePortfolioTrade(FundTradePurchaseRequest trade) throws Exception {
         FundPortfolioUserMasterResponse userHistory = fundPortfolioUserMasterService.findUserPosition(trade.getUserId(), trade.getPortfolioId());
-        if (userHistory == null) {
-            Optional<FundPortfolioMasterResponse> portfolioMaster = fundPortfolioService.findByPortfolioId(trade.getPortfolioId());
-            savePortfolioUserMaster(trade, portfolioMaster.orElseThrow(BusinessException::new));
+        if (userHistory.getId() == null) {
+            FundPortfolioMasterResponse portfolioMaster = fundPortfolioService.findByPortfolioId(trade.getPortfolioId());
+            savePortfolioUserMaster(trade, portfolioMaster);
+        } else {
+            // 更新投入成本
+            FundPortfolioUserMasterRequest request = new FundPortfolioUserMasterRequest();
+            request.setId(userHistory.getId());
+            request.setPortfolioInvestedCost(userHistory.getPortfolioInvestedCost().add(new BigDecimal(trade.getAmount())));
+            fundPortfolioUserMasterService.modify(request);
         }
     }
 
@@ -219,8 +212,7 @@ public class FundTradePurchaseService extends FundTradeBasic {
         request.setPortfolioName(portfolioMaster.getPortfolioName());
         request.setPortfolioRiskType(portfolioMaster.getRiskPrefer());
         request.setUserId(trade.getUserId());
-        // todo 已投期数
-        request.setAipCycle((short) 0);
+        request.setAipCycle((short) trade.getAipCycle());
         // todo 组合净值
         request.setPortfolioNet(BigDecimal.ZERO);
         // 组合当前市值 投入的总金额 交易中状态，为0
@@ -239,56 +231,68 @@ public class FundTradePurchaseService extends FundTradeBasic {
         request.setTotalReturn(portfolioMaster.getTotalReturn());
         request.setAddTime((int) (System.currentTimeMillis() / 1000));
         request.setLastUpdateTime(new Date());
+        request.setStockFundMarketVal(BigDecimal.ZERO);
+        request.setBondFundMarketVal(BigDecimal.ZERO);
+        request.setCurrencyFundMarketVal(BigDecimal.ZERO);
         fundPortfolioUserMasterService.save(request);
+    }
+
+    /**
+     * 落地订单主表
+     *
+     * @param trade
+     * @throws Exception
+     */
+    private void saveOrderMaster(FundTradePurchaseRequest trade) throws Exception {
+        logger.debug("记录用户{}订单主表信息", trade.getUserId());
+        OrderMasterRequest orderMasterRequest = new OrderMasterRequest();
+        orderMasterRequest.setPortfolioId(trade.getPortfolioId());
+        FundPortfolioMasterResponse portfolio = fundPortfolioService.findByPortfolioId(trade.getPortfolioId());
+        orderMasterRequest.setPortfolioName(portfolio.getPortfolioName());
+        orderMasterRequest.setType(1);
+        orderMasterRequest.setAmount(new BigDecimal(trade.getAmount()));
+        orderMasterRequest.setShare(BigDecimal.ZERO);
+        orderMasterRequest.setRatio(BigDecimal.ZERO);
+        orderMasterRequest.setCreateTime(new Date());
+        orderMasterService.save(orderMasterRequest);
     }
 
     /**
      * 落地订单交易数据
      *
-     * @param trade       用户交易申请
-     * @param fund        基金产品明细
-     * @param remoteTrade 基金公司交易明细
-     * @param errorMsg    交易失败信息
+     * @param trade 用户交易申请
+     * @param fund  基金产品明细
      */
-    private void saveOrder(FundTradePurchaseRequest trade, FundTradePurchaseProperty fund, TradeHistoryDTO remoteTrade, String errorMsg) throws Exception {
+    private UserFundOrdersPortfolioDetailRequest saveOrder(FundTradePurchaseRequest trade, FundTradePurchaseProperty fund) throws Exception {
         UserFundOrdersPortfolioDetailRequest request = new UserFundOrdersPortfolioDetailRequest();
         // 本地系统订单号
         request.setOrderId(SerialNumberUtil.build());
+        request.setTtOrderNo("");
         request.setFundCode(fund.getFundCode());
         request.setUserId(trade.getUserId());
         request.setTtAccountNo("");
         request.setPortfolioId(trade.getPortfolioId());
         request.setAmount(fund.getAmount());
+        request.setShare(BigDecimal.ZERO);
         // 基金份额 申购为空，赎回固定份额
         request.setShareId("");
         request.setOrderTime((int) (System.currentTimeMillis() / 1000));
         // 基金订单返回的申请时间
         request.setOrderType(1); // 申购
-        request.setWorkday(0);   // 所属工作日
+        request.setWorkday(0); // 所属工作日 工作日暂时不考虑
         request.setBankCode(trade.getBankSerial());
         request.setBankCardNo(trade.getBankAcco());
-        // todo 手续费
-        request.setFee(BigDecimal.ZERO);
-        request.setFailReason(errorMsg);
+        request.setFee(trade.getFundFees().get(fund.getFundCode()));
+        request.setApplyTime((int) System.currentTimeMillis() / 1000);
+        request.setConfirmDate(0);
+        request.setComfirmAmount(BigDecimal.ZERO);
+        request.setComfirmShare(BigDecimal.ZERO);
         request.setLastUpdateTime(new Date());
         request.setStatus(fund.getStatus());
-        // 基金公司交易数据处理
-        if (fund.getStatus() == ACCEPT) { // 申购成功
-            if (remoteTrade != null) {
-                request.setTtOrderNo(remoteTrade.getApplySerial());
-                request.setShare(new BigDecimal(remoteTrade.getApplyShare()));
-                Date date = new Date();// DateUtils.toDate(String.format("%s %s", remoteTrade.getApplyDate(), remoteTrade.getApplyTime()), "yyyy-MM-dd HH:mi:ss");
-                if (date != null) {
-                    Long applyTime = date.getTime();
-                    request.setApplyTime(applyTime.intValue() / 1000);
-                }
-            }
-            request.setPayStatus(2); // 处理中
-        }
-        if (fund.getStatus() == APPLYING) { // 申购失败
-            request.setPayStatus(0); // 失败
-        }
+        request.setPayStatus(-1);
+        request.setFailReason("");
         fundOrdersPortfolioDetailService.save(request);
+        return request;
     }
 
     /**
@@ -303,18 +307,20 @@ public class FundTradePurchaseService extends FundTradeBasic {
      */
     public void buildPurchaseFundDetails(FundTradePurchaseRequest trade) throws Exception {
         BigDecimal sumAmount = new BigDecimal(trade.getAmount());
-        Optional<List<RaFundPortfolioDetailResponse>> portfolioDetails = fundPortfolioDetailService.findByPortfolioId(trade.getPortfolioId());
-        portfolioDetails.orElseThrow(() -> new InvalidParameterException("未找到申购的组合")).forEach(fundDetail -> {
+        List<RaFundPortfolioDetailResponse> fundDetails = fundPortfolioDetailService.findByPortfolioId(trade.getPortfolioId());
+        for (RaFundPortfolioDetailResponse fundDetail : fundDetails) {
             FundTradePurchaseProperty fundProperty = new FundTradePurchaseProperty();
             fundProperty.setFundCode(fundDetail.getFundCode());
             fundProperty.setFundName(fundDetail.getFundName());
             fundProperty.setProportion(fundDetail.getPercentBegin());
-            fundProperty.setAmount(sumAmount.multiply(fundDetail.getPercentBegin()));
+            fundProperty.setAmount(sumAmount.multiply(fundDetail.getPercentBegin()).setScale(2, BigDecimal.ROUND_HALF_UP));
             fundProperty.setSn(fundDetail.getSn());
             trade.getFundProperties().add(fundProperty);
-        });
-        // TODO: 14/06/2017 手续费如何计算
-        trade.setFee(BigDecimal.ZERO);
+            Product product = productService.findByFundCode(fundDetail.getFundCode());
+            BigDecimal fundFee = fundProperty.getAmount().multiply(new BigDecimal(product.getFeeRate())).setScale(2, BigDecimal.ROUND_HALF_UP);
+            trade.getFundFees().put(fundDetail.getFundCode(), fundFee);
+            trade.setFee(trade.getFee().add(fundFee));
+        }
     }
 
     /**
@@ -323,30 +329,27 @@ public class FundTradePurchaseService extends FundTradeBasic {
      * @param trade 交易申请
      */
     public void verify(FundTradePurchaseRequest trade) throws Exception {
-        Optional<List<RaFundPortfolioDetailResponse>> portfolioDetails = fundPortfolioDetailService.findByPortfolioId(trade.getPortfolioId());
-        parameterVerify(trade, portfolioDetails.orElseThrow(() -> new InvalidParameterException("未找到申购的组合")));
+        parameterVerify(trade);
         paymentChannelVerify(trade);
     }
 
     /**
      * 校验申购交易参数
      *
-     * @param trade       交易申请
-     * @param fundDetails 基金产品明细
+     * @param trade 交易申请
      */
-    private void parameterVerify(FundTradePurchaseRequest trade, List<RaFundPortfolioDetailResponse> fundDetails) throws Exception {
-        if (userIsLocked(trade.getUserId()))
-            throw new TradePasswordLockException();
+    private void parameterVerify(FundTradePurchaseRequest trade) throws Exception {
         if (StringUtils.isBlank(trade.getBankSerial()))
             throw new InvalidParameterException("银行代码不能为空");
         if (StringUtils.isBlank(trade.getBankAcco()))
             throw new InvalidParameterException("银行卡号不能为空");
         if (StringUtils.isBlank(trade.getIdNumber()))
             throw new InvalidParameterException("用户身份证号不能为空");
-        if (trade.getPortfolioId() <= 0)
+        if (trade.getPortfolioId() == null || trade.getPortfolioId() <= 0)
             throw new InvalidParameterException("申购组合不能为空");
         if (StringUtils.isBlank(trade.getAmount()))
             throw new InvalidParameterException("申购金额不能为空");
+        List<RaFundPortfolioDetailResponse> fundDetails = fundPortfolioDetailService.findByPortfolioId(trade.getPortfolioId());
         BigDecimal miniAmount = fundPortfolioDetailService.getMiniAmount(fundDetails);
         if (miniAmount.compareTo(new BigDecimal(trade.getAmount())) > 0)
             throw new InvalidParameterException("申购金额不得低于" + miniAmount + "元");

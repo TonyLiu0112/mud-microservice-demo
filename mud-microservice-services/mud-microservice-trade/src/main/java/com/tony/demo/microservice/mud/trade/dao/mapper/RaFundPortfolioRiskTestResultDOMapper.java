@@ -15,4 +15,7 @@ public interface RaFundPortfolioRiskTestResultDOMapper {
 
     RaFundPortfolioRiskTestResultDO queryRiskTestResult(int userId);
 
+    int queryMaxId();
+
+    int deleteByUserId(int userId);
 }

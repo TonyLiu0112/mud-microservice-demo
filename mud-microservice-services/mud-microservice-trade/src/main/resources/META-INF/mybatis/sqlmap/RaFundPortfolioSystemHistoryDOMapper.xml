@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaFundPortfolioSystemHistoryDOMapper" >
+  <resultMap id="BaseResultMap" type="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioSystemHistoryDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="portfolio_id" property="portfolioId" jdbcType="INTEGER" />
+    <result column="recorde_date" property="recordeDate" jdbcType="INTEGER" />
+    <result column="portfolio_net" property="portfolioNet" jdbcType="DECIMAL" />
+    <result column="portfolio_market_val" property="portfolioMarketVal" jdbcType="DECIMAL" />
+    <result column="portfolio_invested_cost" property="portfolioInvestedCost" jdbcType="DECIMAL" />
+    <result column="portfolio_accumulated_profit" property="portfolioAccumulatedProfit" jdbcType="DECIMAL" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, portfolio_id, recorde_date, portfolio_net, portfolio_market_val, portfolio_invested_cost, 
+    portfolio_accumulated_profit, last_update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ra_fund_portfolio_system_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioSystemHistoryDO" >
+    insert into ra_fund_portfolio_system_history (id, portfolio_id, recorde_date, 
+      portfolio_net, portfolio_market_val, portfolio_invested_cost, 
+      portfolio_accumulated_profit, last_update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{portfolioId,jdbcType=INTEGER}, #{recordeDate,jdbcType=INTEGER}, 
+      #{portfolioNet,jdbcType=DECIMAL}, #{portfolioMarketVal,jdbcType=DECIMAL}, #{portfolioInvestedCost,jdbcType=DECIMAL}, 
+      #{portfolioAccumulatedProfit,jdbcType=DECIMAL}, #{lastUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioSystemHistoryDO" >
+    insert into ra_fund_portfolio_system_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="portfolioId != null" >
+        portfolio_id,
+      </if>
+      <if test="recordeDate != null" >
+        recorde_date,
+      </if>
+      <if test="portfolioNet != null" >
+        portfolio_net,
+      </if>
+      <if test="portfolioMarketVal != null" >
+        portfolio_market_val,
+      </if>
+      <if test="portfolioInvestedCost != null" >
+        portfolio_invested_cost,
+      </if>
+      <if test="portfolioAccumulatedProfit != null" >
+        portfolio_accumulated_profit,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="portfolioId != null" >
+        #{portfolioId,jdbcType=INTEGER},
+      </if>
+      <if test="recordeDate != null" >
+        #{recordeDate,jdbcType=INTEGER},
+      </if>
+      <if test="portfolioNet != null" >
+        #{portfolioNet,jdbcType=DECIMAL},
+      </if>
+      <if test="portfolioMarketVal != null" >
+        #{portfolioMarketVal,jdbcType=DECIMAL},
+      </if>
+      <if test="portfolioInvestedCost != null" >
+        #{portfolioInvestedCost,jdbcType=DECIMAL},
+      </if>
+      <if test="portfolioAccumulatedProfit != null" >
+        #{portfolioAccumulatedProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioSystemHistoryDO" >
+    update ra_fund_portfolio_system_history
+    <set >
+      <if test="portfolioId != null" >
+        portfolio_id = #{portfolioId,jdbcType=INTEGER},
+      </if>
+      <if test="recordeDate != null" >
+        recorde_date = #{recordeDate,jdbcType=INTEGER},
+      </if>
+      <if test="portfolioNet != null" >
+        portfolio_net = #{portfolioNet,jdbcType=DECIMAL},
+      </if>
+      <if test="portfolioMarketVal != null" >
+        portfolio_market_val = #{portfolioMarketVal,jdbcType=DECIMAL},
+      </if>
+      <if test="portfolioInvestedCost != null" >
+        portfolio_invested_cost = #{portfolioInvestedCost,jdbcType=DECIMAL},
+      </if>
+      <if test="portfolioAccumulatedProfit != null" >
+        portfolio_accumulated_profit = #{portfolioAccumulatedProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioSystemHistoryDO" >
+    update ra_fund_portfolio_system_history
+    set portfolio_id = #{portfolioId,jdbcType=INTEGER},
+      recorde_date = #{recordeDate,jdbcType=INTEGER},
+      portfolio_net = #{portfolioNet,jdbcType=DECIMAL},
+      portfolio_market_val = #{portfolioMarketVal,jdbcType=DECIMAL},
+      portfolio_invested_cost = #{portfolioInvestedCost,jdbcType=DECIMAL},
+      portfolio_accumulated_profit = #{portfolioAccumulatedProfit,jdbcType=DECIMAL},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPortfolioIdAndDate" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ra_fund_portfolio_system_history
+    where portfolio_id = #{portfolioId} and recorde_date>=#{date}
+  </select>
+</mapper>

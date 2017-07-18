@@ -6,6 +6,8 @@ import java.util.Date;
 public class UserFundOrdersPortfolioDetailResponse {
     private String orderId;
 
+    private Integer orderMasterId;
+
     private String fundCode;
 
     private Integer userId;
@@ -58,6 +60,14 @@ public class UserFundOrdersPortfolioDetailResponse {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId == null ? null : orderId.trim();
+    }
+
+    public Integer getOrderMasterId() {
+        return orderMasterId;
+    }
+
+    public void setOrderMasterId(Integer orderMasterId) {
+        this.orderMasterId = orderMasterId;
     }
 
     public String getFundCode() {

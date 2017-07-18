@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.trade.service;
+package com.tony.demo.microservice.mud.trade.service.trade;
 
 import com.tony.demo.microservice.mud.trade.service.bean.req.FundProportionRequest;
 import com.tony.demo.microservice.mud.trade.service.bean.res.FundPortfolioUserDetailResponse;
@@ -20,12 +20,8 @@ public class FundProportionService {
 
     private static final BigDecimal SCALE = new BigDecimal(100);
 
-    private final FundPortfolioUserDetailService fundPortfolioUserDetailService;
-
     @Autowired
-    public FundProportionService(FundPortfolioUserDetailService fundPortfolioUserDetailService) {
-        this.fundPortfolioUserDetailService = fundPortfolioUserDetailService;
-    }
+    private FundPortfolioUserDetailService fundPortfolioUserDetailService;
 
     /**
      * 计算基金份额所占比例
@@ -36,11 +32,11 @@ public class FundProportionService {
     public Map<String, BigDecimal> calculation(FundProportionRequest fundProportionRequest) {
         Map<String, BigDecimal> results = new HashMap<>();
         BigDecimal amount = fundProportionRequest.getAmount();
-        fundProportionRequest.getProportions().forEach((key, value) -> {
-            BigDecimal proportion = value.divide(SCALE, 2, BigDecimal.ROUND_HALF_UP);
+        for (Map.Entry<String, BigDecimal> entry : fundProportionRequest.getProportions().entrySet()) {
+            BigDecimal proportion = entry.getValue().divide(SCALE, 2, BigDecimal.ROUND_HALF_UP);
             BigDecimal crtAmount = amount.multiply(proportion);
-            results.put(key, crtAmount);
-        });
+            results.put(entry.getKey(), crtAmount);
+        }
         return results;
     }
 
@@ -56,12 +52,12 @@ public class FundProportionService {
     public Map<String, BigDecimal> computerShare(BigDecimal proportion, Integer userId, Integer portfolioId) throws Exception {
         Map<String, BigDecimal> results = new HashMap<>();
         List<FundPortfolioUserDetailResponse> records = fundPortfolioUserDetailService.findByUserIdAndPortfolioId(userId, portfolioId);
-        records.forEach(record -> {
+        for (FundPortfolioUserDetailResponse record : records) {
             if (record.getShare() != null) {
                 record.getShare().multiply(proportion);
                 results.put(record.getFundCode(), record.getShare().multiply(proportion));
             }
-        });
+        }
         return results;
     }
 

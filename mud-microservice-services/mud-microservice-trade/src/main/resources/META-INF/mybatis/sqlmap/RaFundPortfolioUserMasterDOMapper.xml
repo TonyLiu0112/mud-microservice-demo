@@ -300,4 +300,31 @@
         portfolio_id = #{portfolioId}
         AND user_id = #{userId}
     </select>
+
+    <select id="getTotalProfitAndLoss" resultType="java.math.BigDecimal"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserMasterDO">
+        select
+        portfolio_accumulated_profit
+        from ra_fund_portfolio_user_master
+        where
+        portfolio_id = #{portfolioId,jdbcType=INTEGER}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_fund_portfolio_user_master
+        WHERE
+        user_id = #{userId}
+    </select>
+
+    <select id="queryAccumulatedProfit" resultType="BigDecimal" parameterType="map">
+        select
+        IFNULL(sum(portfolio_accumulated_profit),0) as sumAccumulatedProfit
+        from ra_fund_portfolio_user_master
+        where  user_id = #{userId}
+    </select>
+
 </mapper>

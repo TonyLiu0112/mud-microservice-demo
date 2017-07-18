@@ -1,5 +1,8 @@
 package com.tony.demo.microservice.mud.trade.service.bean.req;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 
 /**
@@ -8,22 +11,25 @@ import java.math.BigDecimal;
  * <p>
  * Created by Tony on 14/06/2017.
  */
+@ApiModel(description = "赎回基金明细")
 public class FundTradeRedemptionProperty {
 
     /**
      * 基金代码
      */
+    @ApiModelProperty(required = true, notes = "基金代码")
     private String fundCode;
 
     /**
      * 基金名称
      */
+    @ApiModelProperty(required = true, notes = "基金名称")
     private String fundName;
 
     /**
-     * 申购基金占比
-     * 0-1的小数
+     * 基金赎回份额
      */
+    @ApiModelProperty(required = true, notes = "基金赎回份额")
     private BigDecimal share;
 
     /**
@@ -73,5 +79,10 @@ public class FundTradeRedemptionProperty {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("基金名称: %s, 基金代码: %s, 赎回份额: %s", fundName, fundCode, share);
     }
 }

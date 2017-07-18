@@ -18,9 +18,9 @@ public class FundPortfolioUserMasterRequest {
 
     private BigDecimal portfolioNet;
 
-    private BigDecimal portfolioMarketVal;
+    private BigDecimal portfolioMarketVal = BigDecimal.ZERO;
 
-    private BigDecimal portfolioShare;
+    private BigDecimal portfolioShare = BigDecimal.ZERO;
 
     private BigDecimal portfolioInvestedCost;
 

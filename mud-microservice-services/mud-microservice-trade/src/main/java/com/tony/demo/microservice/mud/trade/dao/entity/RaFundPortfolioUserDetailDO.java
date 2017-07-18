@@ -31,6 +31,10 @@ public class RaFundPortfolioUserDetailDO {
 
     private String bankName;
 
+    private String fundName;//基金名称-仅用于显示[关联查询得出]
+
+    private String status;//状态[0,1]-仅用于申购确认中[关联查询得出，确认失败红色标注]
+
     public Integer getId() {
         return id;
     }
@@ -142,4 +146,13 @@ public class RaFundPortfolioUserDetailDO {
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
+
+    public String getFundName() { return fundName; }
+
+    public void setFundName(String fundName) { this.fundName = fundName; }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
+
 }

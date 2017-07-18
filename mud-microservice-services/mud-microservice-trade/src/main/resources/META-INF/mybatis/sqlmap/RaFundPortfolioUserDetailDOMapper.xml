@@ -16,6 +16,8 @@
         <result column="bank_code" property="bankCode" jdbcType="CHAR"/>
         <result column="bank_card_no" property="bankCardNo" jdbcType="VARCHAR"/>
         <result column="bank_name" property="bankName" jdbcType="VARCHAR"/>
+        <result column="fund_name" property="fundName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="DECIMAL"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, portfolio_id, fund_code, user_id, sn, percent_begin, percent, market_val, share, 
@@ -225,5 +227,69 @@
         user_id = #{userId}
         AND portfolio_id = #{portfolioId}
         AND share > 0
+    </select>
+
+    <select id="getTotalAssetsByEntity"  resultType="java.math.BigDecimal"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserDetailDO" >
+        SELECT
+        SUM(market_val)
+        FROM
+        ra_fund_portfolio_user_detail
+        WHERE
+        portfolio_id = #{portfolioId,jdbcType=INTEGER}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRedemptionFundListByOrderEntity"  resultMap="BaseResultMap"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaFundPortfolioUserDetailDO" >
+        SELECT
+        rfpud.id, rfpud.portfolio_id, rfpud.fund_code, user_id, rfpud.sn, rfpud.percent_begin, percent, market_val, share,
+        share_id, cost, bank_code, bank_card_no, bank_name, rfpd.fund_name
+        FROM ra_fund_portfolio_user_detail rfpud
+        LEFT JOIN ra_fund_portfolio_detail rfpd
+        ON rfpud.portfolio_id = rfpd.portfolio_id
+        AND rfpud.fund_code = rfpd.fund_code
+        WHERE
+        rfpud.portfolio_id = #{portfolioId,jdbcType=INTEGER}
+        AND user_id = #{userId,jdbcType=INTEGER}
+        ORDER BY sn ASC
+    </select>
+
+    <select id="getConfirmationFundListByOrderEntity"  resultMap="BaseResultMap"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioDetailDO" >
+        SELECT
+        rufopd.portfolio_id, rufopd.fund_code, rufopd.user_id,
+        rfpd.sn, rfpd.percent_begin, rfpd.percent_begin as "percent",
+        rufopd.amount as "market_val", rufopd.share, rufopd.share_id,
+        rufopd.amount as "cost", rufopd.bank_code, rufopd.bank_card_no,
+        rfpd.fund_name, rufopd.status
+        FROM ra_user_fund_orders_portfolio_detail rufopd
+        LEFT JOIN ra_fund_portfolio_detail rfpd
+        ON rufopd.portfolio_id = rfpd.portfolio_id
+        AND rufopd.fund_code = rfpd.fund_code
+
+        WHERE rufopd.user_id = #{userId,jdbcType=INTEGER}
+        AND rufopd.portfolio_id = #{portfolioId,jdbcType=INTEGER}
+        AND rufopd.order_type = #{orderType,jdbcType=INTEGER}
+        ORDER BY rfpd.sn ASC
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_fund_portfolio_user_detail
+        WHERE
+        user_id = #{userId}
+    </select>
+
+    <select id="selectByUserIdFundCode" resultMap="BaseResultMap">
+        SELECT
+        sum(share) AS share
+        FROM
+        ra_fund_portfolio_user_detail
+        WHERE
+        user_id = #{userId}
+        AND fund_code = #{fundCode}
     </select>
 </mapper>

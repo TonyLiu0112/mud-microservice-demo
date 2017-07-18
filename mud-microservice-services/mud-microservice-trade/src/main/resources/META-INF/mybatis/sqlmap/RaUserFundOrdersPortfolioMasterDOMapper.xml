@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tony.demo.microservice.mud.trade.dao.mapper.RaUserFundOrdersPortfolioMasterDOMapper">
+    <resultMap id="BaseResultMap"
+               type="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioMasterDO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="portfolio_id" property="portfolioId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="portfolio_name" property="portfolioName" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="share" property="share" jdbcType="DECIMAL"/>
+        <result column="ratio" property="ratio" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, portfolio_id, user_id, portfolio_name, type, amount, share, ratio, create_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ra_user_fund_orders_portfolio_master
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="insert"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioMasterDO">
+    insert into ra_user_fund_orders_portfolio_master (id, portfolio_id, user_id, portfolio_name,
+      type, amount, share, 
+      ratio, create_time)
+    values (#{id,jdbcType=INTEGER}, #{portfolioId,jdbcType=INTEGER}, #{userId}, #{portfolioName,jdbcType=VARCHAR},
+      #{type,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{share,jdbcType=DECIMAL}, 
+      #{ratio,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioMasterDO">
+        insert into ra_user_fund_orders_portfolio_master
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="portfolioId != null">
+                portfolio_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="portfolioName != null">
+                portfolio_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="share != null">
+                share,
+            </if>
+            <if test="ratio != null">
+                ratio,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="portfolioId != null">
+                #{portfolioId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="portfolioName != null">
+                #{portfolioName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="share != null">
+                #{share,jdbcType=DECIMAL},
+            </if>
+            <if test="ratio != null">
+                #{ratio,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioMasterDO">
+        update ra_user_fund_orders_portfolio_master
+        <set>
+            <if test="portfolioId != null">
+                portfolio_id = #{portfolioId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="portfolioName != null">
+                portfolio_name = #{portfolioName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="share != null">
+                share = #{share,jdbcType=DECIMAL},
+            </if>
+            <if test="ratio != null">
+                ratio = #{ratio,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.tony.demo.microservice.mud.trade.dao.entity.RaUserFundOrdersPortfolioMasterDO">
+    update ra_user_fund_orders_portfolio_master
+    set portfolio_id = #{portfolioId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      portfolio_name = #{portfolioName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      share = #{share,jdbcType=DECIMAL},
+      ratio = #{ratio,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectByPortfolioId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        ra_user_fund_orders_portfolio_master
+        WHERE
+        portfolio_id = #{portfolioId}
+        AND user_id = #{userId}
+    </select>
+</mapper>
