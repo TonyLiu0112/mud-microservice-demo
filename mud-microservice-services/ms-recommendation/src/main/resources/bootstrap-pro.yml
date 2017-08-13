@@ -1,0 +1,18 @@
+server:
+  port: 8081
+  context-path: sc
+spring:
+  application:
+    name: ms-recommendation
+  cloud:
+    config:
+      discovery:
+        service-id: mud-microservice-configcenter
+        enabled: true
+      name: ms-recommendation
+  zipkin:
+    base-url: http://monitor-zipkin:9411
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:111111@eureka1:8761/eureka/,http://admin:222222@eureka2:8762/eureka/,http://admin:333333@eureka3:8763/eureka/

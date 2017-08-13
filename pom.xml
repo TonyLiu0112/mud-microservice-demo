@@ -38,7 +38,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Dalston.RELEASE</version>
+                <version>Dalston.SR2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -55,6 +55,11 @@
             <groupId>javax.interceptor</groupId>
             <artifactId>javax.interceptor-api</artifactId>
             <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wrench.utils</groupId>
+            <artifactId>restful-api</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
