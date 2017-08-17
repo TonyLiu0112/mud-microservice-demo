@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: pro
+    active: dev
 mybatis:
   mapper-locations: classpath:META-INF/mybatis/sqlmap/*.xml
   type-aliases-package: com.tony.demo.microservice.mud.dao.entity

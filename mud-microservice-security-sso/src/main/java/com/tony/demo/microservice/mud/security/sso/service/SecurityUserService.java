@@ -33,7 +33,7 @@ public class SecurityUserService {
         SecurityUserDO account = securityUserRepository.findByLoginName(loginName);
         if (account != null) {
             return new User(account.getLoginName(), account.getPassword(), true, true, true, true,
-                    AuthorityUtils.createAuthorityList("ROLE_USER"));
+                    AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ACTUATOR"));
         } else {
             throw new UsernameNotFoundException("Could not find the login user '" + loginName + "'");
         }

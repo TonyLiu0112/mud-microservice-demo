@@ -1,10 +1,6 @@
 server:
   port: 9999
   context-path: /security
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:111111@eureka1:8761/eureka/,http://admin:222222@eureka2:8762/eureka/,http://admin:333333@eureka3:8763/eureka/
 # 如果想通过service-id的方式在eureka上发现配置中心集群服务
 # 下面配置需要配置在bootstrap.yml中，如果配置在application.yml中，配置无效
 spring:
@@ -15,8 +11,13 @@ spring:
     port: 6379
     password: test123456
   cloud:
-    config:
+    consul:
+      host: localhost
+      port: 8500
       discovery:
-        enabled: true
-        service-id: mud-microservice-configcenter
-      name: security
+        health-check-path: /${server.context-path}/health
+      config:
+        prefix: mud_configuration/master
+        default-context: mud-microservice-security
+        format: yaml
+        data-key: security.yml

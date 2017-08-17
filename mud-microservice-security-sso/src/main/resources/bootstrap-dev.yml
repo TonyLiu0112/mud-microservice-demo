@@ -1,10 +1,6 @@
 server:
   port: 9999
   context-path: /security
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:111111@localhost:8761/eureka/
 spring:
   application:
     name: mud-microservice-security
@@ -13,7 +9,8 @@ spring:
     port: 6379
     password: test123456
   cloud:
-    config:
+    consul:
+      host: localhost
+      port: 8500
       discovery:
-        enabled: true
-        service-id: mud-microservice-configcenter
+        health-check-path: /${server.context-path}/health
