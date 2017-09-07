@@ -1,0 +1,12 @@
+server:
+  port: 18808
+  context-path: /sso-proxy
+spring:
+  application:
+    name: mud-microservice-sso-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /${server.context-path}/health

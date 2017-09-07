@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mud-microservice-parent</artifactId>
+        <groupId>com.tony.demo.microservice.mud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>mud-microservice-security-sso</module>
+        <module>mud-microservice-security-sso-gateway</module>
+        <module>mud-microservice-security-jwt</module>
+        <module>mud-microservice-security-jwt-gateway</module>
+    </modules>
+
+    <groupId>com.tony.demo.microservice.mud.security</groupId>
+    <artifactId>mud-microservice-security</artifactId>
+    <packaging>pom</packaging>
+
+    <name>mud-microservice-security</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+</project>

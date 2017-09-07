@@ -1,19 +1,17 @@
 server:
-  port: 8081
+  port: 8087
+  context-path: /user
 spring:
   application:
     name: ms-user
   cloud:
-    config:
+    consul:
+      host: localhost
+      port: 8500
       discovery:
-        service-id: mud-microservice-configcenter
-        enabled: true
+        health-check-path: /${server.context-path}/health
   zipkin:
     base-url: http://localhost:9411
   sleuth:
     sampler:
       percentage: 1
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:111111@localhost:8761/eureka/

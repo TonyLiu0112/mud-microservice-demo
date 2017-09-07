@@ -2,7 +2,7 @@ package com.tony.demo.microservice.mud.thirdparty;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  * Created by Tony on 11/06/2017.
  */
 @SpringBootApplication
-@EnableEurekaClient
+@EnableDiscoveryClient
 @EnableResourceServer
 public class ThirdpartyApplication {
     public static void main(String[] args) {

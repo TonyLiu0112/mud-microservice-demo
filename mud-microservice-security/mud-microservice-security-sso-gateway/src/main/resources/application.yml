@@ -1,0 +1,18 @@
+zuul:
+  routes:
+    auth-server:
+      path: /security/**
+      serviceId: mud-microservice-security
+      ignoreSecurityHeaders: false
+  ribbon-isolation-strategy: thread
+ribbon:
+  eager-load:
+    enabled: false
+spring:
+  profiles:
+    active: dev
+# 只支持eureka
+#mud-microservice-security:
+#  ribbon:
+#    listOfServers: http://localhost:9999/
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule

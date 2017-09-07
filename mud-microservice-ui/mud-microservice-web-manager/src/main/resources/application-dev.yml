@@ -20,14 +20,14 @@ security:
     enabled: false
   oauth2:
     client:
-      client-id: mud
-      client-secret: mud
-      access-token-uri: http://localhost:18808/sso-proxy/security/security/oauth/token
-      user-authorization-uri: http://localhost:18808/sso-proxy/security/security/oauth/authorize
+      client-id: acme
+      client-secret: acmesecret
+      access-token-uri: http://localhost:9999/security/oauth/token
+      user-authorization-uri: http://localhost:9999/security/oauth/authorize
       scope: read, write
     resource:
-      token-info-uri: http://localhost:18808/sso-proxy/security/security/oauth/check_token
-  ignored: /hystrix.stream, /turbine.stream
+      token-info-uri: http://localhost:9999/security/oauth/check_token
+  ignored: /hystrix.stream, /turbine.stream, /health
 feign:
   hystrix:
     enabled: true
@@ -40,7 +40,6 @@ hystrix:
 logging:
   level:
     root: info
-#    org.springframework.cloud.sleuth: debug
 # 认证服务
 # security:
 #   basic:

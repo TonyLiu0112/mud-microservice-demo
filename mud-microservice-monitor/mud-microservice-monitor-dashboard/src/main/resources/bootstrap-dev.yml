@@ -1,0 +1,9 @@
+server:
+  port: 8383
+spring:
+  application:
+    name: mud-monitor-dashboard
+  cloud:
+    consul:
+      host: localhost
+      port: 8500

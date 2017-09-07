@@ -1,0 +1,4 @@
+logging:
+  level:
+    root: info
+    com.tony.demo.microservice.mud.gateway.api.integration.ReviewClient: debug

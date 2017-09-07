@@ -1,0 +1,9 @@
+server:
+  port: 7000
+spring:
+  application:
+    name: mud-microservice-security-api-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500

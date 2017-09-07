@@ -6,6 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Convert
@@ -36,6 +37,13 @@ public final class ConvertUtils {
         return gitHubPage;
     }
 
+    public static <S, T> T convert(S sources, final Class<T> targetClazz) throws IllegalAccessException, InstantiationException {
+        T t = targetClazz.newInstance();
+        if (sources != null)
+            BeanUtils.copyProperties(sources, t);
+        return t;
+    }
+
     /**
      * Convert list object from entity to dto.
      *
@@ -46,21 +54,24 @@ public final class ConvertUtils {
      * @throws IllegalAccessException
      * @throws InstantiationException
      */
-    public static <S, T> List<T> convert(List<S> sources, Class<T> targetClazz) throws IllegalAccessException, InstantiationException {
-        List<T> targets = new ArrayList<>();
-        for (S source : sources) {
-            T target = targetClazz.newInstance();
-            BeanUtils.copyProperties(source, target);
-            targets.add(target);
-        }
-        return targets;
+    public static <S, T> List<T> convert(List<S> sources, final Class<T> targetClazz) throws IllegalAccessException, InstantiationException {
+        if (sources == null || sources.size() == 0)
+            return new ArrayList<>();
+        return sources.stream().map(source -> {
+            try {
+                T target = targetClazz.newInstance();
+                BeanUtils.copyProperties(source, target);
+                return target;
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }).collect(Collectors.toList());
     }
 
-    public static <S, T> List<T> convert(List<S> sources, Converter<S, T> converter) throws IllegalAccessException, InstantiationException {
-        List<T> targets = new ArrayList<>();
-        for (S source : sources)
-            targets.add(converter.convert(source));
-        return targets;
+    public static <S, T> List<T> convert(List<S> sources, final Converter<S, T> converter) throws IllegalAccessException, InstantiationException {
+        if (sources == null || sources.size() == 0)
+            return new ArrayList<>();
+        return sources.stream().map(converter::convert).collect(Collectors.toList());
     }
 
 }

@@ -19,16 +19,15 @@
         <module>mud-microservice-thirdparty</module>
         <module>mud-microservice-user</module>
         <module>mud-microservice-trade</module>
-        <module>mud-microservice-product</module>
         <module>mud-microservice-batch</module>
         <module>ms-shoppingcard</module>
         <module>ms-recommendation</module>
         <module>ms-user</module>
-        <module>ms-product</module>
         <module>ms-review</module>
         <module>ms-inventory</module>
-        <module>ms-shopping</module>
+        <module>ms-shipping</module>
         <module>ms-order</module>
+        <module>ms-product</module>
     </modules>
 
     <properties>

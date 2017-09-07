@@ -1,0 +1,9 @@
+server:
+  port: 9411
+spring:
+  application:
+    name: mud-monitor-zipkin
+  cloud:
+    consul:
+      host: localhost
+      port: 8500

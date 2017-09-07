@@ -6,18 +6,13 @@
     <artifactId>mud-microservice-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>mud-microservice-eureka</module>
+        <module>mud-microservice-discovery</module>
         <module>mud-microservice-configcenter</module>
-        <module>mud-microservice-api-gateway</module>
         <module>mud-microservice-common</module>
-        <module>mud-microservice-security-sso</module>
-        <module>mud-microservice-security-sso-gateway</module>
-        <module>mud-microservice-security-api</module>
         <module>mud-microservice-services</module>
         <module>mud-microservice-ui</module>
-        <module>mud-microservice-monitor-dashboard</module>
-        <module>mud-microservice-monitor-turbine</module>
-        <module>mud-microservice-monitor-zipkin</module>
+        <module>mud-microservice-monitor</module>
+        <module>mud-microservice-security</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -65,13 +60,13 @@
 
     <build>
         <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.4.12</version>
-                </plugin>
-            </plugins>
+            <!--<plugins>-->
+                <!--<plugin>-->
+                    <!--<groupId>com.spotify</groupId>-->
+                    <!--<artifactId>docker-maven-plugin</artifactId>-->
+                    <!--<version>0.4.12</version>-->
+                <!--</plugin>-->
+            <!--</plugins>-->
         </pluginManagement>
         <plugins>
             <plugin>

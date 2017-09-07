@@ -1,18 +1,19 @@
 server:
-  port: 8081
-  context-path: sc
+  port: 8087
+  context-path: /user
 spring:
   application:
     name: ms-user
   cloud:
-    config:
+    consul:
+      host: localhost
+      port: 8500
       discovery:
-        service-id: mud-microservice-configcenter
-        enabled: true
-      name: ms-user
+        health-check-path: /${server.context-path}/health
+      config:
+        prefix: mud_configuration/master
+        default-context: ${spring.application.name}
+        format: yaml
+        data-key: user.yml
   zipkin:
     base-url: http://monitor-zipkin:9411
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:111111@eureka1:8761/eureka/,http://admin:222222@eureka2:8762/eureka/,http://admin:333333@eureka3:8763/eureka/

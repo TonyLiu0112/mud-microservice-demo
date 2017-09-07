@@ -4,11 +4,10 @@ spring:
   application:
     name: mud-microservice-web-store
   cloud:
+    consul:
+      host: localhost
+      port: 8500
     config:
       discovery:
         enabled: true
         service-id: mud-microservice-configcenter
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:111111@localhost:8761/eureka/

@@ -16,9 +16,9 @@
 
         <!-- jdbc连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/shoppingcard?characterEncoding=utf8"
-                        userId="sc"
-                        password="sc123"/>
+                        connectionURL="jdbc:mysql://localhost:3306/ms_shoppingcard?characterEncoding=utf8"
+                        userId="ms_sc"
+                        password="123456"/>
 
         <!-- 类型转换 -->
         <javaTypeResolver>
@@ -49,7 +49,7 @@
         </javaClientGenerator>
 
         <!-- 配置表信息 -->
-        <table tableName="" domainObjectName="" selectByExampleQueryId="false" enableCountByExample="false"
+        <table tableName="shoppingcard" domainObjectName="ShoppingcardDO" selectByExampleQueryId="false" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"
                enableDeleteByPrimaryKey="false"/>
 

@@ -1,7 +1,7 @@
 package com.tony.demo.microservice.mud.web.manager.controller;
 
 import com.tony.demo.microservice.mud.common.AbstractController;
-import com.tony.demo.microservice.mud.common.session.UserDto;
+import com.tony.demo.microservice.mud.common.session.UserSession;
 import com.tony.demo.microservice.mud.web.manager.dto.IndexDto;
 import com.tony.demo.microservice.mud.web.manager.service.SimpleService;
 import com.tony.demo.microservice.mud.web.manager.service.downstream.RemoteUserService;
@@ -53,9 +53,8 @@ public class IndexController extends AbstractController {
         if (res == null || res.isEmpty())
             return fail();
         Map<String, Object> userInfo = (Map<String, Object>) res.get("results");
-        UserDto userDto = new UserDto();
+        UserSession userDto = new UserSession();
         userDto.setLoginName(loginName);
-        userDto.setPassword(userInfo.get("password").toString());
         userDto.setEmail(userInfo.get("email").toString());
         userDto.setNickname(userInfo.get("nickname").toString());
         userDto.setPhone(userInfo.get("phone").toString());

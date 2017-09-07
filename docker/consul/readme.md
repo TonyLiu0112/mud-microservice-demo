@@ -1,6 +1,5 @@
 #Consul集群搭建
-> console是一个开源的docker swarm集群服务发现平台
-> 搭建简单使用方便
+> console是一个开源的、强一致性（eureka弱一致性）服务注册发现、配置中心等。AP
 
 ## 环境说明
  

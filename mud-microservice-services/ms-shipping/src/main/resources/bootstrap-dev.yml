@@ -1,0 +1,17 @@
+server:
+  port: 8086
+  context-path: ship
+spring:
+  application:
+    name: ms-shipping
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /${review}/health
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      percentage: 1

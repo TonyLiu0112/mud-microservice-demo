@@ -1,0 +1,9 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:111111@localhost:8761/eureka/
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500

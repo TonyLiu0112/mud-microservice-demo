@@ -1,0 +1,23 @@
+server:
+  port: 8086
+  context-path: ship
+spring:
+  application:
+    name: ms-shipping
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /${review}/health
+      config:
+        prefix: mud_configuration/master
+        default-context: ${spring.application.name}
+        format: yaml
+        data-key: shipping.yml
+  zipkin:
+    base-url: http://monitor-zipkin:9411
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:111111@eureka1:8761/eureka/,http://admin:222222@eureka2:8762/eureka/,http://admin:333333@eureka3:8763/eureka/

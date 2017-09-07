@@ -1,0 +1,16 @@
+server:
+  port: 7000
+spring:
+  application:
+    name: mud-microservice-security-api-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /${server.context-path}/health
+      config:
+        prefix: mud_configuration/master
+        default-context: ${spring.application.name}
+        format: yaml
+        data-key: security-api-gateway.yml

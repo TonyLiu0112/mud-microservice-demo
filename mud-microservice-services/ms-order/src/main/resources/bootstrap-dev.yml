@@ -4,6 +4,9 @@ spring:
   application:
     name: ms-order
   cloud:
+    consul:
+      host: localhost
+      port: 8500
     config:
       discovery:
         service-id: mud-microservice-configcenter
@@ -13,7 +16,3 @@ spring:
   sleuth:
     sampler:
       percentage: 1
-eureka:
-  client:
-    service-url:
-      defaultZone: http://admin:111111@localhost:8761/eureka/

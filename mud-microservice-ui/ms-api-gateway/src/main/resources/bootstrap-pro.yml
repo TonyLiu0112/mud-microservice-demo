@@ -1,0 +1,19 @@
+server:
+  port: 58080
+  context-path: /api
+spring:
+  application:
+    name: ms-api-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /${server.context-path}/health
+      config:
+        prefix: mud_configuration/master
+        default-context: ${spring.application.name}
+        format: yaml
+        data-key: api-gateway.yml
+  zipkin:
+    base-url: http://monitor-zipkin:9411

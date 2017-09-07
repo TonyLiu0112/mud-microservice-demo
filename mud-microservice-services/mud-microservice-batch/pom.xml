@@ -95,34 +95,34 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!--<imageName>mud-microservice/${project.artifactId}</imageName>-->
-                    <imageName>registry.cn-shenzhen.aliyuncs.com/tonyrepository/mud-service-activity</imageName>
-                    <baseImage>java</baseImage>
-                    <dockerDirectory>${project.basedir}/src/main/resources/docker</dockerDirectory>
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                    <serverId>aliyun-docker-hub</serverId>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.spotify</groupId>-->
+                <!--<artifactId>docker-maven-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>build-image</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>build</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash;<imageName>mud-microservice/${project.artifactId}</imageName>&ndash;&gt;-->
+                    <!--<imageName>registry.cn-shenzhen.aliyuncs.com/tonyrepository/mud-service-activity</imageName>-->
+                    <!--<baseImage>java</baseImage>-->
+                    <!--<dockerDirectory>${project.basedir}/src/main/resources/docker</dockerDirectory>-->
+                    <!--<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>-->
+                    <!--<resources>-->
+                        <!--<resource>-->
+                            <!--<targetPath>/</targetPath>-->
+                            <!--<directory>${project.build.directory}</directory>-->
+                            <!--<include>${project.build.finalName}.jar</include>-->
+                        <!--</resource>-->
+                    <!--</resources>-->
+                    <!--<serverId>aliyun-docker-hub</serverId>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
