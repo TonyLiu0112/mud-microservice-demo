@@ -13,26 +13,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 import static com.wrench.utils.restfulapi.response.RestfulBuilder.ok;
 import static com.wrench.utils.restfulapi.response.RestfulBuilder.serverError;
 
 @RestController
-@RequestMapping("shopping")
-public class ShoppingController extends BaseController {
+@RequestMapping("shelf")
+public class ProductController extends BaseController {
 
-    private Logger logger = LoggerFactory.getLogger(ShoppingController.class);
+    private Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     private final ShoppingService shoppingService;
 
-    public ShoppingController(ShoppingService shoppingService) {
+    public ProductController(ShoppingService shoppingService) {
         this.shoppingService = shoppingService;
     }
 
-    @GetMapping("shoppings/{pId}")
-    public ResponseEntity<RestfulResponse> getShopping(@PathVariable("pId") Long pId, OAuth2Authentication oAuth2Authentication) {
+    /**
+     * 产品明细（推荐列表、评论列表、产品基本信息）
+     * @param pId
+     * @param oAuth2Authentication
+     * @return
+     */
+    @GetMapping("products/{pId}")
+    public ResponseEntity<RestfulResponse> getProduct(@PathVariable("pId") Long pId, OAuth2Authentication oAuth2Authentication) {
         try {
             UserSession userSession = getUser(oAuth2Authentication);
             Optional<ShoppingViewRes> shoppingProductInfo = shoppingService.getShoppingProductInfo(userSession.getId(), pId);

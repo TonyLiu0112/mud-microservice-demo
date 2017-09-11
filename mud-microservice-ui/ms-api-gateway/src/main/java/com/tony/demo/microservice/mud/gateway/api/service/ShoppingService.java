@@ -48,8 +48,6 @@ public class ShoppingService {
             // 查询库存信息
             getInventory(productId).ifPresent(shoppingViewRes::setInventoryRes);
         }
-        // 查询评论信息
-        getReviews(productId).ifPresent(shoppingViewRes::setReviewResList);
         // 查询购物车信息
         getShoppingcards(userId).ifPresent(shoppingViewRes::setShoppingcardList);
         return Optional.of(shoppingViewRes);
@@ -99,22 +97,6 @@ public class ShoppingService {
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             List<ShoppingcardRes> shoppingcardRes = ExtractUtil.extractList(responseEntity, ShoppingcardRes.class);
             return Optional.of(shoppingcardRes);
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * 查询评论列表
-     *
-     * @param productId 产品ID
-     * @return 评论列表
-     * @throws Exception 业务异常
-     */
-    private Optional<List<ReviewRes>> getReviews(long productId) throws Exception {
-        ResponseEntity<RestfulResponse> responseEntity = reviewClient.getReviews(productId);
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            List<ReviewRes> reviewResList = ExtractUtil.extractList(responseEntity, ReviewRes.class);
-            return Optional.of(reviewResList);
         }
         return Optional.empty();
     }
