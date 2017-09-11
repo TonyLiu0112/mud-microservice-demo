@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static com.tony.demo.microservice.mud.gateway.api.integration.content.Instances.PRODUCT;
 
@@ -19,6 +20,10 @@ public interface ProductClient {
     @GetMapping("product/products/{id}")
     ResponseEntity<RestfulResponse> getProduct(@PathVariable("id") Long id);
 
+    ResponseEntity<RestfulResponse> getProducts(@PathVariable("name") String name,
+                                                @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum);
+
+
     @Component
     class ProductFallbackFactory implements FallbackFactory<ProductClient> {
 
@@ -26,9 +31,18 @@ public interface ProductClient {
 
         @Override
         public ProductClient create(Throwable cause) {
-            return id -> {
-                logger.error("调用[{}]服务异常,", PRODUCT, cause);
-                return RestfulBuilder.serverError();
+            return new ProductClient() {
+                @Override
+                public ResponseEntity<RestfulResponse> getProduct(Long id) {
+                    logger.error("调用[{}]服务异常,", PRODUCT, cause);
+                    return RestfulBuilder.serverError();
+                }
+
+                @Override
+                public ResponseEntity<RestfulResponse> getProducts(String name, Integer pageNum) {
+                    logger.error("调用[{}]服务异常,", PRODUCT, cause);
+                    return RestfulBuilder.serverError();
+                }
             };
         }
     }

@@ -1,6 +1,9 @@
 package com.tony.demo.microservice.mud.gateway.api.service;
 
-import com.tony.demo.microservice.mud.gateway.api.integration.*;
+import com.tony.demo.microservice.mud.gateway.api.integration.InventoryClient;
+import com.tony.demo.microservice.mud.gateway.api.integration.ProductClient;
+import com.tony.demo.microservice.mud.gateway.api.integration.RecommendationClient;
+import com.tony.demo.microservice.mud.gateway.api.integration.ShoppingcardClient;
 import com.tony.demo.microservice.mud.gateway.api.service.response.*;
 import com.wrench.utils.restfulapi.helper.ExtractUtil;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
@@ -14,18 +17,14 @@ import java.util.Optional;
 @Service
 public class ShoppingService {
 
-    private final ReviewClient reviewClient;
     private final RecommendationClient recommendationClient;
     private final ProductClient productClient;
     private final InventoryClient inventoryClient;
-    private final ShoppingcardClient shoppingcardClient;
 
-    public ShoppingService(ReviewClient reviewClient, RecommendationClient recommendationClient, ProductClient productClient, InventoryClient inventoryClient, ShoppingcardClient shoppingcardClient) {
-        this.reviewClient = reviewClient;
+    public ShoppingService(RecommendationClient recommendationClient, ProductClient productClient, InventoryClient inventoryClient) {
         this.recommendationClient = recommendationClient;
         this.productClient = productClient;
         this.inventoryClient = inventoryClient;
-        this.shoppingcardClient = shoppingcardClient;
     }
 
     /**
@@ -48,8 +47,6 @@ public class ShoppingService {
             // 查询库存信息
             getInventory(productId).ifPresent(shoppingViewRes::setInventoryRes);
         }
-        // 查询购物车信息
-        getShoppingcards(userId).ifPresent(shoppingViewRes::setShoppingcardList);
         return Optional.of(shoppingViewRes);
     }
 
@@ -81,22 +78,6 @@ public class ShoppingService {
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             InventoryRes inventoryRes = ExtractUtil.extractData(responseEntity, InventoryRes.class);
             return Optional.of(inventoryRes);
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * 查询购物车信息
-     *
-     * @param userId 用户ID
-     * @return 购物车信息列表
-     * @throws Exception 业务异常
-     */
-    private Optional<List<ShoppingcardRes>> getShoppingcards(long userId) throws Exception {
-        ResponseEntity<RestfulResponse> responseEntity = shoppingcardClient.getShoppingcard(userId);
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            List<ShoppingcardRes> shoppingcardRes = ExtractUtil.extractList(responseEntity, ShoppingcardRes.class);
-            return Optional.of(shoppingcardRes);
         }
         return Optional.empty();
     }
