@@ -1,5 +1,7 @@
 package com.tony.demo.microservice.mud.gateway.api.integration;
 
+import com.github.pagehelper.PageInfo;
+import com.tony.demo.microservice.mud.gateway.api.service.response.ProductRes;
 import com.wrench.utils.restfulapi.response.RestfulBuilder;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
 import feign.hystrix.FallbackFactory;
@@ -18,11 +20,11 @@ import static com.tony.demo.microservice.mud.gateway.api.integration.content.Ins
 public interface ProductClient {
 
     @GetMapping("product/products/{id}")
-    ResponseEntity<RestfulResponse> getProduct(@PathVariable("id") Long id);
+    ResponseEntity<RestfulResponse<ProductRes>> getProduct(@PathVariable("id") Long id);
 
-    ResponseEntity<RestfulResponse> getProducts(@PathVariable("name") String name,
-                                                @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum);
-
+    @GetMapping("product/products")
+    ResponseEntity<RestfulResponse<PageInfo<ProductRes>>> getProducts(@RequestParam("name") String name,
+                                                                      @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum);
 
     @Component
     class ProductFallbackFactory implements FallbackFactory<ProductClient> {
@@ -33,15 +35,15 @@ public interface ProductClient {
         public ProductClient create(Throwable cause) {
             return new ProductClient() {
                 @Override
-                public ResponseEntity<RestfulResponse> getProduct(Long id) {
+                public ResponseEntity<RestfulResponse<ProductRes>> getProduct(Long id) {
                     logger.error("调用[{}]服务异常,", PRODUCT, cause);
-                    return RestfulBuilder.serverError();
+                    return RestfulBuilder.serverError4Fallback();
                 }
 
                 @Override
-                public ResponseEntity<RestfulResponse> getProducts(String name, Integer pageNum) {
+                public ResponseEntity<RestfulResponse<PageInfo<ProductRes>>> getProducts(String name, Integer pageNum) {
                     logger.error("调用[{}]服务异常,", PRODUCT, cause);
-                    return RestfulBuilder.serverError();
+                    return RestfulBuilder.serverError4Fallback();
                 }
             };
         }

@@ -1,5 +1,6 @@
 package com.tony.demo.microservice.mud.gateway.api.integration;
 
+import com.tony.demo.microservice.mud.gateway.api.service.response.InventoryRes;
 import com.wrench.utils.restfulapi.response.RestfulBuilder;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
 import feign.hystrix.FallbackFactory;
@@ -17,7 +18,7 @@ import static com.tony.demo.microservice.mud.gateway.api.integration.content.Ins
 public interface InventoryClient {
 
     @GetMapping("inventory/query/inventories/product/{pId}")
-    ResponseEntity<RestfulResponse> getInventory(@PathVariable("pId") Long productId);
+    ResponseEntity<RestfulResponse<InventoryRes>> getInventory(@PathVariable("pId") Long productId);
 
     @Component
     class InventoryFallbackFactory implements FallbackFactory<InventoryClient> {
@@ -28,7 +29,7 @@ public interface InventoryClient {
         public InventoryClient create(Throwable cause) {
             return productId -> {
                 logger.error("调用[{}]服务异常, ", INVENTORY, cause);
-                return RestfulBuilder.serverError();
+                return RestfulBuilder.serverError4Fallback();
             };
         }
     }

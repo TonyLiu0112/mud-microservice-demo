@@ -2,7 +2,6 @@ package com.tony.demo.microservice.mud.gateway.api.service;
 
 import com.tony.demo.microservice.mud.gateway.api.integration.ShoppingcardClient;
 import com.tony.demo.microservice.mud.gateway.api.service.response.ShoppingcardRes;
-import com.wrench.utils.restfulapi.helper.ExtractUtil;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +27,9 @@ public class ShoppingcardService {
      * @throws Exception 业务异常
      */
     public Optional<List<ShoppingcardRes>> getShoppingcards(long userId) throws Exception {
-        ResponseEntity<RestfulResponse> responseEntity = shoppingcardClient.getShoppingcard(userId);
+        ResponseEntity<RestfulResponse<List<ShoppingcardRes>>> responseEntity = shoppingcardClient.getShoppingcard(userId);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            List<ShoppingcardRes> shoppingcardRes = ExtractUtil.extractList(responseEntity, ShoppingcardRes.class);
+            List<ShoppingcardRes> shoppingcardRes = responseEntity.getBody().getData();
             return Optional.of(shoppingcardRes);
         }
         return Optional.empty();

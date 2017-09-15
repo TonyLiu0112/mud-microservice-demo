@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface RecommendationRepository extends JpaRepository<RecommendationDO, Long> {
-    List<RecommendationDO> findByTagLike(String tag);
+    List<RecommendationDO> findByTagContaining(String tag);
 }

@@ -1,5 +1,7 @@
 package com.tony.demo.microservice.mud.gateway.api.service.response;
 
+import com.github.pagehelper.PageInfo;
+
 import java.util.List;
 
 /**
@@ -10,62 +12,52 @@ public class ShoppingViewRes {
     /**
      * 产品信息
      */
-    private ProductRes productRes;
+    private ProductRes product;
 
     /**
      * 库存信息
      */
-    private InventoryRes inventoryRes;
+    private InventoryRes inventory;
 
     /**
      * 推荐列表
      */
-    private List<RecommendationRes> recommendationResList;
+    private List<RecommendationRes> recommendations;
 
     /**
      * 评论列表
      */
-    private List<ReviewRes> reviewResList;
+    private PageInfo<ReviewRes> reviews;
 
-    private List<ShoppingcardRes> shoppingcardList;
-
-    public ProductRes getProductRes() {
-        return productRes;
+    public ProductRes getProduct() {
+        return product;
     }
 
-    public void setProductRes(ProductRes productRes) {
-        this.productRes = productRes;
+    public void setProduct(ProductRes product) {
+        this.product = product;
     }
 
-    public InventoryRes getInventoryRes() {
-        return inventoryRes;
+    public InventoryRes getInventory() {
+        return inventory;
     }
 
-    public void setInventoryRes(InventoryRes inventoryRes) {
-        this.inventoryRes = inventoryRes;
+    public void setInventory(InventoryRes inventory) {
+        this.inventory = inventory;
     }
 
-    public List<RecommendationRes> getRecommendationResList() {
-        return recommendationResList;
+    public List<RecommendationRes> getRecommendations() {
+        return recommendations;
     }
 
-    public void setRecommendationResList(List<RecommendationRes> recommendationResList) {
-        this.recommendationResList = recommendationResList;
+    public void setRecommendations(List<RecommendationRes> recommendations) {
+        this.recommendations = recommendations;
     }
 
-    public List<ReviewRes> getReviewResList() {
-        return reviewResList;
+    public PageInfo<ReviewRes> getReviews() {
+        return reviews;
     }
 
-    public void setReviewResList(List<ReviewRes> reviewResList) {
-        this.reviewResList = reviewResList;
-    }
-
-    public List<ShoppingcardRes> getShoppingcardList() {
-        return shoppingcardList;
-    }
-
-    public void setShoppingcardList(List<ShoppingcardRes> shoppingcardList) {
-        this.shoppingcardList = shoppingcardList;
+    public void setReviews(PageInfo<ReviewRes> reviews) {
+        this.reviews = reviews;
     }
 }

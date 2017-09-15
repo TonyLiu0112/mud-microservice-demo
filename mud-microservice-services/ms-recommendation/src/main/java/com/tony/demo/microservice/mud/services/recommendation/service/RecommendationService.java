@@ -19,7 +19,7 @@ public class RecommendationService {
     }
 
     public Optional<List<RecommendationRes>> getRecommendations(String tag) throws Exception {
-        List<RecommendationDO> records = recommendationRepository.findByTagLike(tag);
+        List<RecommendationDO> records = recommendationRepository.findByTagContaining(tag);
         return Optional.of(ConvertUtils.convert(records, RecommendationRes.class));
     }
 

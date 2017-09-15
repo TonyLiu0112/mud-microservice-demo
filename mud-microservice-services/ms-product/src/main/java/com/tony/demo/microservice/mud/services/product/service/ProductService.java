@@ -1,9 +1,12 @@
 package com.tony.demo.microservice.mud.services.product.service;
 
+import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.common.utils.ConvertUtils;
 import com.tony.demo.microservice.mud.services.product.dao.entity.ProductDO;
 import com.tony.demo.microservice.mud.services.product.dao.repository.ProductRepository;
 import com.tony.demo.microservice.mud.services.product.service.bean.response.ProductRes;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -33,4 +36,10 @@ public class ProductService {
         return Optional.of(ConvertUtils.convert(records, ProductRes.class));
     }
 
+    public Optional<PageInfo<ProductRes>> findByName(String name, int pageNum) throws Exception {
+        Page<ProductDO> records = productRepository.findByNameContaining(name, new PageRequest(pageNum - 1, 10));
+        if (records.hasContent())
+            return Optional.of(new PageInfo<>(ConvertUtils.convertPage(records, ProductRes.class)));
+        return Optional.empty();
+    }
 }

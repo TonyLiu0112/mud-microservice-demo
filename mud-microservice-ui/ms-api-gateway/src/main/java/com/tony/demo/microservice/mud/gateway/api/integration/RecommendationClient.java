@@ -1,5 +1,6 @@
 package com.tony.demo.microservice.mud.gateway.api.integration;
 
+import com.tony.demo.microservice.mud.gateway.api.service.response.RecommendationRes;
 import com.wrench.utils.restfulapi.response.RestfulBuilder;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
 import feign.hystrix.FallbackFactory;
@@ -11,13 +12,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 import static com.tony.demo.microservice.mud.gateway.api.integration.content.Instances.RECOMMENDATION;
 
 @FeignClient(name = RECOMMENDATION, fallbackFactory = RecommendationClient.RecommendationFallbackFactory.class)
 public interface RecommendationClient {
 
     @GetMapping("recommendation/product/recommendations")
-    ResponseEntity<RestfulResponse> recommendations(@RequestParam("tag") String tag);
+    ResponseEntity<RestfulResponse<List<RecommendationRes>>> recommendations(@RequestParam("tag") String tag);
 
     @Component
     class RecommendationFallbackFactory implements FallbackFactory<RecommendationClient> {
@@ -28,7 +31,7 @@ public interface RecommendationClient {
         public RecommendationClient create(Throwable cause) {
             return tag -> {
                 logger.error("调用[Review]服务异常, ", cause);
-                return RestfulBuilder.serverError();
+                return RestfulBuilder.serverError4Fallback();
             };
         }
     }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class BaseController {
+public class JwtBaseController {
 
     @Autowired
     private DefaultTokenServices defaultTokenServices;

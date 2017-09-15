@@ -1,7 +1,8 @@
 package com.tony.demo.microservice.mud.gateway.api.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.gateway.api.service.ReviewService;
-import com.tony.demo.microservice.mud.gateway.api.service.response.ReviewPageRes;
+import com.tony.demo.microservice.mud.gateway.api.service.response.ReviewRes;
 import com.wrench.utils.restfulapi.response.RestfulBuilder;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("additions")
-public class ReviewController extends BaseController {
+public class ReviewController extends JwtBaseController {
 
     private final ReviewService reviewService;
 
@@ -33,7 +34,7 @@ public class ReviewController extends BaseController {
     public ResponseEntity<RestfulResponse> productReviews(@RequestParam("productId") Long productId,
                                                           @RequestParam("pageNum") Integer pageNum) {
         try {
-            Optional<ReviewPageRes> reviews = reviewService.getReviews(productId, pageNum);
+            Optional<PageInfo<ReviewRes>> reviews = reviewService.getReviews(productId, pageNum);
             if (reviews.isPresent())
                 return RestfulBuilder.ok(reviews.get());
             return RestfulBuilder.notFound();

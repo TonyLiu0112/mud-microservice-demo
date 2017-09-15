@@ -1,8 +1,8 @@
 package com.tony.demo.microservice.mud.gateway.api.service;
 
+import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.gateway.api.integration.ReviewClient;
-import com.tony.demo.microservice.mud.gateway.api.service.response.ReviewPageRes;
-import com.wrench.utils.restfulapi.helper.ExtractUtil;
+import com.tony.demo.microservice.mud.gateway.api.service.response.ReviewRes;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +26,12 @@ public class ReviewService {
      * @return 评论列表
      * @throws Exception 业务异常
      */
-    public Optional<ReviewPageRes> getReviews(long productId, Integer pageNum) throws Exception {
-        ResponseEntity<RestfulResponse> responseEntity = reviewClient.getReviews(productId, pageNum);
+    public Optional<PageInfo<ReviewRes>> getReviews(long productId, Integer pageNum) throws Exception {
+        ResponseEntity<RestfulResponse<PageInfo<ReviewRes>>> responseEntity = reviewClient.getReviews(productId, pageNum);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            ReviewPageRes resPage = ExtractUtil.extractData(responseEntity, ReviewPageRes.class);
-            return Optional.of(resPage);
+            PageInfo<ReviewRes> pageInfo = responseEntity.getBody().getData();
+            if (pageInfo.getList() != null && pageInfo.getList().size() > 0)
+                return Optional.of(pageInfo);
         }
         return Optional.empty();
     }

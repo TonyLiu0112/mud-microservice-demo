@@ -37,6 +37,18 @@ public final class ConvertUtils {
         return gitHubPage;
     }
 
+    public static <T, S> Page<S> convertPage(org.springframework.data.domain.Page<T> springPage, Class<S> clazz) throws InstantiationException, IllegalAccessException {
+        Page<S> gitHubPage = new Page<>();
+        gitHubPage.addAll(ConvertUtils.convert(springPage.getContent(), clazz));
+        gitHubPage.setPageNum(springPage.getNumber() + PAGE_NUMBER_OFFSET);
+        gitHubPage.setPageSize(springPage.getSize());
+        gitHubPage.setPages(springPage.getTotalPages());
+        gitHubPage.setTotal(springPage.getTotalElements());
+        return gitHubPage;
+    }
+
+
+
     public static <S, T> T convert(S sources, final Class<T> targetClazz) throws IllegalAccessException, InstantiationException {
         T t = targetClazz.newInstance();
         if (sources != null)

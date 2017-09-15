@@ -1,7 +1,9 @@
 package com.tony.demo.microservice.mud.gateway.api.service;
 
+import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.gateway.api.integration.ProductClient;
 import com.tony.demo.microservice.mud.gateway.api.service.response.ProductPageRes;
+import com.tony.demo.microservice.mud.gateway.api.service.response.ProductRes;
 import com.wrench.utils.restfulapi.helper.ExtractUtil;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
 import org.springframework.http.HttpStatus;
@@ -19,11 +21,11 @@ public class ProductService {
         this.productClient = productClient;
     }
 
-    public Optional<ProductPageRes> getProducts(String name, int pageNum) throws Exception {
-        ResponseEntity<RestfulResponse> responseEntity = productClient.getProducts(name, pageNum);
+    public Optional<PageInfo<ProductRes>> getProducts(String name, int pageNum) throws Exception {
+        ResponseEntity<RestfulResponse<PageInfo<ProductRes>>> responseEntity = productClient.getProducts(name, pageNum);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            ProductPageRes productPageRes = ExtractUtil.extractData(responseEntity, ProductPageRes.class);
-            return Optional.of(productPageRes);
+            PageInfo<ProductRes> pageInfo = responseEntity.getBody().getData();
+            return Optional.of(pageInfo);
         }
         return Optional.empty();
     }

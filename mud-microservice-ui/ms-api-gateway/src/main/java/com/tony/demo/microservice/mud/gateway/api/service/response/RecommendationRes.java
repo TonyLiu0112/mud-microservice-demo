@@ -9,6 +9,8 @@ public class RecommendationRes {
 
     private String tag;
 
+    private ProductRes product;
+
     public Long getProductId() {
         return productId;
     }
@@ -23,5 +25,13 @@ public class RecommendationRes {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public ProductRes getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductRes product) {
+        this.product = product;
     }
 }

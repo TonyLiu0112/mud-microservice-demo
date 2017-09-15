@@ -1,5 +1,6 @@
 package com.tony.demo.microservice.mud.gateway.api.controller;
 
+
 import com.tony.demo.microservice.mud.common.session.UserSession;
 import com.tony.demo.microservice.mud.gateway.api.service.ShoppingcardService;
 import com.wrench.utils.restfulapi.response.RestfulBuilder;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("shoppingcard")
-public class ShoppingcardController extends BaseController {
+public class ShoppingcardController extends JwtBaseController {
 
     private final ShoppingcardService shoppingcardService;
 
