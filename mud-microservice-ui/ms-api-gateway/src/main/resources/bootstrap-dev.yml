@@ -25,7 +25,7 @@ spring:
     port: 6379
     password: test123456
 security:
-  ignored: /hystrix.stream, /turbine.stream, /health
+  ignored: /hystrix.stream, /turbine.stream, /health, /security/tokens
   key:
     -----BEGIN PUBLIC KEY-----
     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsZbcKnQppmkY5xeMBzHc

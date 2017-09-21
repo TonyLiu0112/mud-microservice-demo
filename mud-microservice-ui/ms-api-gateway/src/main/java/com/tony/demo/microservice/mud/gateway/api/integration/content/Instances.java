@@ -10,5 +10,6 @@ public interface Instances {
     String PRODUCT = "ms-product";
     String INVENTORY = "ms-inventory";
     String SHOPPINGCARD = "ms-shoppingcard";
+    String AUTH = "mud-microservice-security-api";
 
 }

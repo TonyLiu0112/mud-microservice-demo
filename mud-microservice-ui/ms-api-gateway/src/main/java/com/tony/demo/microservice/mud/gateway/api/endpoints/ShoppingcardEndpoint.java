@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.gateway.api.controller;
+package com.tony.demo.microservice.mud.gateway.api.endpoints;
 
 
 import com.tony.demo.microservice.mud.common.session.UserSession;
@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("shoppingcard")
-public class ShoppingcardController extends JwtBaseController {
+public class ShoppingcardEndpoint extends JwtBaseEndpoint {
 
     private final ShoppingcardService shoppingcardService;
 
-    public ShoppingcardController(ShoppingcardService shoppingcardService) {
+    public ShoppingcardEndpoint(ShoppingcardService shoppingcardService) {
         this.shoppingcardService = shoppingcardService;
     }
 

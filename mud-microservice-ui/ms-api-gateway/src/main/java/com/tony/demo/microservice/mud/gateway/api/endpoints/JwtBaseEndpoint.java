@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.gateway.api.controller;
+package com.tony.demo.microservice.mud.gateway.api.endpoints;
 
 import com.tony.demo.microservice.mud.common.session.UserSession;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class JwtBaseController {
+public class JwtBaseEndpoint {
 
     @Autowired
     private DefaultTokenServices defaultTokenServices;

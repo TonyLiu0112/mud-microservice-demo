@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.gateway.api.controller;
+package com.tony.demo.microservice.mud.gateway.api.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.gateway.api.controller;
+package com.tony.demo.microservice.mud.gateway.api.endpoints;
 
 import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.gateway.api.service.ReviewService;
@@ -15,11 +15,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("additions")
-public class ReviewController extends JwtBaseController {
+public class ReviewEndpoint extends JwtBaseEndpoint {
 
     private final ReviewService reviewService;
 
-    public ReviewController(ReviewService reviewService) {
+    public ReviewEndpoint(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
 

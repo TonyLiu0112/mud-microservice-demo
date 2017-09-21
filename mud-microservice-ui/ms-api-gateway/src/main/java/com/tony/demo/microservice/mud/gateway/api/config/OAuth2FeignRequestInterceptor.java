@@ -27,6 +27,8 @@ public class OAuth2FeignRequestInterceptor implements RequestInterceptor {
     public void apply(RequestTemplate template) {
         if (template.headers().containsKey(AUTHORIZATION_HEADER)) {
             LOGGER.warn("The Authorization token has been already set");
+        } else if (oauth2ClientContext.getAccessToken() == null) {
+            LOGGER.warn("The access token is null, it may be login request, ignore.");
         } else if (StringUtil.isBlank(oauth2ClientContext.getAccessToken().getValue())) {
             LOGGER.warn("Can not obtain existing token for request, if it is a non secured request, ignore.");
         } else {

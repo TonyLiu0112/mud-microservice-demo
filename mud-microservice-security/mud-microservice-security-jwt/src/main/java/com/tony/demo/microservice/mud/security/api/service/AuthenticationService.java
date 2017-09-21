@@ -5,6 +5,7 @@ import com.tony.demo.microservice.mud.security.api.service.bean.SecurityUserReq;
 import com.tony.demo.microservice.mud.security.api.service.bean.UserWrapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
@@ -33,15 +33,16 @@ public class AuthenticationService {
     private Logger logger = Logger.getLogger(AuthenticationService.class);
 
     private final AuthenticationManager authenticationManager;
-    private final DefaultTokenServices defaultTokenServices;
     private final SecurityUserService securityUserService;
     private final RestTemplate restTemplate;
     private final LoadBalancerClient loadBalancer;
 
+    @Value("${spring.application.name}")
+    private String authServerId;
+
     @Autowired
-    public AuthenticationService(AuthenticationManager authenticationManager, DefaultTokenServices defaultTokenServices, SecurityUserService securityUserService, RestTemplate restTemplate, LoadBalancerClient loadBalancer) {
+    public AuthenticationService(AuthenticationManager authenticationManager, SecurityUserService securityUserService, RestTemplate restTemplate, LoadBalancerClient loadBalancer) {
         this.authenticationManager = authenticationManager;
-        this.defaultTokenServices = defaultTokenServices;
         this.securityUserService = securityUserService;
         this.restTemplate = restTemplate;
         this.loadBalancer = loadBalancer;
@@ -78,7 +79,7 @@ public class AuthenticationService {
         TokenBuild setToken(String clientId, String secret, UserWrapper user) throws Exception {
             setInterceptor(clientId, secret);
             String userReq = String.format("&user_id=%s&user_name=%s&nickname=%s&email=%s&phone=%s&sex=%s", user.getId(), user.getLoginName(), user.getNickname(), user.getEmail(), user.getPhone(), user.getSex());
-            String url = getAuthURI("mud-microservice-security-api") + "?client_id=" + clientId + "&grant_type=client_credentials" + userReq;
+            String url = getAuthURI() + "?client_id=" + clientId + "&grant_type=client_credentials" + userReq;
             ResponseEntity<String> response = restTemplate.postForEntity(url, null, String.class);
             String responseText = response.getBody();
             Assert.isTrue(HttpStatus.OK == response.getStatusCode(), "Request oauth/token error, response is " + response.getStatusCode());
@@ -87,8 +88,8 @@ public class AuthenticationService {
             return this;
         }
 
-        private String getAuthURI(String serviceId) {
-            ServiceInstance instance = loadBalancer.choose(serviceId);
+        private String getAuthURI() {
+            ServiceInstance instance = loadBalancer.choose(authServerId);
             return String.format("http://%s:%s/oauth/token", instance.getHost(), instance.getPort());
         }
 

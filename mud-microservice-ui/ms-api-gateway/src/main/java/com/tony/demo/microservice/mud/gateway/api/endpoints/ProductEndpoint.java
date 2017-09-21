@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.gateway.api.controller;
+package com.tony.demo.microservice.mud.gateway.api.endpoints;
 
 import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.gateway.api.service.ProductService;
@@ -17,14 +17,14 @@ import static com.wrench.utils.restfulapi.response.RestfulBuilder.serverError;
 
 @RestController
 @RequestMapping("shelf")
-public class ProductController extends JwtBaseController {
+public class ProductEndpoint extends JwtBaseEndpoint {
 
-    private Logger logger = LoggerFactory.getLogger(ProductController.class);
+    private Logger logger = LoggerFactory.getLogger(ProductEndpoint.class);
 
     private final ShoppingService shoppingService;
     private final ProductService productService;
 
-    public ProductController(ShoppingService shoppingService, ProductService productService) {
+    public ProductEndpoint(ShoppingService shoppingService, ProductService productService) {
         this.shoppingService = shoppingService;
         this.productService = productService;
     }
