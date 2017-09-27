@@ -3,6 +3,7 @@ package com.tony.demo.microservice.mud.services.shoppingcard.service;
 import com.tony.demo.microservice.mud.services.shoppingcard.common.utils.ConvertUtils;
 import com.tony.demo.microservice.mud.services.shoppingcard.dao.entity.ShoppingcardDO;
 import com.tony.demo.microservice.mud.services.shoppingcard.dao.repository.ShoppingcardRepository;
+import com.tony.demo.microservice.mud.services.shoppingcard.service.bean.request.ShoppingcardReq;
 import com.tony.demo.microservice.mud.services.shoppingcard.service.bean.response.ShoppingcardRes;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,10 @@ public class ShoppingcardService {
         return Optional.of(resList);
     }
 
+    public Optional<Long> addShoppingcard(ShoppingcardReq shoppingcardReq) throws Exception {
+        ShoppingcardDO shoppingcardDO = new ShoppingcardDO();
+        BeanUtils.copyProperties(shoppingcardReq, shoppingcardDO);
+        ShoppingcardDO save = shoppingcardRepository.save(shoppingcardDO);
+        return Optional.of(save.getId());
+    }
 }

@@ -1,6 +1,7 @@
 package com.tony.demo.microservice.mud.gateway.api.service;
 
 import com.tony.demo.microservice.mud.gateway.api.integration.ShoppingcardClient;
+import com.tony.demo.microservice.mud.gateway.api.service.request.ShoppingcardReq;
 import com.tony.demo.microservice.mud.gateway.api.service.response.ShoppingcardRes;
 import com.wrench.utils.restfulapi.response.RestfulResponse;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,13 @@ public class ShoppingcardService {
             return Optional.of(shoppingcardRes);
         }
         return Optional.empty();
+    }
+
+    public Optional<Long> addShoppingcard(ShoppingcardReq shoppingcardReq) throws Exception {
+        ResponseEntity<RestfulResponse<Long>> responseEntity = shoppingcardClient.storeShoppingcard(shoppingcardReq);
+        if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
+            return Optional.of(responseEntity.getBody().getData());
+        }
+        return Optional.of(0L);
     }
 }
