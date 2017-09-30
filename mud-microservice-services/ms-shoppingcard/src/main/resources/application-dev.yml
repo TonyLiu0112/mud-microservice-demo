@@ -38,10 +38,21 @@ redis:
   max-wait-millis: 2000
 # sso
 security:
+  ignored: /hystrix.stream, /turbine.stream, /health
   oauth2:
     resource:
       jwt: # jwt使用这种方式来验证token
         key-uri: http://localhost:9998/oauth/token_key
+  key:
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsZbcKnQppmkY5xeMBzHc
+    nvgnPgrhpPQftxKrdWvNOTroQlg/KAqjEOwKB+tqK5O4iUdzhfFGrNxYLw76S4VN
+    IVmEXX/cE5WylI3wpY1Fv04blO090Xx2UMVun79Qqg0kKdzSj2wuouoiejW5Z3Ni
+    aENyhCaRlsXzkItnGsRc1Bo/JP8M8xFUXV/xgau06hZp55qxBq+lfR6rtXdY581b
+    Xp+Mc9NkCY3skEs5SK1rl1CHVJTBpp3sInXGNkgbgrDSom5qvhBzvG8cjPNMeNdg
+    cTkLggRJo+S5uxpWVNcqGfh1fy5ZSAOwnoVOuTJlfv8GTGJ4l3q1EMZVrRELucA5
+    BQIDAQAB
+    -----END PUBLIC KEY-----
 # sso使用下面方式来验证token，这种方式和上面的jwt方式不可共存
 #      token-info-uri: http://localhost:9999/security/oauth/check_token
 #    client:

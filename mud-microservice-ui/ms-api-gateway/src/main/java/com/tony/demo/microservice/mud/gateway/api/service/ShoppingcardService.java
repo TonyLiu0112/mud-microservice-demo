@@ -41,6 +41,14 @@ public class ShoppingcardService {
         if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
             return Optional.of(responseEntity.getBody().getData());
         }
-        return Optional.of(0L);
+        return Optional.empty();
+    }
+
+    public Optional<Boolean> removeShoppingcard(ShoppingcardReq shoppingcardReq) throws Exception {
+        ResponseEntity<RestfulResponse> responseEntity = shoppingcardClient.removeShoppingcard(shoppingcardReq);
+        if (responseEntity.getStatusCode() == HttpStatus.NO_CONTENT) {
+            return Optional.of(true);
+        }
+        return Optional.of(false);
     }
 }

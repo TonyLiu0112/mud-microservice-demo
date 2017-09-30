@@ -10,6 +10,8 @@ public class ShoppingcardRes {
 
     private Integer amount;
 
+    private ProductRes product;
+
     public Long getId() {
         return id;
     }
@@ -40,5 +42,13 @@ public class ShoppingcardRes {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public ProductRes getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductRes product) {
+        this.product = product;
     }
 }

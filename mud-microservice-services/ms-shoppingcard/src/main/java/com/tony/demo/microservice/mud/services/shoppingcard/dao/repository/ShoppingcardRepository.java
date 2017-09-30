@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public interface ShoppingcardRepository extends JpaRepository<ShoppingcardDO, Long> {
     List<ShoppingcardDO> findByUserId(Long userId);
+
+    ShoppingcardDO findByUserIdAndProductId(Long userId, Long productId);
+
+    void deleteByUserIdAndProductId(Long userId, Long productId);
 }

@@ -10,6 +10,8 @@ public class ShoppingcardReq {
 
     private Integer amount;
 
+    private Integer opsType;
+
     public Long getId() {
         return id;
     }
@@ -42,4 +44,11 @@ public class ShoppingcardReq {
         this.amount = amount;
     }
 
+    public Integer getOpsType() {
+        return opsType;
+    }
+
+    public void setOpsType(Integer opsType) {
+        this.opsType = opsType;
+    }
 }

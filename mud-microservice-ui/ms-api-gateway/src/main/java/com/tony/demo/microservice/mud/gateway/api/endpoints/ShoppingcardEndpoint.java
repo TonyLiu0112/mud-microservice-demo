@@ -55,9 +55,26 @@ public class ShoppingcardEndpoint extends JwtBaseEndpoint {
     public ResponseEntity<RestfulResponse> addShoppingcard(@RequestBody ShoppingcardReq shoppingcardReq, OAuth2Authentication oAuth2Authentication) {
         try {
             UserSession user = getUser(oAuth2Authentication);
-            shoppingcardReq.setId(user.getId());
+            shoppingcardReq.setUserId(user.getId());
             Optional<Long> optional = shoppingcardService.addShoppingcard(shoppingcardReq);
-            return created(optional.orElse(0L));
+            if (optional.isPresent())
+                return created(optional.get());
+            return notImplemented();
+        } catch (Exception e) {
+            logger.error("Failed to add product to shopping card.", e);
+            return serverError();
+        }
+    }
+
+    @DeleteMapping("shoppingcards")
+    public ResponseEntity<RestfulResponse> removeShoppingcard(@RequestBody ShoppingcardReq shoppingcardReq, OAuth2Authentication oAuth2Authentication) {
+        try {
+            UserSession user = getUser(oAuth2Authentication);
+            shoppingcardReq.setUserId(user.getId());
+            Optional<Boolean> optional = shoppingcardService.removeShoppingcard(shoppingcardReq);
+            if (optional.isPresent() && optional.get())
+                return deleted();
+            return notImplemented();
         } catch (Exception e) {
             logger.error("Failed to add product to shopping card.", e);
             return serverError();

@@ -15,3 +15,12 @@ spring:
   sleuth:
     sampler:
       percentage: 1
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE

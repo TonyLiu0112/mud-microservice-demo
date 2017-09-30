@@ -1,5 +1,9 @@
 ### git2consul
 > git2consul是consul社区的一个开源项目,用于consul实现从git拉取分布式数据的工具
+
+#### basic contain
+
+    docker run -d -p 8400:8400 -p 8500:8500 -p 8600:53/udp --name consul-service --hostname discovery-service progrium/consul -server -bootstrap
     
 #### step1
     
@@ -24,7 +28,7 @@
     
 #### step3
 
-    CONSUL_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' consul)    
+    CONSUL_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' consul-service)    
     
 #### step4
     

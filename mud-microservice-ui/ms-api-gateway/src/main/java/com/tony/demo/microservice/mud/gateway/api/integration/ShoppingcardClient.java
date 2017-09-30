@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +24,9 @@ public interface ShoppingcardClient {
 
     @PostMapping("sc/shoppingcards")
     ResponseEntity<RestfulResponse<Long>> storeShoppingcard(@RequestBody ShoppingcardReq shoppingcardReq);
+
+    @DeleteMapping("sc/shoppingcards")
+    ResponseEntity<RestfulResponse> removeShoppingcard(@RequestBody ShoppingcardReq shoppingcardReq);
 
     @Component
     class ShoppingcardFallbackFactory implements FallbackFactory<ShoppingcardClient> {
@@ -45,6 +45,12 @@ public interface ShoppingcardClient {
                 @Override
                 public ResponseEntity<RestfulResponse<Long>> storeShoppingcard(ShoppingcardReq shoppingcardReq) {
                     logger.error("[{}]服务调用失败, 存储购物车异常.", SHOPPINGCARD, cause);
+                    return RestfulBuilder.serverError4Fallback();
+                }
+
+                @Override
+                public ResponseEntity<RestfulResponse> removeShoppingcard(ShoppingcardReq shoppingcardReq) {
+                    logger.error("[{}]服务调用失败, 删除购物车数据异常.", SHOPPINGCARD, cause);
                     return RestfulBuilder.serverError4Fallback();
                 }
             };
