@@ -1,5 +1,6 @@
 server:
-  port: 8081
+  port: 8096
+  context-path: /order
 spring:
   application:
     name: ms-order

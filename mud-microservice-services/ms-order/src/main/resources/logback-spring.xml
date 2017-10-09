@@ -67,7 +67,7 @@
         </triggeringPolicy>
     </appender>
 
-    <logger name="com.tony.demo.microservice.mud.services.order.service" level="INFO" additivity="false">
+    <logger name="com.tony.demo.microservice.mud.services.order.services" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="ERROR"/>
         <appender-ref ref="SERVICE"/>

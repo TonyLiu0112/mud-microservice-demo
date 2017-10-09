@@ -6,28 +6,12 @@ spring:
     port: 5672
     username: guest
     password: guest
-  jpa:
-    show-sql: true
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/shoppingcard?characterEncoding=utf8
-    username: sc
-    password: sc123
-    driverClassName: com.mysql.jdbc.Driver
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    filters: stat,wall,log4j
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+mongodb:
+  host: 127.0.0.1
+  port: 27017
+  user-name: tiger
+  password: 123456
+  database: mud-order
 # redis config
 redis:
   model: pool
