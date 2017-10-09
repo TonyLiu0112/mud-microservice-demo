@@ -12,17 +12,11 @@ import org.springframework.stereotype.Service
 @Service
 class OrderService(val mongoDatabase: MongoDatabase) {
 
-    /**
-     * query orders for all.
-     */
     fun getOrders(userId: Long): MutableList<Any>? {
         val orders = mongoDatabase.getCollection("orders").find()
         return orders.toMutableList()
     }
 
-    /**
-     * add a new order.
-     */
     fun addOrder(orderReq: OrderReq) {
         val doc = Document("orderId", orderReq.orderId)
                 .append("productId", orderReq.productId)
@@ -34,9 +28,6 @@ class OrderService(val mongoDatabase: MongoDatabase) {
         mongoDatabase.getCollection("orders").insertOne(doc)
     }
 
-    /**
-     * order confirm.
-     */
     fun confirmOrder(orderReq: OrderReq) {
         mongoDatabase.getCollection("orders")
                 .updateOne(Filters.eq("orderId", orderReq.orderId), Document("status", orderReq.status))
