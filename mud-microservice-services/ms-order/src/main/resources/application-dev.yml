@@ -22,6 +22,7 @@ redis:
   max-wait-millis: 2000
 # sso
 security:
+  ignored: /hystrix.stream, /turbine.stream, /health
   oauth2:
     resource:
       jwt: # jwt使用这种方式来验证token
