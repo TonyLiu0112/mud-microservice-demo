@@ -78,9 +78,7 @@ public class AuthenticationService {
 
         TokenBuild setToken(String clientId, String secret, UserWrapper user) throws Exception {
             setInterceptor(clientId, secret);
-            String userReq = String.format("&user_id=%s&user_name=%s&nickname=%s&email=%s&phone=%s&sex=%s", user.getId(), user.getLoginName(), user.getNickname(), user.getEmail(), user.getPhone(), user.getSex());
-            String url = getAuthURI() + "?client_id=" + clientId + "&grant_type=client_credentials" + userReq;
-            ResponseEntity<String> response = restTemplate.postForEntity(url, null, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity(getAuthURI(clientId, user), null, String.class);
             String responseText = response.getBody();
             Assert.isTrue(HttpStatus.OK == response.getStatusCode(), "Request oauth/token error, response is " + response.getStatusCode());
             jwtMap = new ObjectMapper().readValue(responseText, HashMap.class);
@@ -88,9 +86,13 @@ public class AuthenticationService {
             return this;
         }
 
-        private String getAuthURI() {
+        private String getAuthURI(String clientId, UserWrapper user) {
             ServiceInstance instance = loadBalancer.choose(authServerId);
-            return String.format("http://%s:%s/oauth/token", instance.getHost(), instance.getPort());
+            String basicUrl = String.format("http://%s:%s/oauth/token", instance.getHost(), instance.getPort());
+            String userReq = String.format("&user_id=%s&user_name=%s&nickname=%s&email=%s&phone=%s&sex=%s&roles=%s",
+                    user.getId(), user.getLoginName(), user.getNickname(), user.getEmail(), user.getPhone(), user.getSex(),
+                    user.getUser().getAuthorities());
+            return basicUrl + "?client_id=" + clientId + "&grant_type=client_credentials" + userReq;
         }
 
         private void setInterceptor(String username, String password) {

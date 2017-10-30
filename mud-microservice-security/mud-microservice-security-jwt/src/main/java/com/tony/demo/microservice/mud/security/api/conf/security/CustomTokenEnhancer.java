@@ -22,12 +22,14 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         Map<String, Object> additionalInfo = new HashMap<>();
         additionalInfo.put("organization", authentication.getName() + randomAlphabetic(4));
         Map<String, String> requestParameters = authentication.getOAuth2Request().getRequestParameters();
-        additionalInfo.put("user", new UserSession(Long.valueOf(requestParameters.get("user_id")),
+        additionalInfo.put("user", new UserSession(
+                Long.valueOf(requestParameters.get("user_id")),
                 requestParameters.get("user_name"),
                 requestParameters.get("nickname"),
                 requestParameters.get("phone"),
                 requestParameters.get("email"),
-                Integer.parseInt(requestParameters.get("sex"))));
+                Integer.parseInt(requestParameters.get("sex")),
+                requestParameters.get("roles")));
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
     }
