@@ -1,6 +1,7 @@
 package com.tony.demo.microservice.mud.services.shoppingcard.endpoints;
 
 import com.tony.demo.microservice.mud.common.session.UserSession;
+import com.tony.demo.microservice.mud.security.helper.roles.Roles;
 import com.tony.demo.microservice.mud.services.shoppingcard.service.ShoppingcardService;
 import com.tony.demo.microservice.mud.services.shoppingcard.service.bean.request.ShoppingcardReq;
 import com.tony.demo.microservice.mud.services.shoppingcard.service.bean.response.ShoppingcardRes;
@@ -28,6 +29,7 @@ public class ShoppingcardEndpoint extends JwtBaseEndpoint {
     }
 
     @GetMapping("shoppingcards")
+    @Roles(values = {"ROLE_USER"})
     public ResponseEntity<RestfulResponse> getShoppingcard(OAuth2Authentication oAuth2Authentication) {
         try {
             UserSession user = getUser(oAuth2Authentication);
