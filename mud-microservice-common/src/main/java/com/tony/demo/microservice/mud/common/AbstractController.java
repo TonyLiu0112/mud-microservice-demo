@@ -22,6 +22,7 @@ import static com.tony.demo.microservice.mud.common.content.code.APICode.*;
  * <p>
  * Generator controller
  */
+@Deprecated
 public abstract class AbstractController implements MessageSourceAware {
 
     private MessageSource messageSource;

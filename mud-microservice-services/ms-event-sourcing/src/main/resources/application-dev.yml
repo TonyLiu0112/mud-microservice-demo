@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: ms-event-sourcing
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  jpa:
+    show-sql: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/ms_event_sourcing?characterEncoding=utf8
+    username: es
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,log4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+# 用户安全认证
+security:
+  oauth2:
+    resource:
+      jwt: # jwt使用这种方式来验证token
+        key-uri: http://localhost:9998/oauth/token_key
+# log
+logging:
+  level:
+    root: info

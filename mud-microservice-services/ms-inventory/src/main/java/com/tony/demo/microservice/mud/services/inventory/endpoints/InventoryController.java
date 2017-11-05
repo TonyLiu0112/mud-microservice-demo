@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.services.inventory.controller;
+package com.tony.demo.microservice.mud.services.inventory.endpoints;
 
 import com.tony.demo.microservice.mud.services.inventory.service.bean.InventoryService;
 import com.tony.demo.microservice.mud.services.inventory.service.bean.response.InventoryRes;

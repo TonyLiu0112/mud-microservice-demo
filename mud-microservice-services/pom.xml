@@ -28,6 +28,7 @@
         <module>ms-shipping</module>
         <module>ms-order</module>
         <module>ms-product</module>
+        <module>ms-event-sourcing</module>
     </modules>
 
     <properties>

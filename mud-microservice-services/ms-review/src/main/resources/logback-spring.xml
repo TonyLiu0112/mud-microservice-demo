@@ -73,7 +73,7 @@
         <appender-ref ref="SERVICE"/>
     </logger>
 
-    <logger name="com.tony.demo.microservice.mud.services.review.controller" level="INFO" additivity="false">
+    <logger name="com.tony.demo.microservice.mud.services.review.endpoints" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="ERROR"/>
         <appender-ref ref="SERVICE"/>

@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.services.recommendation.controller;
+package com.tony.demo.microservice.mud.services.recommendation.endpoints;
 
 import com.tony.demo.microservice.mud.services.recommendation.service.RecommendationService;
 import com.tony.demo.microservice.mud.services.recommendation.service.bean.response.RecommendationRes;

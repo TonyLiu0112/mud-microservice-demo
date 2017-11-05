@@ -1,9 +1,12 @@
 package com.tony.demo.microservice.mud.common.session;
 
 import com.alibaba.fastjson.JSONObject;
+import jodd.util.StringUtil;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UserSession implements Serializable {
 
@@ -24,13 +27,17 @@ public class UserSession implements Serializable {
     public UserSession() {
     }
 
-    public UserSession(Long id, String loginName, String nickname, String phone, String email, Integer sex) {
+    public UserSession(Long id, String loginName, String nickname, String phone, String email, Integer sex, String rs) {
         this.id = id;
         this.loginName = loginName;
         this.nickname = nickname;
         this.phone = phone;
         this.email = email;
         this.sex = sex;
+        if (StringUtil.isNotBlank(rs)) {
+            String[] rolesArr = rs.replace("[", "").replace("]", "").split(",");
+            roles = Stream.of(rolesArr).collect(Collectors.toList());
+        }
     }
 
     public Long getId() {

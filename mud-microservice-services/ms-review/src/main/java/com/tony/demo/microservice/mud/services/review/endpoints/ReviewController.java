@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.services.review.controller;
+package com.tony.demo.microservice.mud.services.review.endpoints;
 
 import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.services.review.service.ReviewService;

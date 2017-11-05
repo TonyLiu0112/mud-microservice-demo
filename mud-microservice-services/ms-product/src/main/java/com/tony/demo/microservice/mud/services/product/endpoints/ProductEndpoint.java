@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.services.product.controller;
+package com.tony.demo.microservice.mud.services.product.endpoints;
 
 import com.github.pagehelper.PageInfo;
 import com.tony.demo.microservice.mud.services.product.service.ProductService;
@@ -15,11 +15,11 @@ import java.util.Optional;
 import static com.wrench.utils.restfulapi.response.RestfulBuilder.*;
 
 @RestController
-public class ProductController {
+public class ProductEndpoint {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductEndpoint(ProductService productService) {
         this.productService = productService;
     }
 

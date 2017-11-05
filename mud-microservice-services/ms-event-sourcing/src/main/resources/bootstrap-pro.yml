@@ -1,0 +1,19 @@
+server:
+  port: 8998
+  context-path: /es
+spring:
+  application:
+    name: ms-event-sourcing
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /${server.context-path}/health
+      config:
+        prefix: mud_configuration/master
+        default-context: ${spring.application.name}
+        format: yaml
+        data-key: es.yml
+  zipkin:
+    base-url: http://monitor-zipkin:9411
