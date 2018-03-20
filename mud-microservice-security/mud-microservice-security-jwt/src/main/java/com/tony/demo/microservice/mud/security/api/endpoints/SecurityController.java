@@ -1,4 +1,4 @@
-package com.tony.demo.microservice.mud.security.api.controller;
+package com.tony.demo.microservice.mud.security.api.endpoints;
 
 import com.tony.demo.microservice.mud.common.content.code.APICode;
 import com.tony.demo.microservice.mud.security.api.service.AuthenticationService;

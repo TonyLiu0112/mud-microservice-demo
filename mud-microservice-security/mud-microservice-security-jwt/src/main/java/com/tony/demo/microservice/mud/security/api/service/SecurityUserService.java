@@ -36,7 +36,7 @@ public class SecurityUserService {
             UserWrapper response = new UserWrapper();
             BeanUtils.copyProperties(account, response);
             User roleUser = new User(account.getLoginName(), account.getPassword(), true, true, true, true,
-                    AuthorityUtils.createAuthorityList("ROLE_USER"));
+                    AuthorityUtils.createAuthorityList("ROLE_USER", "ACTUATOR"));
             response.setUser(roleUser);
             return response;
         } else {
