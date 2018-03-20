@@ -1,5 +1,5 @@
 # zipkin支持
-> 配合spring sleuth，完成对服务的性能的监控
+> 配合spring sleuth，完成对服务的调用链路的性能监控
 > 配合elasticsearch保证监控数据的持久化
 
 ## 服务端
