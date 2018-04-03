@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mud-microservice-parent</artifactId>
+        <groupId>com.tony.demo.microservice.mud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.tony.demo.microservice.mud</groupId>
+    <artifactId>mud-microservice-dataflow</artifactId>
+    <packaging>pom</packaging>
+
+    <name>mud-microservice-dataflow</name>
+    <url>http://maven.apache.org</url>
+    <modules>
+        <module>mud-microservice-stream</module>
+        <module>mud-microservice-task</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

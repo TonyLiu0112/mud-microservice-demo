@@ -13,6 +13,7 @@
         <module>mud-microservice-ui</module>
         <module>mud-microservice-monitor</module>
         <module>mud-microservice-security</module>
+        <module>mud-microservice-dataflow</module>
     </modules>
     <packaging>pom</packaging>
 

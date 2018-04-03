@@ -1,0 +1,9 @@
+spring:
+  rabbitmq:
+    addresses: www.tony666.com
+    port: 5672
+    username: admin
+    password: admin
+logging:
+  level:
+    root: info
