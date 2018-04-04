@@ -16,11 +16,24 @@ public class TimeProcessor {
 
     private int count = 0;
 
+    /**
+     * 命令式编程模型
+     *
+     * @param timestamp
+     * @return
+     */
     @Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
     public Object transform(Long timestamp) {
         logger.info("processor input: {}", ++count);
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         return dateFormat.format(timestamp);
     }
-
+/*
+    // 功能性编程模型(反应器模式)
+    @StreamListener
+    @Output(Processor.OUTPUT)
+    public Flux<String> method2(@Input(Processor.INPUT) Flux<Long> input) {
+        return input.map(timestamp -> "当前时间戳 " + timestamp);
+    }
+*/
 }
