@@ -11,11 +11,11 @@
     ubuntu2: 10.211.55.10
 
     ubuntu3: 10.211.55.11
-    
+
 #### 拉取镜像
 
     sudo docker pull progrium/consul
-    
+
 ## 启动容器
 > 其中172.17.0.1是docker0的默认ip，可以通过ip addr命令查看docker0的网络信息得到
 

@@ -7,12 +7,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tony.demo.microservice.mud</groupId>
     <artifactId>mud-microservice-task</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>mud-microservice-task</name>
     <url>http://maven.apache.org</url>
+    <modules>
+        <module>batch-task</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

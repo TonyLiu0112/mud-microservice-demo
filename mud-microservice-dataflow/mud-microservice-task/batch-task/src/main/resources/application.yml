@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://116.62.121.231:3306/dataflow?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&useSSL=false
+    username: dataflow
+    password: dataflow
+    type: com.mysql.jdbc.jdbc2.optional.MysqlDataSource

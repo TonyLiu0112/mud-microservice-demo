@@ -75,5 +75,10 @@
             <artifactId>spring-web</artifactId>
             <version>4.3.9.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>io.eventuate.client.java</groupId>
+            <artifactId>eventuate-client-java</artifactId>
+            <version>0.20.1.RELEASE</version>
+        </dependency>
     </dependencies>
 </project>
