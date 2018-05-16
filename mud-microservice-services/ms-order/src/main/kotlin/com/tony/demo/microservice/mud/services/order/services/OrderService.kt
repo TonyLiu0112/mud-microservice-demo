@@ -5,7 +5,7 @@ import com.mongodb.client.model.Filters
 import com.tony.demo.microservice.mud.common.eventuate.domain.Money
 import com.tony.demo.microservice.mud.services.order.eventuate.command.CreateOrderCommand
 import com.tony.demo.microservice.mud.services.order.eventuate.command.OrderCommand
-import com.tony.demo.microservice.mud.services.order.eventuate.event.entity.Order
+import com.tony.demo.microservice.mud.services.order.eventuate.entity.Order
 import com.tony.demo.microservice.mud.services.order.services.bean.OrderReq
 import io.eventuate.sync.AggregateRepository
 import org.bson.Document
