@@ -1,0 +1,22 @@
+file:///usr/local/tony/stream-source-1.0-SNAPSHOT.jar
+
+file:///usr/local/tony/stream-processor-1.0-SNAPSHOT.jar
+
+file:///usr/local/tony/stream-sink-1.0-SNAPSHOT.jar
+
+file:///usr/local/tony/batch-task-1.0-SNAPSHOT.jar
+
+
+
+docker cp /Users/Tony/.m2/repository/com/tony/demo/microservice/mud/stream-source/1.0-SNAPSHOT/stream-source-1.0-SNAPSHOT.jar dataflow-server:/usr/local/tony/
+
+docker cp /Users/Tony/.m2/repository/com/tony/demo/microservice/mud/stream-processor/1.0-SNAPSHOT/stream-processor-1.0-SNAPSHOT.jar dataflow-server:/usr/local/tony/
+
+docker cp /Users/Tony/.m2/repository/com/tony/demo/microservice/mud/stream-sink/1.0-SNAPSHOT/stream-sink-1.0-SNAPSHOT.jar dataflow-server:/usr/local/tony/
+
+
+
+tonySource | tonyProcessor | tonySink
+
+
+deployer.tonyBatchTask.spring.datasource.url=jdbc:mysql://116.62.121.231:3306/dataflow?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&useSSL=false, deployer.tonyBatchTask.spring.datasource.driverClassName=com.mysql.jdbc.Driver, deployer.tonyBatchTask.spring.datasource.username=dataflow, spring.datasource.password=dataflow
