@@ -17,7 +17,7 @@ import java.math.BigDecimal
  */
 @Service
 class OrderService(val mongoDatabase: MongoDatabase,
-                   val repository: AggregateRepository<Order, OrderCommand>) {
+                   val aggregateRepository: AggregateRepository<Order, OrderCommand>) {
 
     fun getOrders(userId: Long): MutableList<Any>? = mongoDatabase.getCollection("orders").find().toMutableList()
 
@@ -40,7 +40,7 @@ class OrderService(val mongoDatabase: MongoDatabase,
      * 创建一个订单
      */
     fun createOrder4Eventuate(orderReq: OrderReq) {
-        repository.save(CreateOrderCommand(orderReq.userId.toString(), Money(BigDecimal(100))))
+        aggregateRepository.save(CreateOrderCommand(orderReq.userId.toString(), Money(BigDecimal(orderReq.price))))
     }
 
 }

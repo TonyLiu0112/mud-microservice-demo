@@ -123,11 +123,11 @@
             <artifactId>eventuate-local-java-jdbc</artifactId>
             <version>${eventuateLocalVersion}</version>
         </dependency>
-        <dependency>
-            <groupId>io.eventuate.local.java</groupId>
-            <artifactId>eventuate-local-java-embedded-cdc-autoconfigure</artifactId>
-            <version>${eventuateLocalVersion}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>io.eventuate.local.java</groupId>-->
+            <!--<artifactId>eventuate-local-java-embedded-cdc-autoconfigure</artifactId>-->
+            <!--<version>${eventuateLocalVersion}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>io.eventuate.client.java</groupId>
             <artifactId>eventuate-client-java-jdbc</artifactId>

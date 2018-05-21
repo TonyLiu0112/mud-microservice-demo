@@ -48,4 +48,14 @@ class OrderEndpoints(val orderService: OrderService) : JwtBaseEndPoint() {
         }
     }
 
+    @PostMapping("eventuate/orders")
+    fun createOrder(@RequestBody orderReq: OrderReq): ResponseEntity<RestfulResponse<Any>> {
+        return try {
+            orderService.createOrder4Eventuate(orderReq)
+            RestfulBuilder.created()
+        } catch (e: Exception) {
+            RestfulBuilder.serverError()
+        }
+    }
+
 }
