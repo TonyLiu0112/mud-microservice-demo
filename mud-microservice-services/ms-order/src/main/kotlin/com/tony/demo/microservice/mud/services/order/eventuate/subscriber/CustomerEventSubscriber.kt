@@ -1,7 +1,7 @@
 package com.tony.demo.microservice.mud.services.order.eventuate.subscriber
 
-import com.tony.demo.microservice.mud.common.eventuate.event.customer.CustomerCreditLimitExceededEvent
-import com.tony.demo.microservice.mud.common.eventuate.event.customer.CustomerCreditReservedEvent
+import com.tony.demo.microservice.mud.common.eventuate.event.user.UserCreditLimitExceededEvent
+import com.tony.demo.microservice.mud.common.eventuate.event.user.UserCreditReservedEvent
 import com.tony.demo.microservice.mud.services.order.eventuate.command.ApproveOrderCommand
 import com.tony.demo.microservice.mud.services.order.eventuate.command.RejectOrderCommand
 import com.tony.demo.microservice.mud.services.order.eventuate.entity.Order
@@ -20,12 +20,12 @@ import java.util.concurrent.CompletableFuture
 class CustomerEventSubscriber {
 
     @EventHandlerMethod
-    fun creditLimitReserved(ctx: EventHandlerContext<CustomerCreditReservedEvent>): CompletableFuture<EntityWithIdAndVersion<Order>> {
+    fun creditLimitReserved(ctx: EventHandlerContext<UserCreditReservedEvent>): CompletableFuture<EntityWithIdAndVersion<Order>> {
         return ctx.update(Order::class.java, ctx.event.orderId, ApproveOrderCommand())
     }
 
     @EventHandlerMethod
-    fun creditLimitExceeded(ctx: EventHandlerContext<CustomerCreditLimitExceededEvent>): CompletableFuture<EntityWithIdAndVersion<Order>> {
+    fun creditLimitExceeded(ctx: EventHandlerContext<UserCreditLimitExceededEvent>): CompletableFuture<EntityWithIdAndVersion<Order>> {
         return ctx.update(Order::class.java, ctx.event.orderId, RejectOrderCommand())
     }
 

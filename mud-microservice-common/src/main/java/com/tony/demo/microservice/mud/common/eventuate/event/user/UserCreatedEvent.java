@@ -1,11 +1,11 @@
-package com.tony.demo.microservice.mud.common.eventuate.event.customer;
+package com.tony.demo.microservice.mud.common.eventuate.event.user;
 
 import com.tony.demo.microservice.mud.common.eventuate.domain.Money;
-import com.tony.demo.microservice.mud.common.eventuate.event.CustomerEvent;
+import com.tony.demo.microservice.mud.common.eventuate.event.UserEvent;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-public class CustomerCreatedEvent implements CustomerEvent {
+public class UserCreatedEvent implements UserEvent {
   private String name;
   private Money creditLimit;
 
@@ -19,11 +19,10 @@ public class CustomerCreatedEvent implements CustomerEvent {
     return HashCodeBuilder.reflectionHashCode(this);
   }
 
-  private CustomerCreatedEvent() {
+  private UserCreatedEvent() {
   }
 
-  public CustomerCreatedEvent(String name, Money creditLimit) {
-
+  public UserCreatedEvent(String name, Money creditLimit) {
     this.name = name;
     this.creditLimit = creditLimit;
   }

@@ -29,6 +29,7 @@
         <module>ms-order</module>
         <module>ms-product</module>
         <module>ms-event-sourcing</module>
+        <module>ms-cdc</module>
     </modules>
 
     <properties>

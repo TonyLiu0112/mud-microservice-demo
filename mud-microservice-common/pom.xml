@@ -11,10 +11,11 @@
     <packaging>jar</packaging>
 
     <name>mud-microservice-common</name>
-    <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <eventuateClientVersion>0.20.1.RELEASE</eventuateClientVersion>
+        <eventuateLocalVersion>0.18.0.RELEASE</eventuateLocalVersion>
     </properties>
 
     <dependencies>
@@ -77,8 +78,28 @@
         </dependency>
         <dependency>
             <groupId>io.eventuate.client.java</groupId>
+            <artifactId>eventuate-client-java-spring</artifactId>
+            <version>${eventuateClientVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.eventuate.local.java</groupId>
+            <artifactId>eventuate-local-java-jdbc</artifactId>
+            <version>${eventuateLocalVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.eventuate.client.java</groupId>
             <artifactId>eventuate-client-java</artifactId>
             <version>0.20.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
         </dependency>
     </dependencies>
 </project>
